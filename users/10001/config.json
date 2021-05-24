@@ -1,0 +1,8 @@
+{
+    "userId": 10001,
+    "telegramChatId": 610957248,
+    "membershipLevel": 4,
+    "coinLimit": 0,
+    "maxActiveOrders": 3,
+    "automaticClose": true
+}

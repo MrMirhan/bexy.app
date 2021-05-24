@@ -1,0 +1,11 @@
+{
+    "name": "Hamza Mirhan",
+    "surname": "Almendi",
+    "phone": "905550524744",
+    "location": {
+        "country": "Turkey",
+        "state": "Istanbul",
+        "city": "Beylikduzu",
+        "postCode": "34520"
+    }
+}

@@ -1,0 +1,10 @@
+[
+    {
+        "coin": "DENT",
+        "orderId": "717758",
+        "entryPrice": 1.31,
+        "bougthQuantity": 50,
+        "spentMoney": 6.52,
+        "orderType": "SELL"
+    }
+]

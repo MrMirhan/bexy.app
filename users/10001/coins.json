@@ -1,0 +1,51 @@
+{
+    "ada":{
+        "active": 0,
+        "apiKeys":[
+            "900001",
+            "900002"
+        ]
+    }, "dent":{
+        "active": 0,
+        "apiKeys":[]
+    }, "storj":{
+        "active": 0,
+        "apiKeys":[]
+    }, "btt":{
+        "active": 0,
+        "apiKeys":[]
+    }, "vet":{
+        "active": 0,
+        "apiKeys":[]
+    }, "doge":{
+        "active": 0,
+        "apiKeys":[]
+    }, "hot":{
+        "active": 0,
+        "apiKeys":[]
+    }, "sxp":{
+        "active": 0,
+        "apiKeys":[]
+    }, "xlm":{
+        "active": 0,
+        "apiKeys":[]
+    }, "algo":{
+        "active": 0,
+        "apiKeys":[]
+    }, "mtl":{
+        "active": 0,
+        "apiKeys":[]
+    }, "trx":{
+        "active": 0,
+        "apiKeys":[]
+    }, "reef":{
+        "active": 0,
+        "apiKeys":[]
+    }, "one":{
+        "active": 0,
+        "apiKeys":[]
+    }, "xrp":{
+        "active": 0,
+        "apiKeys":[]
+    }
+}

@@ -1,0 +1,13 @@
+[
+    {
+        "coin": "ADA",
+        "orderId": "716523",
+        "entryPrice": 1.20,
+        "sellPrice": 1.32,
+        "bougthQuantity": 50,
+        "spentMoney": 6.52,
+        "orderType": "BUY",
+        "pnl": 2.50,
+        "roe": "%40"
+    }
+]

@@ -1,0 +1,13 @@
+[
+    {
+        "coin": "ONE",
+        "orderId": "712859",
+        "entryPrice": 1.30,
+        "markPrice": 1.32,
+        "bougthQuantity": 50,
+        "spentMoney": 6.52,
+        "orderType": "BUY",
+        "pnl": 0.40,
+        "roe": "%10"
+    }
+]
