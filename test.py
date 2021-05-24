@@ -16,6 +16,9 @@ from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 from telepot.namedtuple import InlineQueryResultArticle, InlineQueryResultPhoto, InputTextMessageContent
 import json
 import orderHandler as oh
+import logging
+import datetime
+import sys, os
 
 TOKEN = "1776589751:AAH3HQRXe7tEJf5C-HnfBVeOBWta72Gbd_E"
 
@@ -118,45 +121,12 @@ def on_callback_query(msg):
         else:
             bot.answerCallbackQuery(query_id, text='No previous message to edit')
     elif data.startswith("kapat"):
-        coin = data.split(" ")[1]
+        coin = str(data.split(" ")[1]).lower()
         msg_idf = telepot.message_identifier(message_with_inline_keyboard)
         bot.answerCallbackQuery(query_id, text=f'{coin} kapatılıyor.')
         bot.sendMessage(from_id, f'{coin} kapatılıyor.')
         bot.deleteMessage(msg_idf)
-        oh.createThread("cancel", {'test': 'sjsjsj'})
-
-
-def on_inline_query(msg):
-    def compute():
-        query_id, from_id, query_string = telepot.glance(msg, flavor='inline_query')
-        print('%s: Computing for: %s' % (threading.current_thread().name, query_string))
-
-        articles = [InlineQueryResultArticle(
-                        id='abcde', title='Telegram', input_message_content=InputTextMessageContent(message_text='Telegram is a messaging app')),
-                    dict(type='article',
-                        id='fghij', title='Google', input_message_content=dict(message_text='Google is a search engine'))]
-
-        photo1_url = 'https://core.telegram.org/file/811140934/1/tbDSLHSaijc/fdcc7b6d5fb3354adf'
-        photo2_url = 'https://www.telegram.org/img/t_logo.png'
-        photos = [InlineQueryResultPhoto(
-                      id='12345', photo_url=photo1_url, thumb_url=photo1_url),
-                  dict(type='photo',
-                      id='67890', photo_url=photo2_url, thumb_url=photo2_url)]
-
-        result_type = query_string[-1:].lower()
-
-        if result_type == 'a':
-            return articles
-        elif result_type == 'p':
-            return photos
-        else:
-            results = articles if random.randint(0,1) else photos
-            if result_type == 'b':
-                return dict(results=results, switch_pm_text='Back to Bot', switch_pm_parameter='Optional_start_parameter')
-            else:
-                return dict(results=results)
-
-    answerer.answer(msg, compute)
+        oh.createThread("cancel", {"type": "all", "coin": coin})
 
 
 def on_chosen_inline_result(msg):
@@ -170,13 +140,28 @@ def on_open(ws):
     print('Socket connection started.')
     MessageLoop(bot, {'chat': on_chat_message,
                   'callback_query': on_callback_query,
-                  'inline_query': on_inline_query,
                   'chosen_inline_result': on_chosen_inline_result}).run_as_thread()
     print('Listening ...')
-    oh.createThread(10001)
+    date = str(datetime.datetime.now())
+    print(date)
+    todayDate = str(date.split(" ")[0])
+    nowTime = str(date.split(" ")[1]).split(":")
+    nowTime = str(nowTime[0]) + "." + nowTime[1] + "" + str(round(float(nowTime[2])))
+    try:
+        os.makedirs(f"logs/alpha/{todayDate}")    
+        print("Todays logging directory " , todayDate ,  " created.")
+        open(f"logs/alpha/{todayDate}/{nowTime}.log", "w")
+        logging.basicConfig(filename=f"logs/alpha/{todayDate}/{nowTime}.log", filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+        logging.warning('Process started.')
+    except FileExistsError:
+        print("This process started time " , nowTime ,  " logging file created.")  
+        open(f"logs/alpha/{todayDate}/{nowTime}.log", "w")
+        logging.basicConfig(filename=f"logs/alpha/{todayDate}/{nowTime}.log", filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+        logging.warning('Process started.')
 
 def on_close(ws):
     print('Socket connection ended.')
+    logging.warning('Process stopped.')
 
 def check(ws, message):
     print("xd")

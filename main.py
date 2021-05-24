@@ -84,14 +84,12 @@ def check(ws, message):
 
                 coin = coind[xd]
                 kusur = coin['pres']
-                clientInfo = coin['apiCredentials']
-                walletName = clientInfo[0]['walletName']
                 bildirimGonderildi = coind[xd]['bildirimGonderildi']
                 ustte = coin['ustte']
                 kesisti = coin['kesisti']
                 eskiUstte = coin['eskiUstte']
                 
-                client = Client(clientInfo[0]['apiKey'], clientInfo[0]['apiSecret'])
+                client = Client(config.API_KEY, config.API_SECRET)
                 TRADE_SYMBOL = xd.upper() + "USDT"
 
                 close = str(float(requests.get("https://api.binance.com/api/v3/avgPrice?symbol={}".format(TRADE_SYMBOL)).json()['price']))

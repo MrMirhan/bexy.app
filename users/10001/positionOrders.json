@@ -1,10 +1,32 @@
 [
     {
-        "coin": "ONE",
+        "coin": "ADA",
         "orderId": "712859",
         "entryPrice": 1.30,
         "markPrice": 1.32,
-        "bougthQuantity": 50,
+        "bougthQuantity": 20,
+        "spentMoney": 6.52,
+        "orderType": "BUY",
+        "pnl": 0.40,
+        "roe": "%10"
+    },
+    {
+        "coin": "DOGE",
+        "orderId": "712359",
+        "entryPrice": 1.30,
+        "markPrice": 1.32,
+        "bougthQuantity": 704,
+        "spentMoney": 6.52,
+        "orderType": "BUY",
+        "pnl": 0.40,
+        "roe": "%10"
+    },
+    {
+        "coin": "XLM",
+        "orderId": "712259",
+        "entryPrice": 1.30,
+        "markPrice": 1.32,
+        "bougthQuantity": 35,
         "spentMoney": 6.52,
         "orderType": "BUY",
         "pnl": 0.40,

@@ -1,358 +1,107 @@
-{"ada":{
-    "apiCredentials": [
-        {
-            "apiKey": "VzJYaYBn2w0aNkavvlCG1o2LwuOUQyBEjjnM0TPZAGBIwZge0hsejAnxV3pf2J2L",
-            "apiSecret": "XGoSn1gxfL6eoDA8WlEBinbNUmGXNneeBCCbHpXaE6BxWNIvHvWMXYziZTFjZjFa",
-            "id": 10001,
-            "walletName": "Mirhan's Wallet"
-        },
-        {
-            "apiKey": "6dQDARiB6SypLZnC1ma1munObhfmR9N4sl7auLqDoV6A9z7mQv3dJyCdeiROL9Rv",
-            "apiSecret": "oVhndE9xw4uyp7MxvwWQweOtOaWQ3VGxV468pNrbdDeHFAnAmYZnX6AhBD2I2mhn",
-            "id": 10002,
-            "walletName": "Faik's Wallet"
-        }
-    ],
-    "bildirimGonderildi": 0,
-    "eskiUstte": 0,
-    "kesisti": 0,
-    "pres": 4,
-    "ustte": 0
-}, "dent":{
-    "apiCredentials": [
-        {
-            "apiKey": "VzJYaYBn2w0aNkavvlCG1o2LwuOUQyBEjjnM0TPZAGBIwZge0hsejAnxV3pf2J2L",
-            "apiSecret": "XGoSn1gxfL6eoDA8WlEBinbNUmGXNneeBCCbHpXaE6BxWNIvHvWMXYziZTFjZjFa",
-            "id": 10001,
-            "walletName": "Mirhan's Wallet"
-        },
-        {
-            "apiKey": "6dQDARiB6SypLZnC1ma1munObhfmR9N4sl7auLqDoV6A9z7mQv3dJyCdeiROL9Rv",
-            "apiSecret": "oVhndE9xw4uyp7MxvwWQweOtOaWQ3VGxV468pNrbdDeHFAnAmYZnX6AhBD2I2mhn",
-            "id": 10002,
-            "walletName": "Faik's Wallet"
-        }
-    ],
-    "bildirimGonderildi": 0,
-    "eskiUstte": 0,
-    "kesisti": 0,
-    "openOrders": [],
-    "positionOrders": [],
-    "orderHistory": [],
-    "positionHistory": [],
-    "pres": 4,
-    "ustte": 0
-}, "storj":{
-    "apiCredentials": [
-        {
-            "apiKey": "VzJYaYBn2w0aNkavvlCG1o2LwuOUQyBEjjnM0TPZAGBIwZge0hsejAnxV3pf2J2L",
-            "apiSecret": "XGoSn1gxfL6eoDA8WlEBinbNUmGXNneeBCCbHpXaE6BxWNIvHvWMXYziZTFjZjFa",
-            "id": 10001,
-            "walletName": "Mirhan's Wallet"
-        },
-        {
-            "apiKey": "6dQDARiB6SypLZnC1ma1munObhfmR9N4sl7auLqDoV6A9z7mQv3dJyCdeiROL9Rv",
-            "apiSecret": "oVhndE9xw4uyp7MxvwWQweOtOaWQ3VGxV468pNrbdDeHFAnAmYZnX6AhBD2I2mhn",
-            "id": 10002,
-            "walletName": "Faik's Wallet"
-        }
-    ],
-    "bildirimGonderildi": 0,
-    "eskiUstte": 0,
-    "kesisti": 0,
-    "openOrders": [],
-    "positionOrders": [],
-    "orderHistory": [],
-    "positionHistory": [],
-    "pres": 4,
-    "ustte": 0
-}, "btt":{
-    "apiCredentials": [
-        {
-            "apiKey": "VzJYaYBn2w0aNkavvlCG1o2LwuOUQyBEjjnM0TPZAGBIwZge0hsejAnxV3pf2J2L",
-            "apiSecret": "XGoSn1gxfL6eoDA8WlEBinbNUmGXNneeBCCbHpXaE6BxWNIvHvWMXYziZTFjZjFa",
-            "id": 10001,
-            "walletName": "Mirhan's Wallet"
-        },
-        {
-            "apiKey": "6dQDARiB6SypLZnC1ma1munObhfmR9N4sl7auLqDoV6A9z7mQv3dJyCdeiROL9Rv",
-            "apiSecret": "oVhndE9xw4uyp7MxvwWQweOtOaWQ3VGxV468pNrbdDeHFAnAmYZnX6AhBD2I2mhn",
-            "id": 10002,
-            "walletName": "Faik's Wallet"
-        }
-    ],
-    "bildirimGonderildi": 0,
-    "eskiUstte": 0,
-    "kesisti": 0,
-    "openOrders": [],
-    "positionOrders": [],
-    "orderHistory": [],
-    "positionHistory": [],
-    "pres": 4,
-    "ustte": 0
-}, "vet":{
-    "apiCredentials": [
-        {
-            "apiKey": "VzJYaYBn2w0aNkavvlCG1o2LwuOUQyBEjjnM0TPZAGBIwZge0hsejAnxV3pf2J2L",
-            "apiSecret": "XGoSn1gxfL6eoDA8WlEBinbNUmGXNneeBCCbHpXaE6BxWNIvHvWMXYziZTFjZjFa",
-            "id": 10001,
-            "walletName": "Mirhan's Wallet"
-        },
-        {
-            "apiKey": "6dQDARiB6SypLZnC1ma1munObhfmR9N4sl7auLqDoV6A9z7mQv3dJyCdeiROL9Rv",
-            "apiSecret": "oVhndE9xw4uyp7MxvwWQweOtOaWQ3VGxV468pNrbdDeHFAnAmYZnX6AhBD2I2mhn",
-            "id": 10002,
-            "walletName": "Faik's Wallet"
-        }
-    ],
-    "bildirimGonderildi": 0,
-    "eskiUstte": 0,
-    "kesisti": 0,
-    "openOrders": [],
-    "positionOrders": [],
-    "orderHistory": [],
-    "positionHistory": [],
-    "pres": 4,
-    "ustte": 0
-}, "doge":{
-    "apiCredentials": [
-        {
-            "apiKey": "VzJYaYBn2w0aNkavvlCG1o2LwuOUQyBEjjnM0TPZAGBIwZge0hsejAnxV3pf2J2L",
-            "apiSecret": "XGoSn1gxfL6eoDA8WlEBinbNUmGXNneeBCCbHpXaE6BxWNIvHvWMXYziZTFjZjFa",
-            "id": 10001,
-            "walletName": "Mirhan's Wallet"
-        },
-        {
-            "apiKey": "6dQDARiB6SypLZnC1ma1munObhfmR9N4sl7auLqDoV6A9z7mQv3dJyCdeiROL9Rv",
-            "apiSecret": "oVhndE9xw4uyp7MxvwWQweOtOaWQ3VGxV468pNrbdDeHFAnAmYZnX6AhBD2I2mhn",
-            "id": 10002,
-            "walletName": "Faik's Wallet"
-        }
-    ],
-    "bildirimGonderildi": 0,
-    "eskiUstte": 0,
-    "kesisti": 0,
-    "openOrders": [],
-    "positionOrders": [],
-    "orderHistory": [],
-    "positionHistory": [],
-    "pres": 4,
-    "ustte": 0
-}, "hot":{
-    "apiCredentials": [
-        {
-            "apiKey": "VzJYaYBn2w0aNkavvlCG1o2LwuOUQyBEjjnM0TPZAGBIwZge0hsejAnxV3pf2J2L",
-            "apiSecret": "XGoSn1gxfL6eoDA8WlEBinbNUmGXNneeBCCbHpXaE6BxWNIvHvWMXYziZTFjZjFa",
-            "id": 10001,
-            "walletName": "Mirhan's Wallet"
-        },
-        {
-            "apiKey": "6dQDARiB6SypLZnC1ma1munObhfmR9N4sl7auLqDoV6A9z7mQv3dJyCdeiROL9Rv",
-            "apiSecret": "oVhndE9xw4uyp7MxvwWQweOtOaWQ3VGxV468pNrbdDeHFAnAmYZnX6AhBD2I2mhn",
-            "id": 10002,
-            "walletName": "Faik's Wallet"
-        }
-    ],
-    "bildirimGonderildi": 0,
-    "eskiUstte": 0,
-    "kesisti": 0,
-    "openOrders": [],
-    "positionOrders": [],
-    "orderHistory": [],
-    "positionHistory": [],
-    "pres": 4,
-    "ustte": 0
-}, "sxp":{
-    "apiCredentials": [
-        {
-            "apiKey": "VzJYaYBn2w0aNkavvlCG1o2LwuOUQyBEjjnM0TPZAGBIwZge0hsejAnxV3pf2J2L",
-            "apiSecret": "XGoSn1gxfL6eoDA8WlEBinbNUmGXNneeBCCbHpXaE6BxWNIvHvWMXYziZTFjZjFa",
-            "id": 10001,
-            "walletName": "Mirhan's Wallet"
-        },
-        {
-            "apiKey": "6dQDARiB6SypLZnC1ma1munObhfmR9N4sl7auLqDoV6A9z7mQv3dJyCdeiROL9Rv",
-            "apiSecret": "oVhndE9xw4uyp7MxvwWQweOtOaWQ3VGxV468pNrbdDeHFAnAmYZnX6AhBD2I2mhn",
-            "id": 10002,
-            "walletName": "Faik's Wallet"
-        }
-    ],
-    "bildirimGonderildi": 0,
-    "eskiUstte": 0,
-    "kesisti": 0,
-    "openOrders": [],
-    "positionOrders": [],
-    "orderHistory": [],
-    "positionHistory": [],
-    "pres": 4,
-    "ustte": 0
-}, "xlm":{
-    "apiCredentials": [
-        {
-            "apiKey": "VzJYaYBn2w0aNkavvlCG1o2LwuOUQyBEjjnM0TPZAGBIwZge0hsejAnxV3pf2J2L",
-            "apiSecret": "XGoSn1gxfL6eoDA8WlEBinbNUmGXNneeBCCbHpXaE6BxWNIvHvWMXYziZTFjZjFa",
-            "id": 10001,
-            "walletName": "Mirhan's Wallet"
-        },
-        {
-            "apiKey": "6dQDARiB6SypLZnC1ma1munObhfmR9N4sl7auLqDoV6A9z7mQv3dJyCdeiROL9Rv",
-            "apiSecret": "oVhndE9xw4uyp7MxvwWQweOtOaWQ3VGxV468pNrbdDeHFAnAmYZnX6AhBD2I2mhn",
-            "id": 10002,
-            "walletName": "Faik's Wallet"
-        }
-    ],
-    "bildirimGonderildi": 0,
-    "eskiUstte": 0,
-    "kesisti": 0,
-    "openOrders": [],
-    "positionOrders": [],
-    "orderHistory": [],
-    "positionHistory": [],
-    "pres": 4,
-    "ustte": 0
-}, "algo":{
-    "apiCredentials": [
-        {
-            "apiKey": "VzJYaYBn2w0aNkavvlCG1o2LwuOUQyBEjjnM0TPZAGBIwZge0hsejAnxV3pf2J2L",
-            "apiSecret": "XGoSn1gxfL6eoDA8WlEBinbNUmGXNneeBCCbHpXaE6BxWNIvHvWMXYziZTFjZjFa",
-            "id": 10001,
-            "walletName": "Mirhan's Wallet"
-        },
-        {
-            "apiKey": "6dQDARiB6SypLZnC1ma1munObhfmR9N4sl7auLqDoV6A9z7mQv3dJyCdeiROL9Rv",
-            "apiSecret": "oVhndE9xw4uyp7MxvwWQweOtOaWQ3VGxV468pNrbdDeHFAnAmYZnX6AhBD2I2mhn",
-            "id": 10002,
-            "walletName": "Faik's Wallet"
-        }
-    ],
-    "bildirimGonderildi": 0,
-    "eskiUstte": 0,
-    "kesisti": 0,
-    "openOrders": [],
-    "positionOrders": [],
-    "orderHistory": [],
-    "positionHistory": [],
-    "pres": 4,
-    "ustte": 0
-}, "mtl":{
-    "apiCredentials": [
-        {
-            "apiKey": "VzJYaYBn2w0aNkavvlCG1o2LwuOUQyBEjjnM0TPZAGBIwZge0hsejAnxV3pf2J2L",
-            "apiSecret": "XGoSn1gxfL6eoDA8WlEBinbNUmGXNneeBCCbHpXaE6BxWNIvHvWMXYziZTFjZjFa",
-            "id": 10001,
-            "walletName": "Mirhan's Wallet"
-        },
-        {
-            "apiKey": "6dQDARiB6SypLZnC1ma1munObhfmR9N4sl7auLqDoV6A9z7mQv3dJyCdeiROL9Rv",
-            "apiSecret": "oVhndE9xw4uyp7MxvwWQweOtOaWQ3VGxV468pNrbdDeHFAnAmYZnX6AhBD2I2mhn",
-            "id": 10002,
-            "walletName": "Faik's Wallet"
-        }
-    ],
-    "bildirimGonderildi": 0,
-    "eskiUstte": 0,
-    "kesisti": 0,
-    "openOrders": [],
-    "positionOrders": [],
-    "orderHistory": [],
-    "positionHistory": [],
-    "pres": 4,
-    "ustte": 0
-}, "trx":{
-    "apiCredentials": [
-        {
-            "apiKey": "VzJYaYBn2w0aNkavvlCG1o2LwuOUQyBEjjnM0TPZAGBIwZge0hsejAnxV3pf2J2L",
-            "apiSecret": "XGoSn1gxfL6eoDA8WlEBinbNUmGXNneeBCCbHpXaE6BxWNIvHvWMXYziZTFjZjFa",
-            "id": 10001,
-            "walletName": "Mirhan's Wallet"
-        },
-        {
-            "apiKey": "6dQDARiB6SypLZnC1ma1munObhfmR9N4sl7auLqDoV6A9z7mQv3dJyCdeiROL9Rv",
-            "apiSecret": "oVhndE9xw4uyp7MxvwWQweOtOaWQ3VGxV468pNrbdDeHFAnAmYZnX6AhBD2I2mhn",
-            "id": 10002,
-            "walletName": "Faik's Wallet"
-        }
-    ],
-    "bildirimGonderildi": 0,
-    "eskiUstte": 0,
-    "kesisti": 0,
-    "openOrders": [],
-    "positionOrders": [],
-    "orderHistory": [],
-    "positionHistory": [],
-    "pres": 4,
-    "ustte": 0
-}, "reef":{
-    "apiCredentials": [
-        {
-            "apiKey": "VzJYaYBn2w0aNkavvlCG1o2LwuOUQyBEjjnM0TPZAGBIwZge0hsejAnxV3pf2J2L",
-            "apiSecret": "XGoSn1gxfL6eoDA8WlEBinbNUmGXNneeBCCbHpXaE6BxWNIvHvWMXYziZTFjZjFa",
-            "id": 10001,
-            "walletName": "Mirhan's Wallet"
-        },
-        {
-            "apiKey": "6dQDARiB6SypLZnC1ma1munObhfmR9N4sl7auLqDoV6A9z7mQv3dJyCdeiROL9Rv",
-            "apiSecret": "oVhndE9xw4uyp7MxvwWQweOtOaWQ3VGxV468pNrbdDeHFAnAmYZnX6AhBD2I2mhn",
-            "id": 10002,
-            "walletName": "Faik's Wallet"
-        }
-    ],
-    "bildirimGonderildi": 0,
-    "eskiUstte": 0,
-    "kesisti": 0,
-    "openOrders": [],
-    "positionOrders": [],
-    "orderHistory": [],
-    "positionHistory": [],
-    "pres": 4,
-    "ustte": 0
-}, "one":{
-    "apiCredentials": [
-        {
-            "apiKey": "VzJYaYBn2w0aNkavvlCG1o2LwuOUQyBEjjnM0TPZAGBIwZge0hsejAnxV3pf2J2L",
-            "apiSecret": "XGoSn1gxfL6eoDA8WlEBinbNUmGXNneeBCCbHpXaE6BxWNIvHvWMXYziZTFjZjFa",
-            "id": 10001,
-            "walletName": "Mirhan's Wallet"
-        },
-        {
-            "apiKey": "6dQDARiB6SypLZnC1ma1munObhfmR9N4sl7auLqDoV6A9z7mQv3dJyCdeiROL9Rv",
-            "apiSecret": "oVhndE9xw4uyp7MxvwWQweOtOaWQ3VGxV468pNrbdDeHFAnAmYZnX6AhBD2I2mhn",
-            "id": 10002,
-            "walletName": "Faik's Wallet"
-        }
-    ],
-    "bildirimGonderildi": 0,
-    "eskiUstte": 0,
-    "kesisti": 0,
-    "openOrders": [],
-    "positionOrders": [],
-    "orderHistory": [],
-    "positionHistory": [],
-    "pres": 4,
-    "ustte": 0
-}, "xrp":{
-    "apiCredentials": [
-        {
-            "apiKey": "VzJYaYBn2w0aNkavvlCG1o2LwuOUQyBEjjnM0TPZAGBIwZge0hsejAnxV3pf2J2L",
-            "apiSecret": "XGoSn1gxfL6eoDA8WlEBinbNUmGXNneeBCCbHpXaE6BxWNIvHvWMXYziZTFjZjFa",
-            "id": 10001,
-            "walletName": "Mirhan's Wallet"
-        },
-        {
-            "apiKey": "6dQDARiB6SypLZnC1ma1munObhfmR9N4sl7auLqDoV6A9z7mQv3dJyCdeiROL9Rv",
-            "apiSecret": "oVhndE9xw4uyp7MxvwWQweOtOaWQ3VGxV468pNrbdDeHFAnAmYZnX6AhBD2I2mhn",
-            "id": 10002,
-            "walletName": "Faik's Wallet"
-        }
-    ],
-    "bildirimGonderildi": 0,
-    "eskiUstte": 0,
-    "kesisti": 0,
-    "openOrders": [],
-    "positionOrders": [],
-    "orderHistory": [],
-    "positionHistory": [],
-    "pres": 4,
-    "ustte": 0
-}
+{
+    "ada": {
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
+        "kesisti": 0,
+        "pres": 4,
+        "ustte": 0
+    },
+    "algo": {
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
+        "kesisti": 0,
+        "pres": 4,
+        "ustte": 0
+    },
+    "btt": {
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
+        "kesisti": 0,
+        "pres": 4,
+        "ustte": 0
+    },
+    "dent": {
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
+        "kesisti": 0,
+        "pres": 4,
+        "ustte": 0
+    },
+    "doge": {
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
+        "kesisti": 0,
+        "pres": 4,
+        "ustte": 0
+    },
+    "hot": {
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
+        "kesisti": 0,
+        "pres": 4,
+        "ustte": 0
+    },
+    "mtl": {
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
+        "kesisti": 0,
+        "pres": 4,
+        "ustte": 0
+    },
+    "one": {
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
+        "kesisti": 0,
+        "pres": 4,
+        "ustte": 0
+    },
+    "reef": {
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
+        "kesisti": 0,
+        "pres": 4,
+        "ustte": 0
+    },
+    "storj": {
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
+        "kesisti": 0,
+        "pres": 4,
+        "ustte": 0
+    },
+    "sxp": {
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
+        "kesisti": 0,
+        "pres": 4,
+        "ustte": 0
+    },
+    "trx": {
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
+        "kesisti": 0,
+        "pres": 4,
+        "ustte": 0
+    },
+    "vet": {
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
+        "kesisti": 0,
+        "pres": 4,
+        "ustte": 0
+    },
+    "xlm": {
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
+        "kesisti": 0,
+        "pres": 4,
+        "ustte": 0
+    },
+    "xrp": {
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
+        "kesisti": 0,
+        "pres": 4,
+        "ustte": 0
+    }
 }

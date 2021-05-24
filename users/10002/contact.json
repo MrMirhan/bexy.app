@@ -1,0 +1,11 @@
+{
+    "name": "Burak",
+    "surname": "Özyer",
+    "phone": "905422421752",
+    "location": {
+        "country": "Turkey",
+        "state": "Aydın",
+        "city": "Efeler",
+        "postCode": "09100"
+    }
+}

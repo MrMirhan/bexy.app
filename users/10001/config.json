@@ -4,5 +4,5 @@
     "membershipLevel": 4,
     "coinLimit": 0,
     "maxActiveOrders": 3,
-    "automaticClose": true
+    "automaticClose": "true"
 }
