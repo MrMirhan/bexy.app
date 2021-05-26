@@ -1,59 +1,59 @@
 {
     "ada": {
-        "bildirimGonderildi": 0,
-        "eskiUstte": 1,
+        "bildirimGonderildi": 2,
+        "eskiUstte": 2,
         "kesisti": 0,
         "pres": 4,
-        "ustte": 2
+        "ustte": 1
     },
     "algo": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 1,
+        "eskiUstte": 2,
         "kesisti": 0,
         "pres": 4,
-        "ustte": 2
+        "ustte": 1
     },
     "btt": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 1,
+        "eskiUstte": 2,
         "kesisti": 0,
         "pres": 4,
-        "ustte": 2
+        "ustte": 1
     },
     "dent": {
-        "bildirimGonderildi": 1,
-        "eskiUstte": 1,
+        "bildirimGonderildi": 0,
+        "eskiUstte": 2,
         "kesisti": 0,
         "pres": 4,
-        "ustte": 2
+        "ustte": 1
     },
     "doge": {
-        "bildirimGonderildi": 0,
-        "eskiUstte": 1,
+        "bildirimGonderildi": 1,
+        "eskiUstte": 2,
         "kesisti": 0,
         "pres": 4,
-        "ustte": 2
+        "ustte": 1
     },
     "hot": {
-        "bildirimGonderildi": 0,
-        "eskiUstte": 1,
+        "bildirimGonderildi": 1,
+        "eskiUstte": 2,
         "kesisti": 0,
         "pres": 6,
-        "ustte": 2
+        "ustte": 1
     },
     "mtl": {
-        "bildirimGonderildi": 1,
-        "eskiUstte": 1,
+        "bildirimGonderildi": 0,
+        "eskiUstte": 2,
         "kesisti": 0,
         "pres": 4,
-        "ustte": 2
+        "ustte": 1
     },
     "one": {
-        "bildirimGonderildi": 1,
-        "eskiUstte": 1,
+        "bildirimGonderildi": 0,
+        "eskiUstte": 2,
         "kesisti": 0,
         "pres": 4,
-        "ustte": 2
+        "ustte": 1
     },
     "reef": {
         "bildirimGonderildi": 0,
@@ -70,18 +70,18 @@
         "ustte": 2
     },
     "sxp": {
-        "bildirimGonderildi": 0,
-        "eskiUstte": 1,
+        "bildirimGonderildi": 1,
+        "eskiUstte": 2,
         "kesisti": 0,
         "pres": 4,
-        "ustte": 2
+        "ustte": 1
     },
     "trx": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 1,
+        "eskiUstte": 2,
         "kesisti": 0,
         "pres": 4,
-        "ustte": 2
+        "ustte": 1
     },
     "vet": {
         "bildirimGonderildi": 0,
@@ -91,7 +91,7 @@
         "ustte": 2
     },
     "xlm": {
-        "bildirimGonderildi": 1,
+        "bildirimGonderildi": 0,
         "eskiUstte": 1,
         "kesisti": 0,
         "pres": 4,

@@ -8,6 +8,7 @@ from telethon.sync import TelegramClient, events
 import continuous_threading
 from continuous_threading import CommandProcess
 import traceback
+import config
 import telepot
 from telepot.loop import MessageLoop
 from telepot.delegate import per_chat_id, create_open, pave_event_space, per_inline_from_id
@@ -19,6 +20,9 @@ import orderHandler as oh
 import logging
 import datetime
 import sys, os
+from binance.client import Client
+from binance.enums import *
+from binance.exceptions import BinanceAPIException, BinanceOrderException
 
 TOKEN = "1776589751:AAH3HQRXe7tEJf5C-HnfBVeOBWta72Gbd_E"
 
@@ -38,18 +42,20 @@ def on_chat_message(msg):
             args = message.split(" ")
             command = args[0].replace("/", "").lower();
             del args[0]
+            #komutlar: /kapat, /start, /api (ekle / sil / bak), /coin (açık (pozisyon / order) - api (ekle / çıkar / bak) - çık {coin}), /ayar (limit (bütçe / işlem) - otomatik (kapat / aç))
             if command == "hi":
                 bot.sendMessage(chat_id, "xd")
                 print(args)
             elif command == "coin":
-                print(len(args))
                 if len(args) > 0:
                     if args[0] == "bak":
                         if len(args) > 1:
                             jsonFile = open('coins.json', "r+")
                             coin = json.load(jsonFile)
                             coin = coin[args[1]]
-                            oh.createThread("create", {"orderType": "al", "coinAlimEmriDeger": 0.10448, "pres": 6, "coin": "one", "type": "all"})
+                            if len(args) > 2:
+                                if len(args) > 3:
+                                    oh.createThread("create", {"orderType": str(args[2]).lower(), "coinAlimEmriDeger": float(args[3]), "pres": coin['pres'], "coin": str(args[1]).lower(), "type": "all"})
                         else:
                             bot.sendMessage(chat_id, 'Bir coin adı belirtin.')
                     else:
@@ -75,8 +81,10 @@ def on_chat_message(msg):
                 markup = ReplyKeyboardRemove()
                 bot.sendMessage(chat_id, 'Hide custom keyboard', reply_markup=markup)
             elif command == 'f':
-                markup = ForceReply()
-                bot.sendMessage(chat_id, 'Force reply', reply_markup=markup)
+                apiKey = config.API_KEY
+                apiSecret = config.API_SECRET
+                client = Client(apiKey, apiSecret)
+                print(client.futures_account(recvWindow=50000, timestamp=round(time.time() * 1000))['positions'])
             elif command == "kapat":
                 xd = []
                 for x in coins:
@@ -146,7 +154,7 @@ def on_open(ws):
     print(date)
     todayDate = str(date.split(" ")[0])
     nowTime = str(date.split(" ")[1]).split(":")
-    nowTime = str(nowTime[0]) + "." + nowTime[1] + "" + str(round(float(nowTime[2])))
+    nowTime = str(nowTime[0]) + "." + nowTime[1] + "." + str(round(float(nowTime[2])))
     try:
         os.makedirs(f"logs/alpha/{todayDate}")    
         print("Todays logging directory " , todayDate ,  " created.")

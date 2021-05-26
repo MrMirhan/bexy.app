@@ -1,10 +1,154 @@
 [
-    {
-        "coin": "DENT",
-        "orderId": "717758",
-        "entryPrice": 1.31,
-        "bougthQuantity": 50,
-        "spentMoney": 6.52,
-        "orderType": "SELL"
-    }
+  {
+    "coin": "DENT",
+    "orderId": "717758",
+    "entryPrice": 1.31,
+    "bougthQuantity": 50,
+    "spentMoney": 6.52,
+    "orderType": "SELL"
+  },
+  {
+    "coin": "HOT",
+    "orderId": 637134667,
+    "entryPrice": 0.104409,
+    "bougthQuantity": 1140,
+    "spentMoney": 11.913132539000001,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "HOT",
+    "orderId": 637235918,
+    "entryPrice": 0.10444,
+    "bougthQuantity": 1140,
+    "spentMoney": 11.905612390000002,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "ADA",
+    "orderId": 13581707910,
+    "entryPrice": 1.7251,
+    "bougthQuantity": 70,
+    "spentMoney": 11.905612390000002,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "DOGE",
+    "orderId": 5975575749,
+    "entryPrice": 0.34442,
+    "bougthQuantity": 350,
+    "spentMoney": 11.885175760000001,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "DOGE",
+    "orderId": 5975615434,
+    "entryPrice": 0.34367,
+    "bougthQuantity": 350,
+    "spentMoney": 11.885175760000001,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "DOGE",
+    "orderId": 5975848250,
+    "entryPrice": 0.34429,
+    "bougthQuantity": 350,
+    "spentMoney": 11.88876102,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "XLM",
+    "orderId": 4711345744,
+    "entryPrice": 0.43611,
+    "bougthQuantity": 270,
+    "spentMoney": 11.88876102,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "XLM",
+    "orderId": 4711366941,
+    "entryPrice": 0.436,
+    "bougthQuantity": 270,
+    "spentMoney": 11.88876102,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "ALGO",
+    "orderId": 2267462012,
+    "entryPrice": 1.0187,
+    "bougthQuantity": 120,
+    "spentMoney": 11.88876102,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "ALGO",
+    "orderId": 2267480979,
+    "entryPrice": 1.0086,
+    "bougthQuantity": 120,
+    "spentMoney": 11.88876102,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "ALGO",
+    "orderId": 2267498996,
+    "entryPrice": 1.013,
+    "bougthQuantity": 120,
+    "spentMoney": 11.878532700000001,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "ALGO",
+    "orderId": 2267505338,
+    "entryPrice": 1.0118,
+    "bougthQuantity": 120,
+    "spentMoney": 11.878532700000001,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "HOT",
+    "orderId": 639645676,
+    "entryPrice": 0.10478,
+    "bougthQuantity": 1130,
+    "spentMoney": 11.888358185000001,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "HOT",
+    "orderId": 639665492,
+    "entryPrice": 0.010479,
+    "bougthQuantity": 11340,
+    "spentMoney": 11.879042972,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "HOT",
+    "orderId": 639708039,
+    "entryPrice": 0.0106,
+    "bougthQuantity": 11200,
+    "spentMoney": 11.87434447,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "HOT",
+    "orderId": 639718118,
+    "entryPrice": 0.0106,
+    "bougthQuantity": 11200,
+    "spentMoney": 11.87434447,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "HOT",
+    "orderId": 639718539,
+    "entryPrice": 0.01065,
+    "bougthQuantity": 10590,
+    "spentMoney": 11.28074447,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "HOT",
+    "orderId": 639719004,
+    "entryPrice": 0.0107,
+    "bougthQuantity": 10020,
+    "spentMoney": 10.71682697,
+    "orderType": "BUY"
+  }
 ]

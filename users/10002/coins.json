@@ -12,7 +12,9 @@
         "apiKeys":[]
     }, "btt":{
         "active": 0,
-        "apiKeys":[]
+        "apiKeys":[
+            "900003"
+        ]
     }, "vet":{
         "active": 0,
         "apiKeys":[]
@@ -21,13 +23,17 @@
         "apiKeys":[]
     }, "hot":{
         "active": 0,
-        "apiKeys":[]
+        "apiKeys":[
+            "900003"
+        ]
     }, "sxp":{
         "active": 0,
         "apiKeys":[]
     }, "xlm":{
         "active": 0,
-        "apiKeys":[]
+        "apiKeys":[
+            "900003"
+        ]
     }, "algo":{
         "active": 0,
         "apiKeys":[]
@@ -36,7 +42,9 @@
         "apiKeys":[]
     }, "trx":{
         "active": 0,
-        "apiKeys":[]
+        "apiKeys":[
+            "900003"
+        ]
     }, "reef":{
         "active": 0,
         "apiKeys":[]
@@ -45,6 +53,8 @@
         "apiKeys":[]
     }, "xrp":{
         "active": 0,
-        "apiKeys":[]
+        "apiKeys":[
+            "900003"
+        ]
     }
 }
