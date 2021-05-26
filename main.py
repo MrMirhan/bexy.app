@@ -51,6 +51,7 @@ def sendTelegram(cid, message):
     response = requests.post(send_text)
     return response.json()
 
+
 def format_number(num):
     try:
         dec = decimal.Decimal(num)

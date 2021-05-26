@@ -49,7 +49,7 @@ def on_chat_message(msg):
                             jsonFile = open('coins.json', "r+")
                             coin = json.load(jsonFile)
                             coin = coin[args[1]]
-                            bot.sendMessagechat_id, (str(coin))
+                            oh.createThread("create", {"orderType": "al", "coinAlimEmriDeger": 0.10448, "pres": 6, "coin": "one", "type": "all"})
                         else:
                             bot.sendMessage(chat_id, 'Bir coin adı belirtin.')
                     else:

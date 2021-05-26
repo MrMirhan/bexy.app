@@ -22,11 +22,11 @@
         "roe": "%10"
     },
     {
-        "coin": "XLM",
+        "coin": "XRP",
         "orderId": "712259",
         "entryPrice": 1.30,
         "markPrice": 1.32,
-        "bougthQuantity": 35,
+        "bougthQuantity": 10,
         "spentMoney": 6.52,
         "orderType": "BUY",
         "pnl": 0.40,

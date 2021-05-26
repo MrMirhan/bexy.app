@@ -21,7 +21,7 @@
         "ustte": 2
     },
     "dent": {
-        "bildirimGonderildi": 0,
+        "bildirimGonderildi": 1,
         "eskiUstte": 1,
         "kesisti": 0,
         "pres": 4,
@@ -38,18 +38,18 @@
         "bildirimGonderildi": 0,
         "eskiUstte": 1,
         "kesisti": 0,
-        "pres": 4,
+        "pres": 6,
         "ustte": 2
     },
     "mtl": {
-        "bildirimGonderildi": 0,
+        "bildirimGonderildi": 1,
         "eskiUstte": 1,
         "kesisti": 0,
         "pres": 4,
         "ustte": 2
     },
     "one": {
-        "bildirimGonderildi": 2,
+        "bildirimGonderildi": 1,
         "eskiUstte": 1,
         "kesisti": 0,
         "pres": 4,
@@ -91,11 +91,11 @@
         "ustte": 2
     },
     "xlm": {
-        "bildirimGonderildi": 0,
-        "eskiUstte": 2,
+        "bildirimGonderildi": 1,
+        "eskiUstte": 1,
         "kesisti": 0,
         "pres": 4,
-        "ustte": 1
+        "ustte": 2
     },
     "xrp": {
         "bildirimGonderildi": 0,

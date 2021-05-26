@@ -45,10 +45,14 @@
         "active": 0,
         "apiKeys":[]
     }, "one":{
-        "active": 0,
-        "apiKeys":[]
+        "active": 1,
+        "apiKeys":[
+            "900001"
+        ]
     }, "xrp":{
-        "active": 0,
-        "apiKeys":[]
+        "active": 1,
+        "apiKeys":[
+            "900001"
+        ]
     }
 }
