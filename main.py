@@ -2,7 +2,6 @@ from socket import SIO_LOOPBACK_FAST_PATH
 from requests.models import encode_multipart_formdata
 import websocket
 import json
-import pprint
 import talib
 import numpy
 import config
@@ -14,13 +13,8 @@ import time
 import json
 from tradingview_ta import TA_Handler, Interval, Exchange
 from decimal import Decimal
-import math
-import telebot
 import telepot
-from telethon.sync import TelegramClient, events
-import continuous_threading
 from continuous_threading import CommandProcess
-import traceback
 from telepot.loop import MessageLoop
 from telepot.delegate import per_chat_id, create_open, pave_event_space, per_inline_from_id
 from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, ForceReply
@@ -34,12 +28,8 @@ from selenium.webdriver.support import expected_conditions as EC1, wait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 import decimal
-from newOrderHandler import createThread, stopJobs
-import datetime
-import random   
-import sys, re, optparse, os
+import handlerOrder as oh
 import json
-from threading import Thread
 from telegramHandler import on_chat_message, on_callback_query, on_chosen_inline_result, sendTelegram
 from loggerM import sendLog
 
@@ -57,11 +47,12 @@ def on_open(ws):
                   'callback_query': on_callback_query,
                   'chosen_inline_result': on_chosen_inline_result}).run_as_thread()
     print('Listening ...')
+    oh.startCheck()
 
 def on_close(ws):
     print('Socket connection ended.')
     sendLog('Process stopped.')
-    stopJobs()
+    oh.stopJobs()
 
 def generateStochasticRSI(close_array, timeperiod=14):
     rsi = talib.RSI(close_array, timeperiod)
@@ -92,7 +83,7 @@ def format_number(num):
     return val
 
 def orderAc(coin, coinAlimEmriDeger, pres, type):
-    createThread("create", {"orderType": str(type), "coinAlimEmriDeger": float(coinAlimEmriDeger), "pres": int(pres), "coin": str(coin).lower(), "type": "all"})
+    oh.createThread("create", {"orderType": str(type), "coinAlimEmriDeger": float(coinAlimEmriDeger), "pres": int(pres), "coin": str(coin).lower(), "type": "all"})
 
 def check(ws, message):
     coins = ["ada", "dent", "storj", "btt", "vet", "doge", "hot", "sxp", "xlm", "algo", "mtl", "trx", "reef", "one", "xrp"]

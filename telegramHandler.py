@@ -12,6 +12,7 @@ from telepot.namedtuple import InlineQueryResultArticle, InlineQueryResultPhoto,
 import json
 import logging
 import time
+import handlerOrder as oh
 import datetime, requests
 
 TOKEN = "1776589751:AAH3HQRXe7tEJf5C-HnfBVeOBWta72Gbd_E"
@@ -48,7 +49,7 @@ def on_chat_message(msg):
                             if len(args) > 2:
                                 if len(args) > 3:
                                     print('x')
-                                    #oh.createThread("create", {"orderType": str(args[2]).lower(), "coinAlimEmriDeger": float(args[3]), "pres": coin['pres'], "coin": str(args[1]).lower(), "type": "all"})
+                                    #oh.oh.createThread("create", {"orderType": str(args[2]).lower(), "coinAlimEmriDeger": float(args[3]), "pres": coin['pres'], "coin": str(args[1]).lower(), "type": "all"})
                         else:
                             bot.sendMessage(chat_id, 'Bir coin adı belirtin.')
                     else:
@@ -122,7 +123,7 @@ def on_callback_query(msg):
         bot.answerCallbackQuery(query_id, text=f'{coin} kapatılıyor.')
         bot.sendMessage(from_id, f'{coin} kapatılıyor.')
         bot.deleteMessage(msg_idf)
-        #oh.createThread("cancel", {"type": "all", "coin": coin})
+        oh.createThread("cancel", {"type": "all", "coin": coin})
 
 
 def on_chosen_inline_result(msg):

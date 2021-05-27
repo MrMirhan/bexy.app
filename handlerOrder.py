@@ -152,7 +152,6 @@ def checkPnl(threadId, args):
     coinAlimEmriDeger = float(args['coinAlimEmriDeger'])
     quantity = int(args['quantity'])
     userId = str(args['userId'])
-    beforeBudget = float(args['beforeBudget'])
     spent = float(args['spent'])
     apiId = int(args['apiId'])
     islemBaslamaTime = int(round(int(threadId)))
@@ -183,19 +182,26 @@ def checkPnl(threadId, args):
     positions = client.futures_account(recvWindow=50000, timestamp=round(time.time() * 1000))['positions']
     position = [y for y in positions if y['symbol'] == symbol]
     pnl = float(position[0]['unrealizedProfit'])
+    karzarar = "KÂR"
+    if pnl < 0: karzarar = "ZARAR"
+    orderId = str(order['orderId'])
     positionAmount = float(position[0]['positionAmt'])
+    openPositions = [z for z in positions if z['orderId'] == orderId]
     if positionAmount == 0:
         scheduler.remove_job(f"{threadId}", jobstore=None)
-        openPositions = [z for z in positions if z['coin'] == coin]
-        if len(openPositions) >= 1:
-            mesaj = "------İŞLEM KAPATILDI (MANUEL)------\nCoin Sembol: {}\nİşlem Id: {}".format(symbol, orderId)
-            sendTelegram(str(userConfig['telegramChatId']), mesaj)
-            with open("users/{}/positionOrders.json".format(userId), encoding='utf-8') as json_data:
-                nations = json.load(json_data)
-            nations_new = [x for x in nations if x['coin'] != coin]
-            with open("users/{}/positionOrders.json".format(userId), mode='w', encoding='utf-8') as json_data:
-                json.dump(nations_new, json_data, indent=2)
-
+        print(len(openPositions))
+        if len(openPositions) > -1:
+            if openPositions['apiId'] == apiId:
+                mesaj =  "------İŞLEMDEN  MANUEL ÇIKILDI ({})------\nCoin Sembol: {}\nİşlem Tipi: {}\nİşlem Id: {}\nMiktar: {}\nHarcama: {}\nPNL: {}".format(karzarar, orderType, orderType, orderId, quantity, spent, pnl)
+                sendTelegram(str(userConfig['telegramChatId']), mesaj)
+                sendLog(mesaj)
+                with open("users/{}/positionOrders.json".format(userId), encoding='utf-8') as json_data:
+                    nations = json.load(json_data)
+                nations_new = [x for x in nations if x['coin'] != coin]
+                with open("users/{}/positionOrders.json".format(userId), mode='w', encoding='utf-8') as json_data:
+                    json.dump(nations_new, json_data, indent=2)
+    else:
+        sendLog(len(openPositions))
 def orderCheck(threadId, args):
     orderId = str(args['orderId'])
     symbol = str(args['symbol'])
@@ -235,10 +241,10 @@ def orderCheck(threadId, args):
     order = getOrder(orderId, symbol, apiKey, apiSecret)
     status = order['status']
     if status == "NEW":
-        if (anlikTime - islemBaslamaTime) > (60 * 1000) * 3:
+        if (anlikTime - islemBaslamaTime) > (330 * 1000):
             scheduler.remove_job(f"{threadId}", jobstore=None)
             cancel = client.futures_cancel_order(symbol=symbol, orderId=orderId, recvWindow=50000, timestamp=round(time.time() * 1000))
-            mesaj = "------İŞLEM EMRİ KALDIRILDI------\nCoin Sembol: {}\nİşlem Id: {}\nİşlem 3 Dakika İçerisinde Pozisyona Girmediği İçin Kaldırıldı.".format(symbol, orderId)
+            mesaj = "------İŞLEM EMRİ KALDIRILDI------\nCoin Sembol: {}\nİşlem Id: {}\nİşlem 5 Dakika İçerisinde Pozisyona Girmediği İçin Kaldırıldı.".format(symbol, orderId)
             sendLog(str(mesaj) + " " + str(userId))
             sendTelegram(str(userConfig['telegramChatId']), mesaj)
             with open("users/{}/openOrders.json".format(userId), encoding='utf-8') as json_data:
@@ -261,8 +267,7 @@ def orderCheck(threadId, args):
         mesaj = "------İŞLEM BAŞLADI------\nCoin Sembol: {}\nİşlem Tipi: {}\nİşlem Id: {}\nMiktar: {}\nHarcama: {}\nCoin Giriş Değer: {}".format(symbol, orderType, order['orderId'], quantity, spent, coinAlimEmriDeger)
         sendLog(str(mesaj) + " " + str(userId))
         sendTelegram(str(userConfig['telegramChatId']), mesaj)
-    
-        appendCoin = {"coin": coin, "orderId": str(order['orderId']), "entryPrice": float(coinAlimEmriDeger), "markPrice": 0.00, "bougthQuantity": float(quantity), "spentMoney": float(spent), "orderType": str(side), "pnl": 0.00, "roe": "0"}
+        appendCoin = {"coin": coin, "orderId": str(order['orderId']), "entryPrice": float(coinAlimEmriDeger), "markPrice": 0.00, "bougthQuantity": float(quantity), "spentMoney": float(spent), "orderType": str(side), "pnl": 0.00, "roe": "0", "apiId": int(apiId)}
         createThread("pnl", args)
         with open("users/{}/openOrders.json".format(userId), encoding='utf-8') as json_data:
             nations = json.load(json_data)
@@ -282,6 +287,25 @@ def orderCheck(threadId, args):
             feeds.append(appendCoin)
             json.dump(feeds, feedsjson, indent=2)
         sendLog("Order successfully added to positions history json.")
+
+def startCheck():
+    for dirs in os.walk("users"):
+        usersArray = dirs[1]
+        for user in usersArray:
+            openOrdersJsonFile = open("1users/{}/openOrders.json".format(user), "r+")
+            positionOrderJsonFile = open("users/{}/positionOrders.json".format(user), "r+")
+            configJsonFile = open("users/{}/config.json".format(user), "r+")
+            apiJsonFile = open("users/{}/binanceApiKeys.json".format(user), "r+")
+                                
+            openOrders = json.load(openOrdersJsonFile)
+            positionOrders = json.load(positionOrderJsonFile)
+            userConfig = json.load(configJsonFile)
+            userApis = json.load(apiJsonFile)
+            
+            for order in openOrders:
+                createThread("check", {"orderId": order['orderId'], "symbol":  str(order['coin']).upper() + "USDT", "side": order['orderType'], "coin": str(order['coin']).ower(), "orderType": order['orderType'], "coinAlimEmriDeger": order['entryPrice'], "quantity": order['bougthQuantity'], "beforeBudget": order['orderType'], "spent": order['spentMoney'], "userId": userConfig['userId'], "apiId": order['apiId']})
+            for position in positionOrders:
+                createThread("pnl", {"orderId": position['orderId'], "symbol":  str(position['coin']).upper() + "USDT", "side": position['orderType'], "coin": str(position['coin']).ower(), "orderType": position['orderType'], "coinAlimEmriDeger": position['entryPrice'], "quantity": position['bougthQuantity'], "beforeBudget": position['orderType'], "spent": order['spentMoney'], "userId": userConfig['userId'], "apiId": position['apiId']})
 
 def createOrder(args):
     coin = str(args['coin']).lower()
@@ -308,18 +332,6 @@ def createOrder(args):
                 userId = str(userConfig['userId'])
                 TRADE_SYMBOL = str(coin.upper()) + "USDT"
                 coinData = userCoins[coin]
-                if len(openOrders) == int(userConfig['maxActiveOrders']):
-                    mesaj = "------MAKS İŞLEM LİMİTİ------\nKoyulan Maks İşlem Limiti: {}\nBelirlemiş olduğunuz aynı anda maksimum işlem limiti aşılacak olduğu için yeni işleme girilemedi.".format(int(userConfig['maxActiveOrders']))
-                    sendLog(str(mesaj) + " " + str(userId))
-                    sendTelegram(str(userConfig['telegramChatId']), mesaj)
-                    return
-                sameOrder = [x for x in openOrders if x['coin'] == str(coin).upper()]
-                samePosition = [x for x in positionOrders if x['coin'] == str(coin).upper()]
-                if len(samePosition) > 1 or len(sameOrder) > 0:
-                    mesaj = "------AKTİF İŞLEM VAR------\nCoin Sembol: {}\nİşlem açılmak istenen coinde aktif bir işlem olduğu için yeni işlem açılmadı.".format(TRADE_SYMBOL)
-                    sendLog(str(mesaj) + " " + str(userId))
-                    sendTelegram(str(userConfig['telegramChatId']), mesaj)
-                    return
                 if coinData['active'] == 1:
                     for a in coinData['apiKeys']:
                         api = [x for x in userApis if x['apiKeyId'] == int(a)]
@@ -327,6 +339,7 @@ def createOrder(args):
                         apiKey = api['apiKey']
                         apiSecret = api['apiSecret']
                         apiName = api['apiName']
+                        apiId = api['apiKeyId']
                         client = Client(apiKey, apiSecret)
                         side = args['side']
                         pres = int(args['pres'])
@@ -336,20 +349,48 @@ def createOrder(args):
                         minusBudget = float(0)
                         for x in open_orders:
                             minusBudget = float(minusBudget) + float((float(x['stopPrice']) * float(x['origQty'])) / float(10))
+                        for x in positionOrders:
+                            minusBudget = float(minusBudget) + float((float(x['stopPrice']) * float(x['origQty'])) / float(10))
                         availableBalance = budget - minusBudget
                         orderBudgetLimit = int(userConfig['orderBudgetLimit'])
                         alimButce = float(float(availableBalance) * float(float(orderBudgetLimit) / float(100)))
                         price = float(args['coinAlimEmriDeger'])
                         qnt = int(round(float(alimButce / price)) * 10)
+                        if str(side) == "BUY":
+                            if userConfig['long'] == "false":
+                                mesaj = "------LONG İŞLEM KAPALI------\nLong işlem ayarınız kapalı olduğundan bu işleme girilmedi."
+                                sendLog(str(mesaj) + " " + str(userId))
+                                sendTelegram(str(userConfig['telegramChatId']), mesaj)
+                                return
+                        elif str(side) == "SELL":
+                            if userConfig['short'] == "false":
+                                mesaj = "------SHORT İŞLEM KAPALI------\nShort işlem ayarınız kapalı olduğundan bu işleme girilmedi."
+                                sendLog(str(mesaj) + " " + str(userId))
+                                sendTelegram(str(userConfig['telegramChatId']), mesaj)
+                                return
                         if availableBalance < alimButce:
                             mesaj = "------YETERSİZ BAKİYE------\nİşlem İçin Gereken Tutar: {}\nHesabınızdaki Kullanılabilir Bakiye: {}\nİşleme bakiyeniz yetersiz olduğu için girilemedi.".format(availableBalance, alimButce)
+                            sendLog(str(mesaj) + " " + str(userId))
+                            sendTelegram(str(userConfig['telegramChatId']), mesaj)
+                            return
+                        sameOrder = [x for x in openOrders if x['coin'] == str(coin).upper()]
+                        samePosition = [x for x in positionOrders if x['coin'] == str(coin).upper()]
+                        if len(samePosition) > 1 or len(sameOrder) > 0:
+                            if (samePosition['apiId'] == apiId) or (sameOrder['apiId'] == apiId):
+                                mesaj = "------AKTİF İŞLEM VAR------\nCoin Sembol: {}\nApi ID: {}\nİşlem açılmak istenen coinde aktif bir işlem olduğu için yeni işlem açılmadı.".format(TRADE_SYMBOL, apiId)
+                                sendLog(str(mesaj) + " " + str(userId))
+                                sendTelegram(str(userConfig['telegramChatId']), mesaj)
+                            return
+                        apiOpenOrders = [x for x in openOrders if x['apiId'] == int(apiId)]
+                        if len(apiOpenOrders) == int(userConfig['maxActiveOrders']):
+                            mesaj = "------MAKS İŞLEM LİMİTİ------\nKoyulan Maks İşlem Limiti: {}\nApi Adı: {}\nApi ID: {}\nBelirlemiş olduğunuz aynı anda maksimum işlem limiti aşılacak olduğu için yeni işleme girilemedi.".format(int(userConfig['maxActiveOrders']), apiName, apiId)
                             sendLog(str(mesaj) + " " + str(userId))
                             sendTelegram(str(userConfig['telegramChatId']), mesaj)
                             return
                         try:
                             sendLog("Order Request Sending to Binance" + " " + str(userId))
                             order = client.futures_create_order(symbol=TRADE_SYMBOL, side=side, type="STOP", timeInForce = "GTC", quantity = qnt, price=price, stopPrice=price, recvWindow=50000, timestamp=round(time.time() * 1000))
-                            appendOrder = {"coin": coin.upper(), "orderId": order['orderId'], "entryPrice": price, "bougthQuantity": qnt, "spentMoney": alimButce, "orderType": side}
+                            appendOrder = {"coin": coin.upper(), "orderId": order['orderId'], "entryPrice": price, "bougthQuantity": qnt, "spentMoney": alimButce, "orderType": side, "apiId": int(apiId)}
                             with open("users/{}/openOrders.json".format(userId), mode='r', encoding='utf-8') as feedsjson:
                                 feeds = json.load(feedsjson)
                             with open("users/{}/openOrders.json".format(userId), mode='w', encoding='utf-8') as feedsjson:

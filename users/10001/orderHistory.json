@@ -230,5 +230,470 @@
     "bougthQuantity": 11320,
     "spentMoney": 11.877629244000001,
     "orderType": "BUY"
+  },
+  {
+    "coin": "DENT",
+    "orderId": 590812106,
+    "entryPrice": 0.0043,
+    "bougthQuantity": 27630,
+    "spentMoney": 11.8819673915,
+    "orderType": "SELL"
+  },
+  {
+    "coin": "BTT",
+    "orderId": 625162404,
+    "entryPrice": 0.0041,
+    "bougthQuantity": 28980,
+    "spentMoney": 11.8819673915,
+    "orderType": "SELL"
+  },
+  {
+    "coin": "SXP",
+    "orderId": 6409281146,
+    "entryPrice": 2.3301,
+    "bougthQuantity": 50,
+    "spentMoney": 11.8819673915,
+    "orderType": "SELL"
+  },
+  {
+    "coin": "DOGE",
+    "orderId": 5994762555,
+    "entryPrice": 0.3425,
+    "bougthQuantity": 350,
+    "spentMoney": 11.8819673915,
+    "orderType": "SELL"
+  },
+  {
+    "coin": "ONE",
+    "orderId": 634236408,
+    "entryPrice": 0.1067,
+    "bougthQuantity": 1110,
+    "spentMoney": 11.8819673915,
+    "orderType": "SELL"
+  },
+  {
+    "coin": "HOT",
+    "orderId": 643022479,
+    "entryPrice": 0.010077,
+    "bougthQuantity": 11790,
+    "spentMoney": 11.8819673915,
+    "orderType": "SELL"
+  },
+  {
+    "coin": "MTL",
+    "orderId": 265653833,
+    "entryPrice": 2.5335,
+    "bougthQuantity": 50,
+    "spentMoney": 11.899675963500002,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "DOGE",
+    "orderId": 5995614994,
+    "entryPrice": 0.3443,
+    "bougthQuantity": 350,
+    "spentMoney": 11.899675963500002,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "STORJ",
+    "orderId": 2135810893,
+    "entryPrice": 1.2178,
+    "bougthQuantity": 100,
+    "spentMoney": 11.899675963500002,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "HOT",
+    "orderId": 643273848,
+    "entryPrice": 0.010146,
+    "bougthQuantity": 11770,
+    "spentMoney": 11.943503563500002,
+    "orderType": "SELL"
+  },
+  {
+    "coin": "DOGE",
+    "orderId": 5996701640,
+    "entryPrice": 0.3437,
+    "bougthQuantity": 350,
+    "spentMoney": 11.943503563500002,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "REEF",
+    "orderId": 678476418,
+    "entryPrice": 0.0312,
+    "bougthQuantity": 3830,
+    "spentMoney": 11.9423006135,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "HOT",
+    "orderId": 643727690,
+    "entryPrice": 0.010007,
+    "bougthQuantity": 21510,
+    "spentMoney": 21.5202898224,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "SXP",
+    "orderId": 6410915043,
+    "entryPrice": 2.3666,
+    "bougthQuantity": 90,
+    "spentMoney": 21.5202898224,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "VET",
+    "orderId": 11740445717,
+    "entryPrice": 0.132,
+    "bougthQuantity": 1630,
+    "spentMoney": 21.508706910599997,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "XLM",
+    "orderId": 4722564650,
+    "entryPrice": 0.4392,
+    "bougthQuantity": 490,
+    "spentMoney": 21.508706910599997,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "REEF",
+    "orderId": 679025052,
+    "entryPrice": 0.0312,
+    "bougthQuantity": 6890,
+    "spentMoney": 21.508706910599997,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "ONE",
+    "orderId": 635237429,
+    "entryPrice": 0.1146,
+    "bougthQuantity": 1890,
+    "spentMoney": 21.622564398599998,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "ADA",
+    "orderId": 13623226484,
+    "entryPrice": 1.7242,
+    "bougthQuantity": 130,
+    "spentMoney": 21.622564398599998,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "STORJ",
+    "orderId": 2136512752,
+    "entryPrice": 1.2221,
+    "bougthQuantity": 180,
+    "spentMoney": 21.622564398599998,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "HOT",
+    "orderId": 643986357,
+    "entryPrice": 0.010002,
+    "bougthQuantity": 21780,
+    "spentMoney": 21.785856357599997,
+    "orderType": "SELL",
+    "apiId": 900001
+  },
+  {
+    "coin": "MTL",
+    "orderId": 265917362,
+    "entryPrice": 2.5771,
+    "bougthQuantity": 80,
+    "spentMoney": 21.785856357599997,
+    "orderType": "SELL",
+    "apiId": 900001
+  },
+  {
+    "coin": "ADA",
+    "orderId": 13624575946,
+    "entryPrice": 1.7448,
+    "bougthQuantity": 130,
+    "spentMoney": 21.8861344494,
+    "orderType": "SELL",
+    "apiId": 900001
+  },
+  {
+    "coin": "DENT",
+    "orderId": 592006411,
+    "entryPrice": 0.0043,
+    "bougthQuantity": 50900,
+    "spentMoney": 21.8861344494,
+    "orderType": "SELL",
+    "apiId": 900001
+  },
+  {
+    "coin": "BTT",
+    "orderId": 626519794,
+    "entryPrice": 0.0042,
+    "bougthQuantity": 52110,
+    "spentMoney": 21.8861344494,
+    "orderType": "SELL",
+    "apiId": 900001
+  },
+  {
+    "coin": "DOGE",
+    "orderId": 6000797647,
+    "entryPrice": 0.3433,
+    "bougthQuantity": 640,
+    "spentMoney": 21.8861344494,
+    "orderType": "SELL",
+    "apiId": 900001
+  },
+  {
+    "coin": "TRX",
+    "orderId": 3919122546,
+    "entryPrice": 0.0821,
+    "bougthQuantity": 2670,
+    "spentMoney": 21.8861344494,
+    "orderType": "SELL",
+    "apiId": 900001
+  },
+  {
+    "coin": "ONE",
+    "orderId": 635517605,
+    "entryPrice": 0.1149,
+    "bougthQuantity": 1900,
+    "spentMoney": 21.8782429974,
+    "orderType": "SELL",
+    "apiId": 900001
+  },
+  {
+    "coin": "XLM",
+    "orderId": 4723472855,
+    "entryPrice": 0.4449,
+    "bougthQuantity": 500,
+    "spentMoney": 22.0872461769,
+    "orderType": "SELL",
+    "apiId": 900001
+  },
+  {
+    "coin": "HOT",
+    "orderId": 644177749,
+    "entryPrice": 0.010053,
+    "bougthQuantity": 22070,
+    "spentMoney": 22.1860421136,
+    "orderType": "SELL",
+    "apiId": 900001
+  },
+  {
+    "coin": "SXP",
+    "orderId": 6412087658,
+    "entryPrice": 2.4194,
+    "bougthQuantity": 90,
+    "spentMoney": 21.313829259,
+    "orderType": "SELL",
+    "apiId": 900001
+  },
+  {
+    "coin": "DENT",
+    "orderId": 592326432,
+    "entryPrice": 0.0043,
+    "bougthQuantity": 49570,
+    "spentMoney": 21.313829259,
+    "orderType": "SELL",
+    "apiId": 900001
+  },
+  {
+    "coin": "TRX",
+    "orderId": 3919833366,
+    "entryPrice": 0.0817,
+    "bougthQuantity": 2610,
+    "spentMoney": 21.313829259,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "ONE",
+    "orderId": 635867319,
+    "entryPrice": 0.113,
+    "bougthQuantity": 1890,
+    "spentMoney": 21.313829259,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "MTL",
+    "orderId": 266037362,
+    "entryPrice": 2.5595,
+    "bougthQuantity": 80,
+    "spentMoney": 21.313829259,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "DOGE",
+    "orderId": 6003054654,
+    "entryPrice": 0.3408,
+    "bougthQuantity": 630,
+    "spentMoney": 21.313829259,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "ALGO",
+    "orderId": 2274165484,
+    "entryPrice": 1.0146,
+    "bougthQuantity": 210,
+    "spentMoney": 21.313829259,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "XRP",
+    "orderId": 14473705259,
+    "entryPrice": 1.0193,
+    "bougthQuantity": 210,
+    "spentMoney": 21.313829259,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "STORJ",
+    "orderId": 2137040591,
+    "entryPrice": 1.2175,
+    "bougthQuantity": 180,
+    "spentMoney": 21.347204859,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "VET",
+    "orderId": 11742826624,
+    "entryPrice": 0.1285,
+    "bougthQuantity": 1660,
+    "spentMoney": 21.347204859,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "SXP",
+    "orderId": 6412564044,
+    "entryPrice": 2.4004,
+    "bougthQuantity": 90,
+    "spentMoney": 21.347204859,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "ADA",
+    "orderId": 13627537907,
+    "entryPrice": 1.7138,
+    "bougthQuantity": 120,
+    "spentMoney": 21.347204859,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "ALGO",
+    "orderId": 2274453625,
+    "entryPrice": 1.0073,
+    "bougthQuantity": 210,
+    "spentMoney": 21.4490105937,
+    "orderType": "SELL",
+    "apiId": 900001
+  },
+  {
+    "coin": "STORJ",
+    "orderId": 2137286037,
+    "entryPrice": 1.1931,
+    "bougthQuantity": 180,
+    "spentMoney": 21.4490105937,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "XRP",
+    "orderId": 14475660798,
+    "entryPrice": 1.0046,
+    "bougthQuantity": 210,
+    "spentMoney": 21.4490105937,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "BTT",
+    "orderId": 627430096,
+    "entryPrice": 0.0042,
+    "bougthQuantity": 51070,
+    "spentMoney": 21.4490105937,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "TRX",
+    "orderId": 3920802075,
+    "entryPrice": 0.0803,
+    "bougthQuantity": 2670,
+    "spentMoney": 21.4490105937,
+    "orderType": "BUY",
+    "apiId": 900001
+  },
+  {
+    "coin": "XRP",
+    "orderId": 14477123658,
+    "entryPrice": 1.0013,
+    "bougthQuantity": 210,
+    "spentMoney": 21.4574336037,
+    "orderType": "SELL",
+    "apiId": 900001
+  },
+  {
+    "coin": "BTT",
+    "orderId": 627730822,
+    "entryPrice": 0.0041,
+    "bougthQuantity": 52360,
+    "spentMoney": 21.4694486037,
+    "orderType": "SELL",
+    "apiId": 900001
+  },
+  {
+    "coin": "VET",
+    "orderId": 11744499264,
+    "entryPrice": 0.1264,
+    "bougthQuantity": 1700,
+    "spentMoney": 21.4694486037,
+    "orderType": "SELL",
+    "apiId": 900001
+  },
+  {
+    "coin": "ALGO",
+    "orderId": 2274922429,
+    "entryPrice": 0.997,
+    "bougthQuantity": 220,
+    "spentMoney": 21.4694486037,
+    "orderType": "SELL",
+    "apiId": 900001
+  },
+  {
+    "coin": "DENT",
+    "orderId": 592975859,
+    "entryPrice": 0.0043,
+    "bougthQuantity": 49930,
+    "spentMoney": 21.4694486037,
+    "orderType": "SELL",
+    "apiId": 900001
+  },
+  {
+    "coin": "MTL",
+    "orderId": 266215639,
+    "entryPrice": 2.5208,
+    "bougthQuantity": 90,
+    "spentMoney": 21.4694486037,
+    "orderType": "SELL",
+    "apiId": 900001
   }
 ]

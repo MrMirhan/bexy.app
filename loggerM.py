@@ -1,4 +1,5 @@
 import logging, datetime, time, os, sys
+from re import search
 
 date = str(datetime.datetime.now())
 todayDate = str(date.split(" ")[0])
@@ -17,6 +18,7 @@ except FileExistsError:
     logging.warning('Process started.')
 
 def sendLog(message):
-    if "raised an exception" in str(message):
+    if search("raised", str(message)):
         return
     logging.warning(message)
+    print(message)

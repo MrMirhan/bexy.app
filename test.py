@@ -16,7 +16,7 @@ from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboar
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 from telepot.namedtuple import InlineQueryResultArticle, InlineQueryResultPhoto, InputTextMessageContent
 import json
-import newOrderHandler as oh
+import handlerOrder as oh
 import logging
 import datetime
 import sys, os
