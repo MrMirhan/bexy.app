@@ -1,9 +1,3 @@
-from socket import SIO_LOOPBACK_FAST_PATH
-from sys import int_info
-import websocket
-import threading
-import time
-import random
 from telethon.sync import TelegramClient, events
 import continuous_threading
 from continuous_threading import CommandProcess
@@ -16,22 +10,19 @@ from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboar
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 from telepot.namedtuple import InlineQueryResultArticle, InlineQueryResultPhoto, InputTextMessageContent
 import json
-import newOrderHandler as oh
 import logging
-import datetime
-import sys, os
-from binance.client import Client
-from binance.enums import *
-from binance.exceptions import BinanceAPIException, BinanceOrderException
-import telegramHandler as th
+import time
+import datetime, requests
 
 TOKEN = "1776589751:AAH3HQRXe7tEJf5C-HnfBVeOBWta72Gbd_E"
-
-SOCKETS = f"wss://stream.binance.com:9443/ws/adausdt@kline_5m"
-
-message_with_inline_keyboard = None
-
 coins = ["ada", "dent", "storj", "btt", "vet", "doge", "hot", "sxp", "xlm", "algo", "mtl", "trx", "reef", "one", "xrp"]
+
+bot = telepot.Bot(TOKEN)
+
+def sendTelegram(cid, message):
+    send_text = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={cid}&text={message}"
+    response = requests.post(send_text)
+    return response.json()
 
 def on_chat_message(msg):
     global coins, message_with_inline_keyboard
@@ -56,7 +47,8 @@ def on_chat_message(msg):
                             coin = coin[args[1]]
                             if len(args) > 2:
                                 if len(args) > 3:
-                                    oh.createThread("create", {"orderType": str(args[2]).lower(), "coinAlimEmriDeger": float(args[3]), "pres": coin['pres'], "coin": str(args[1]).lower(), "type": "all"})
+                                    print('x')
+                                    #oh.createThread("create", {"orderType": str(args[2]).lower(), "coinAlimEmriDeger": float(args[3]), "pres": coin['pres'], "coin": str(args[1]).lower(), "type": "all"})
                         else:
                             bot.sendMessage(chat_id, 'Bir coin adı belirtin.')
                     else:
@@ -81,11 +73,6 @@ def on_chat_message(msg):
             elif command == 'h':
                 markup = ReplyKeyboardRemove()
                 bot.sendMessage(chat_id, 'Hide custom keyboard', reply_markup=markup)
-            elif command == 'f':
-                apiKey = config.API_KEY
-                apiSecret = config.API_SECRET
-                client = Client(apiKey, apiSecret)
-                print(client.futures_account(recvWindow=50000, timestamp=round(time.time() * 1000))['positions'])
             elif command == "kapat":
                 xd = []
                 for x in coins:
@@ -135,48 +122,9 @@ def on_callback_query(msg):
         bot.answerCallbackQuery(query_id, text=f'{coin} kapatılıyor.')
         bot.sendMessage(from_id, f'{coin} kapatılıyor.')
         bot.deleteMessage(msg_idf)
-        oh.createThread("cancel", {"type": "all", "coin": coin})
+        #oh.createThread("cancel", {"type": "all", "coin": coin})
 
 
 def on_chosen_inline_result(msg):
     result_id, from_id, query_string = telepot.glance(msg, flavor='chosen_inline_result')
     print('Chosen Inline Result:', result_id, from_id, query_string)
-
-
-bot = telepot.Bot(TOKEN)
-answerer = telepot.helper.Answerer(bot)
-def on_open(ws):
-    print('Socket connection started.')
-    MessageLoop(bot, {'chat': on_chat_message,
-                  'callback_query': on_callback_query,
-                  'chosen_inline_result': on_chosen_inline_result}).run_as_thread()
-    print('Listening ...')
-    date = str(datetime.datetime.now())
-    print(date)
-    todayDate = str(date.split(" ")[0])
-    nowTime = str(date.split(" ")[1]).split(":")
-    nowTime = str(nowTime[0]) + "." + nowTime[1] + "." + str(round(float(nowTime[2])))
-    try:
-        os.makedirs(f"logs/alpha/{todayDate}")    
-        print("Todays logging directory " , todayDate ,  " created.")
-        open(f"logs/alpha/{todayDate}/{nowTime}.log", "w")
-        logging.basicConfig(filename=f"logs/alpha/{todayDate}/{nowTime}.log", filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
-        logging.warning('Process started.')
-    except FileExistsError:
-        print("This process started time " , nowTime ,  " logging file created.")  
-        open(f"logs/alpha/{todayDate}/{nowTime}.log", "w")
-        logging.basicConfig(filename=f"logs/alpha/{todayDate}/{nowTime}.log", filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
-        logging.warning('Process started.')
-
-def on_close(ws):
-    print('Socket connection ended.')
-    logging.warning('Process stopped.')
-
-def check(ws, message):
-    print("xd")
-
-wss = websocket.WebSocketApp(SOCKETS, on_open=on_open, on_close=on_close, on_message=check)
-wss.run_forever()
-
-while True:
-    pass

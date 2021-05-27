@@ -5,19 +5,25 @@
             "900001"
         ]
     }, "dent":{
-        "active": 0,
-        "apiKeys":[]
+        "active": 1,
+        "apiKeys":[
+            "900001"
+        ]
     }, "storj":{
         "active": 1,
         "apiKeys":[
             "900001"
         ]
     }, "btt":{
-        "active": 0,
-        "apiKeys":[]
+        "active": 1,
+        "apiKeys":[
+            "900001"
+        ]
     }, "vet":{
-        "active": 0,
-        "apiKeys":[]
+        "active": 1,
+        "apiKeys":[
+            "900001"
+        ]
     }, "doge":{
         "active": 1,
         "apiKeys":[
@@ -29,8 +35,10 @@
             "900001"
         ]
     }, "sxp":{
-        "active": 0,
-        "apiKeys":[]
+        "active": 1,
+        "apiKeys":[
+            "900001"
+        ]
     }, "xlm":{
         "active": 1,
         "apiKeys":[
@@ -42,14 +50,20 @@
             "900001"
         ]
     }, "mtl":{
-        "active": 0,
-        "apiKeys":[]
+        "active": 1,
+        "apiKeys":[
+            "900001"
+        ]
     }, "trx":{
-        "active": 0,
-        "apiKeys":[]
+        "active": 1,
+        "apiKeys":[
+            "900001"
+        ]
     }, "reef":{
-        "active": 0,
-        "apiKeys":[]
+        "active": 1,
+        "apiKeys":[
+            "900001"
+        ]
     }, "one":{
         "active": 1,
         "apiKeys":[

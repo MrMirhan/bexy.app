@@ -150,5 +150,85 @@
     "bougthQuantity": 10020,
     "spentMoney": 10.71682697,
     "orderType": "BUY"
+  },
+  {
+    "coin": "XRP",
+    "orderId": 14445829258,
+    "entryPrice": 1.035,
+    "bougthQuantity": 110,
+    "spentMoney": 11.87434447,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "XRP",
+    "orderId": 14445884624,
+    "entryPrice": 1.035,
+    "bougthQuantity": 110,
+    "spentMoney": 11.87434447,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "XRP",
+    "orderId": 14445927217,
+    "entryPrice": 1.035,
+    "bougthQuantity": 110,
+    "spentMoney": 11.87434447,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "XRP",
+    "orderId": 14446038720,
+    "entryPrice": 1.035,
+    "bougthQuantity": 110,
+    "spentMoney": 11.87434447,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "STORJ",
+    "orderId": 2133107297,
+    "entryPrice": 1.2566,
+    "bougthQuantity": 90,
+    "spentMoney": 11.87434447,
+    "orderType": "SELL"
+  },
+  {
+    "coin": "BTT",
+    "orderId": 619115900,
+    "entryPrice": 0.0043,
+    "bougthQuantity": 27610,
+    "spentMoney": 11.87434447,
+    "orderType": "SELL"
+  },
+  {
+    "coin": "ALGO",
+    "orderId": 2268141856,
+    "entryPrice": 1.0207,
+    "bougthQuantity": 120,
+    "spentMoney": 11.87434447,
+    "orderType": "SELL"
+  },
+  {
+    "coin": "XRP",
+    "orderId": 14446252329,
+    "entryPrice": 1.035,
+    "bougthQuantity": 110,
+    "spentMoney": 11.8725729065,
+    "orderType": "BUY"
+  },
+  {
+    "coin": "VET",
+    "orderId": 11729933164,
+    "entryPrice": 0.1317,
+    "bougthQuantity": 900,
+    "spentMoney": 11.877629244000001,
+    "orderType": "SELL"
+  },
+  {
+    "coin": "HOT",
+    "orderId": 640205969,
+    "entryPrice": 0.010496,
+    "bougthQuantity": 11320,
+    "spentMoney": 11.877629244000001,
+    "orderType": "BUY"
   }
 ]

@@ -20,10 +20,16 @@ import requests
 from binance.client import Client
 from binance.enums import *
 from binance.exceptions import BinanceAPIException, BinanceOrderException
-import main
+from loggerM import sendLog
+from telegramHandler import sendTelegram
 
 stop = {}
-scheduler = BackgroundScheduler()
+scheduler = BackgroundScheduler({
+    'apscheduler.executors.default': {
+        'class': 'apscheduler.executors.pool:ThreadPoolExecutor',
+        'max_workers': '9999999999999'
+    },
+    'apscheduler.job_defaults.max_instances': '999999999999'})
 scheduler.start()
 
 def orderCancel(threadId, args): # {"type": "all / user", "userId": 0 / 10001, "coin": "ALGO/MKR/ADA", "orderId": "578678"}
@@ -76,7 +82,7 @@ def orderCancel(threadId, args): # {"type": "all / user", "userId": 0 / 10001, "
                                     elif orderType == "SELL":
                                         orderTypex = "BUY"
                                     cancelPosition = client.futures_create_order(symbol=coinx, side=orderTypex, type="MARKET", quantity=bougthQuantity, recvWindow=50000, timestamp=round(time.time() * 1000))
-                                    main.sendTelegram(str(userConfig['telegramChatId']), "------İŞLEMDEN ÇIKILDI ({})------\nCoin Sembol: {}\nİşlem Tipi: {}\nİşlem Id: {}\nMiktar: {}\nHarcama: {}\nPNL: {}".format(karzarar, coinx, orderType, orderId, bougthQuantity, spentMoney, pnl))
+                                    sendTelegram(str(userConfig['telegramChatId']), "------İŞLEMDEN ÇIKILDI ({})------\nCoin Sembol: {}\nİşlem Tipi: {}\nİşlem Id: {}\nMiktar: {}\nHarcama: {}\nPNL: {}".format(karzarar, coinx, orderType, orderId, bougthQuantity, spentMoney, pnl))
                                     with open("users/{}/positionOrders.json".format(x), encoding='utf-8') as json_data:
                                         nations = json.load(json_data)
                                     nations_new = [x for x in nations if x['coin'] != coin.upper()]
@@ -113,7 +119,6 @@ def orderCancel(threadId, args): # {"type": "all / user", "userId": 0 / 10001, "
                                     coinx = str(coin.upper()) + "USDT"
                                     position = client.futures_account(recvWindow=50000, timestamp=round(time.time() * 1000))['positions']
                                     position = [y for y in position if y['symbol'] == coinx]
-                                    print(position)
                                     pnl = float(position[0]['unrealizedProfit'])
                                     bougthQuantity = int(order['bougthQuantity'])
                                     spentMoney = float(order['spentMoney'])
@@ -128,7 +133,8 @@ def orderCancel(threadId, args): # {"type": "all / user", "userId": 0 / 10001, "
                                     elif orderType == "SELL":
                                         orderTypex = "BUY"
                                     cancelPosition =  client.futures_create_order(symbol=coinx, side=orderTypex, type="MARKET", quantity=bougthQuantity, recvWindow=50000, timestamp=round(time.time() * 1000))
-                                    main.sendTelegram(str(userConfig['telegramChatId']), "------İŞLEMDEN ÇIKILDI ({})------\nCoin Sembol: {}\nİşlem Tipi: {}\nİşlem Id: {}\nMiktar: {}\nHarcama: {}\nPNL: {}".format(karzarar, coinx, orderType, orderId, bougthQuantity, spentMoney, pnl))
+                                    sendTelegram(str(userConfig['telegramChatId']), "------İŞLEMDEN ÇIKILDI ({})------\nCoin Sembol: {}\nİşlem Tipi: {}\nİşlem Id: {}\nMiktar: {}\nHarcama: {}\nPNL: {}".format(karzarar, coinx, orderType, orderId, bougthQuantity, spentMoney, pnl))
+
 def getOrder(id, symbol, apiKey, apiSecret):
     try:
         client = Client(apiKey, apiSecret)
@@ -181,10 +187,9 @@ def checkPnl(threadId, args):
     if positionAmount == 0:
         scheduler.remove_job(f"{threadId}", jobstore=None)
         openPositions = [z for z in positions if z['coin'] == coin]
-        print(openPositions, len(openPositions))
         if len(openPositions) >= 1:
             mesaj = "------İŞLEM KAPATILDI (MANUEL)------\nCoin Sembol: {}\nİşlem Id: {}".format(symbol, orderId)
-            main.sendTelegram(str(userConfig['telegramChatId']), mesaj)
+            sendTelegram(str(userConfig['telegramChatId']), mesaj)
             with open("users/{}/positionOrders.json".format(userId), encoding='utf-8') as json_data:
                 nations = json.load(json_data)
             nations_new = [x for x in nations if x['coin'] != coin]
@@ -230,12 +235,12 @@ def orderCheck(threadId, args):
     order = getOrder(orderId, symbol, apiKey, apiSecret)
     status = order['status']
     if status == "NEW":
-        if (anlikTime - islemBaslamaTime) > (60 * 1000) * 2:
+        if (anlikTime - islemBaslamaTime) > (60 * 1000) * 3:
             scheduler.remove_job(f"{threadId}", jobstore=None)
-            print('20 Saniyedir işleme giremedi.')
             cancel = client.futures_cancel_order(symbol=symbol, orderId=orderId, recvWindow=50000, timestamp=round(time.time() * 1000))
-            mesaj = "------İŞLEM EMRİ KALDIRILDI------\nCoin Sembol: {}\nİşlem Id: {}\nİşlem 2 Dakika İçerisinde Pozisyona Girmediği İçin Kaldırıldı.".format(symbol, orderId)
-            main.sendTelegram(str(userConfig['telegramChatId']), mesaj)
+            mesaj = "------İŞLEM EMRİ KALDIRILDI------\nCoin Sembol: {}\nİşlem Id: {}\nİşlem 3 Dakika İçerisinde Pozisyona Girmediği İçin Kaldırıldı.".format(symbol, orderId)
+            sendLog(str(mesaj) + " " + str(userId))
+            sendTelegram(str(userConfig['telegramChatId']), mesaj)
             with open("users/{}/openOrders.json".format(userId), encoding='utf-8') as json_data:
                 nations = json.load(json_data)
             nations_new = [x for x in nations if x['coin'] != coin]
@@ -244,7 +249,8 @@ def orderCheck(threadId, args):
     elif status == "CANCELED":
         scheduler.remove_job(f"{threadId}", jobstore=None)
         mesaj = "------İŞLEM İPTAL EDİLDİ------\nCoin Sembol: {}\nİşlem Id: {}\nİşlem Manuel Olarak Kapatıldı".format(symbol, orderId)
-        main.sendTelegram(str(userConfig['telegramChatId']), mesaj)
+        sendLog(str(mesaj) + " " + str(userId))
+        sendTelegram(str(userConfig['telegramChatId']), mesaj)
         with open("users/{}/openOrders.json".format(userId), encoding='utf-8') as json_data:
             nations = json.load(json_data)
         nations_new = [x for x in nations if x['coin'] != coin]
@@ -253,7 +259,8 @@ def orderCheck(threadId, args):
     elif status != "NEW":
         scheduler.remove_job(f"{threadId}", jobstore=None)
         mesaj = "------İŞLEM BAŞLADI------\nCoin Sembol: {}\nİşlem Tipi: {}\nİşlem Id: {}\nMiktar: {}\nHarcama: {}\nCoin Giriş Değer: {}".format(symbol, orderType, order['orderId'], quantity, spent, coinAlimEmriDeger)
-        main.sendTelegram(str(userConfig['telegramChatId']), mesaj)
+        sendLog(str(mesaj) + " " + str(userId))
+        sendTelegram(str(userConfig['telegramChatId']), mesaj)
     
         appendCoin = {"coin": coin, "orderId": str(order['orderId']), "entryPrice": float(coinAlimEmriDeger), "markPrice": 0.00, "bougthQuantity": float(quantity), "spentMoney": float(spent), "orderType": str(side), "pnl": 0.00, "roe": "0"}
         createThread("pnl", args)
@@ -262,19 +269,19 @@ def orderCheck(threadId, args):
         nations_new = [x for x in nations if x['coin'] != coin]
         with open("users/{}/openOrders.json".format(userId), mode='w', encoding='utf-8') as json_data:
             json.dump(nations_new, json_data, indent=2)
-        print("orders ok")
+        sendLog("Order successfully deleted from opened orders json.")
         with open("users/{}/positionOrders.json".format(userId), encoding='utf-8') as feedssjson:
             feedss = json.load(feedssjson)
         with open("users/{}/positionOrders.json".format(userId), mode='w', encoding='utf-8') as feedssjson:
             feedss.append(appendCoin)
             json.dump(feedss, feedssjson, indent=2)
-        print("position ok")
+        sendLog("Order successfully added to opened positions json.")
         with open("users/{}/positionHistory.json".format(userId), mode='r', encoding='utf-8') as feedsjson:
             feeds = json.load(feedsjson)
         with open("users/{}/positionHistory.json".format(userId), mode='w', encoding='utf-8') as feedsjson:
             feeds.append(appendCoin)
             json.dump(feeds, feedsjson, indent=2)
-        print("history ok")
+        sendLog("Order successfully added to positions history json.")
 
 def createOrder(args):
     coin = str(args['coin']).lower()
@@ -284,6 +291,7 @@ def createOrder(args):
             for x in usersArray:
                 x = str(x)
                 openOrdersJsonFile = open("users/{}/openOrders.json".format(x), "r+")
+                positionOrderJsonFile = open("users/{}/positionOrders.json".format(x), "r+")
                 configJsonFile = open("users/{}/config.json".format(x), "r+")
                 apiJsonFile = open("users/{}/binanceApiKeys.json".format(x), "r+")
                 pnlJsonFile = open("users/{}/pnlHistory.json".format(x), "r+")
@@ -291,6 +299,7 @@ def createOrder(args):
                 coinsJsonFile = open("users/{}/coins.json".format(x), "r+")
                                 
                 openOrders = json.load(openOrdersJsonFile)
+                positionOrders = json.load(positionOrderJsonFile)
                 userConfig = json.load(configJsonFile)
                 userApis = json.load(apiJsonFile)
                 pnlHistory = json.load(pnlJsonFile)
@@ -301,7 +310,15 @@ def createOrder(args):
                 coinData = userCoins[coin]
                 if len(openOrders) == int(userConfig['maxActiveOrders']):
                     mesaj = "------MAKS İŞLEM LİMİTİ------\nKoyulan Maks İşlem Limiti: {}\nBelirlemiş olduğunuz aynı anda maksimum işlem limiti aşılacak olduğu için yeni işleme girilemedi.".format(int(userConfig['maxActiveOrders']))
-                    main.sendTelegram(str(userConfig['telegramChatId']), mesaj)
+                    sendLog(str(mesaj) + " " + str(userId))
+                    sendTelegram(str(userConfig['telegramChatId']), mesaj)
+                    return
+                sameOrder = [x for x in openOrders if x['coin'] == str(coin).upper()]
+                samePosition = [x for x in positionOrders if x['coin'] == str(coin).upper()]
+                if len(samePosition) > 1 or len(sameOrder) > 0:
+                    mesaj = "------AKTİF İŞLEM VAR------\nCoin Sembol: {}\nİşlem açılmak istenen coinde aktif bir işlem olduğu için yeni işlem açılmadı.".format(TRADE_SYMBOL)
+                    sendLog(str(mesaj) + " " + str(userId))
+                    sendTelegram(str(userConfig['telegramChatId']), mesaj)
                     return
                 if coinData['active'] == 1:
                     for a in coinData['apiKeys']:
@@ -326,10 +343,11 @@ def createOrder(args):
                         qnt = int(round(float(alimButce / price)) * 10)
                         if availableBalance < alimButce:
                             mesaj = "------YETERSİZ BAKİYE------\nİşlem İçin Gereken Tutar: {}\nHesabınızdaki Kullanılabilir Bakiye: {}\nİşleme bakiyeniz yetersiz olduğu için girilemedi.".format(availableBalance, alimButce)
-                            main.sendTelegram(str(userConfig['telegramChatId']), mesaj)
+                            sendLog(str(mesaj) + " " + str(userId))
+                            sendTelegram(str(userConfig['telegramChatId']), mesaj)
                             return
                         try:
-                            print("sending order")
+                            sendLog("Order Request Sending to Binance" + " " + str(userId))
                             order = client.futures_create_order(symbol=TRADE_SYMBOL, side=side, type="STOP", timeInForce = "GTC", quantity = qnt, price=price, stopPrice=price, recvWindow=50000, timestamp=round(time.time() * 1000))
                             appendOrder = {"coin": coin.upper(), "orderId": order['orderId'], "entryPrice": price, "bougthQuantity": qnt, "spentMoney": alimButce, "orderType": side}
                             with open("users/{}/openOrders.json".format(userId), mode='r', encoding='utf-8') as feedsjson:
@@ -343,18 +361,18 @@ def createOrder(args):
                                 feeds.append(appendOrder)
                                 json.dump(feeds, feedsjson, indent=2)
                             mesaj = "------EMİR KOYULDU------\nCoin Sembol: {}\nİşlem Tipi: {}\nİşlem Id: {}\nAlım Miktarı: {}\nAlım Yapılacak Değer: {}\nHarcanan Tutar: {}\nİşlem Öncesi Kullanılabilir Bakiye: {}".format(TRADE_SYMBOL, side, order['orderId'], qnt, price, alimButce, availableBalance)
-                            main.sendTelegram(str(userConfig['telegramChatId']), mesaj)
-                            print(getOrder(order['orderId'], TRADE_SYMBOL, apiKey, apiSecret))
+                            sendTelegram(str(userConfig['telegramChatId']), mesaj)
                             createThread("check", {"orderId": order['orderId'], "symbol": TRADE_SYMBOL, "side": side, "coin": coin, "orderType": side, "coinAlimEmriDeger": price, "quantity": qnt, "beforeBudget": availableBalance, "spent": alimButce, "userId": userId, "apiId": a})
                             return order
                         except Exception as e:
-                            print("an exception occured - {}".format(e))
+                            mesaj = "an exception occured - {}".format(e)
+                            sendLog(mesaj)
                             e = str(e)
                             if "2021" in e:
                                 if side == "SELL":
-                                    print("Activation price should be smaller than current price.")
+                                    sendLog("Activation price should be smaller than current price.")
                                 elif side == "BUY":
-                                    print("Activation price should be larger than current price.")
+                                    sendLog("Activation price should be larger than current price.")
                                 return "immediately"
                             elif "1111" in e:
                                 return "pres"
@@ -411,3 +429,7 @@ def createThread(type, args):
         scheduler.add_job(func=checkPnl, args=[threadId, args], trigger="interval", id=f"{threadId}", seconds=1)
     elif type == 'create':
         scheduler.add_job(func=alimYap, args=[threadId, args], trigger=None, id=f"{threadId}")
+
+def stopJobs():
+    scheduler.remove_all_jobs(jobstore=None)
+    scheduler.shutdown(wait=False)

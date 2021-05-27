@@ -1,4 +1,5 @@
 from socket import SIO_LOOPBACK_FAST_PATH
+from requests.models import encode_multipart_formdata
 import websocket
 import json
 import pprint
@@ -15,6 +16,16 @@ from tradingview_ta import TA_Handler, Interval, Exchange
 from decimal import Decimal
 import math
 import telebot
+import telepot
+from telethon.sync import TelegramClient, events
+import continuous_threading
+from continuous_threading import CommandProcess
+import traceback
+from telepot.loop import MessageLoop
+from telepot.delegate import per_chat_id, create_open, pave_event_space, per_inline_from_id
+from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, ForceReply
+from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
+from telepot.namedtuple import InlineQueryResultArticle, InlineQueryResultPhoto, InputTextMessageContent
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
@@ -23,21 +34,34 @@ from selenium.webdriver.support import expected_conditions as EC1, wait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 import decimal
+from newOrderHandler import createThread, stopJobs
+import datetime
 import random   
-import sys, re, optparse 
+import sys, re, optparse, os
 import json
 from threading import Thread
+from telegramHandler import on_chat_message, on_callback_query, on_chosen_inline_result, sendTelegram
+from loggerM import sendLog
 
 SOCKETS = f"wss://stream.binance.com:9443/ws/adausdt@kline_5m"
 
 channelId = "-1001347995174"
-token = "1776589751:AAH3HQRXe7tEJf5C-HnfBVeOBWta72Gbd_E"
+TOKEN = "1776589751:AAH3HQRXe7tEJf5C-HnfBVeOBWta72Gbd_E"
+
+bot = telepot.Bot(TOKEN)
+answerer = telepot.helper.Answerer(bot)
 
 def on_open(ws):
     print('Socket connection started.')
+    MessageLoop(bot, {'chat': on_chat_message,
+                  'callback_query': on_callback_query,
+                  'chosen_inline_result': on_chosen_inline_result}).run_as_thread()
+    print('Listening ...')
 
 def on_close(ws):
     print('Socket connection ended.')
+    sendLog('Process stopped.')
+    stopJobs()
 
 def generateStochasticRSI(close_array, timeperiod=14):
     rsi = talib.RSI(close_array, timeperiod)
@@ -45,11 +69,6 @@ def generateStochasticRSI(close_array, timeperiod=14):
     stochrsif, stochrsis = talib.STOCH(
         rsi, rsi, rsi, fastk_period=14, slowk_period=3, slowd_period=3)
     return stochrsif, stochrsis
-
-def sendTelegram(cid, message):
-    send_text = f"https://api.telegram.org/bot{token}/sendMessage?chat_id={cid}&text={message}"
-    response = requests.post(send_text)
-    return response.json()
 
 
 def format_number(num):
@@ -71,6 +90,9 @@ def format_number(num):
     if tup.sign:
         return '-' + val
     return val
+
+def orderAc(coin, coinAlimEmriDeger, pres, type):
+    createThread("create", {"orderType": str(type), "coinAlimEmriDeger": float(coinAlimEmriDeger), "pres": int(pres), "coin": str(coin).lower(), "type": "all"})
 
 def check(ws, message):
     coins = ["ada", "dent", "storj", "btt", "vet", "doge", "hot", "sxp", "xlm", "algo", "mtl", "trx", "reef", "one", "xrp"]
@@ -107,7 +129,7 @@ def check(ws, message):
                 red = round(bluei, 2)
                 blue = round(redi, 2)
                 aradakiFark = abs(red - blue)
-                print(f"------COIN DETAILS------\nsymbol: {TRADE_SYMBOL}\nperiod: 5m\nclose: {candle['c']}\n------STOCHASTIC RSI------\nblue: {blue}\nred: {red}\ndifference: {aradakiFark}")
+                sendLog(f"------COIN DETAILS------\nsymbol: {TRADE_SYMBOL}\nperiod: 5m\nclose: {close}\n------STOCHASTIC RSI------\nblue: {blue}\nred: {red}\ndifference: {aradakiFark}")
                 if red > blue:
                     ustte = 1
                     coind[xd]['ustte'] = ustte
@@ -119,13 +141,13 @@ def check(ws, message):
                     eskiUstte = 1
                     coind[xd]['eskiUstte'] = eskiUstte
 
-                print(xd, ustte, eskiUstte, kesisti)
+                sendLog(str(xd) + " " + str(ustte) + " " + str(eskiUstte) + " " + str(kesisti))
 
                 if (kesisti == 1 and aradakiFark > 2.2) and ((red > 83 or red == 83) and (blue > 83 or blue == 83) or (red < 17 or red == 17) and (blue < 17 or blue == 17)):
                     kesisti = 0
                     coind[xd]['kesisti'] = kesisti
                     if (red < 17 or red == 17) and (blue < 17 or blue == 17):
-                            print("KESİŞME OLMUŞ")
+                            sendLog("KESİŞME OLMUŞ")
                             coinDeger = float(close)
                             coinAlimEmriDeger = float(coinDeger + ((coinDeger / float(100)) * float(0.185)))
                             coinAlimEmriDeger = float(coinAlimEmriDeger)
@@ -134,28 +156,30 @@ def check(ws, message):
                                 if aradakiFark > 2:
                                     bildirimGonderildi = 2
                                     coind[xd]['bildirimGonderildi'] = bildirimGonderildi
-                                    print(f"trying to send notification for buy {TRADE_SYMBOL} from {coinAlimEmriDeger} USDT")
+                                    sendLog(f"trying to send notification for buy {TRADE_SYMBOL} from {coinAlimEmriDeger} USDT")
                                     sent = sendTelegram(channelId, f"------ALIŞ EMRI------\nCoin Sembol: {TRADE_SYMBOL}\nMum Kapanışı: {coinDeger}\nEmir Koyulacak Fiyat: {coinAlimEmriDeger}")
                                     if sent['ok'] == True:
-                                        print(f"------BUY ORDER------\nCoin Sembol: {TRADE_SYMBOL}\nCandle Close: {coinDeger}\nOrder Price: {coinAlimEmriDeger}")
+                                        sendLog(f"------BUY ORDER------\nCoin Sembol: {TRADE_SYMBOL}\nCandle Close: {coinDeger}\nOrder Price: {coinAlimEmriDeger}")
+                                        orderAc(str(xd), coinAlimEmriDeger, kusur, "al")
                                     else:
-                                        print("Error while sending message to channel\n", sent['description'])
+                                        sendLog("Error while sending message to channel\n{}".format(sent['description']))
                                 else:
-                                    print("Aradaki fark 2 den büyük değil, işlem kesin değil. İşlem açmadım.")
+                                    sendLog("Aradaki fark 2 den büyük değil, işlem kesin değil. İşlem açmadım.")
                             elif bildirimGonderildi == 1:
                                 if aradakiFark > 2:
                                     bildirimGonderildi = 2
                                     coind[xd]['bildirimGonderildi'] = bildirimGonderildi
-                                    print(f"trying to send notification for buy {TRADE_SYMBOL} from {coinAlimEmriDeger} USDT")
+                                    sendLog(f"trying to send notification for buy {TRADE_SYMBOL} from {coinAlimEmriDeger} USDT")
                                     sent = sendTelegram(channelId, f"------ALIŞ EMRI------\nCoin Sembol: {TRADE_SYMBOL}\nMum Kapanışı: {coinDeger}\nEmir Koyulacak Fiyat: {coinAlimEmriDeger}")
                                     if sent['ok'] == True:
-                                        print(f"------BUY ORDER------\nCoin Sembol: {TRADE_SYMBOL}\nCandle Close: {coinDeger}\nOrder Price: {coinAlimEmriDeger}")
+                                        sendLog(f"------BUY ORDER------\nCoin Sembol: {TRADE_SYMBOL}\nCandle Close: {coinDeger}\nOrder Price: {coinAlimEmriDeger}")
+                                        orderAc(str(xd), coinAlimEmriDeger, kusur, "al")
                                     else:
-                                        print("Error while sending message to channel\n", sent['description'])
+                                        sendLog("Error while sending message to channel\n{}".format(sent['description']))
                                 else:
-                                    print("Aradaki fark 2 den büyük değil, işlem kesin değil. İşlem açmadım.")
+                                    sendLog("Aradaki fark 2 den büyük değil, işlem kesin değil. İşlem açmadım.")
                     elif (red > 83 or red == 83) and (blue > 83 or blue == 83):
-                            print("KESİŞME OLMUŞ")
+                            sendLog("KESİŞME OLMUŞ")
                             coinDeger = float(close)
                             coinAlimEmriDeger = float(coinDeger - ((coinDeger / float(100)) * float(0.185)))
                             coinAlimEmriDeger = float(coinAlimEmriDeger)
@@ -164,85 +188,89 @@ def check(ws, message):
                                 if aradakiFark > 2:
                                     bildirimGonderildi = 1
                                     coind[xd]['bildirimGonderildi'] = bildirimGonderildi
-                                    print(f"trying to send notification for sell {TRADE_SYMBOL} from {coinAlimEmriDeger} USDT")
+                                    sendLog(f"trying to send notification for sell {TRADE_SYMBOL} from {coinAlimEmriDeger} USDT")
                                     sent = sendTelegram(channelId, f"------SATIŞ EMRI------\nCoin Sembol: {TRADE_SYMBOL}\nMum Kapanışı: {coinDeger}\nEmir Koyulacak Fiyat: {coinAlimEmriDeger}")
                                     if sent['ok'] == True:
-                                        print(f"------SELL ORDER------\nCoin Symbol: {TRADE_SYMBOL}\nCandle Close: {coinDeger}\nOrder Price: {coinAlimEmriDeger}")
+                                        sendLog(f"------SELL ORDER------\nCoin Symbol: {TRADE_SYMBOL}\nCandle Close: {coinDeger}\nOrder Price: {coinAlimEmriDeger}")
+                                        orderAc(str(xd), coinAlimEmriDeger, kusur, "sat")
                                     else:
-                                        print("Error while sending message to channel\n", sent['description'])
+                                        sendLog("Error while sending message to channel\n{}".format(sent['description']))
                                 else:
-                                    print("Aradaki fark 2 den büyük değil, işlem kesin değil. İşlem açmadım.")
+                                    sendLog("Aradaki fark 2 den büyük değil, işlem kesin değil. İşlem açmadım.")
                             elif bildirimGonderildi == 2:
                                 if aradakiFark > 2:
                                     bildirimGonderildi = 1
                                     coind[xd]['bildirimGonderildi'] = bildirimGonderildi
-                                    print(f"trying to send notification for sell {TRADE_SYMBOL} from {coinAlimEmriDeger} USDT")
+                                    sendLog(f"trying to send notification for sell {TRADE_SYMBOL} from {coinAlimEmriDeger} USDT")
                                     sent = sendTelegram(channelId, f"------SATIŞ EMRI------\nCoin Sembol: {TRADE_SYMBOL}\nMum Kapanışı: {coinDeger}\nEmir Koyulacak Fiyat: {coinAlimEmriDeger}")
                                     if sent['ok'] == True:
-                                        print(f"------SELL ORDER------\nCoin Symbol: {TRADE_SYMBOL}\nCandle Close: {coinDeger}\nOrder Price: {coinAlimEmriDeger}")
+                                        sendLog(f"------SELL ORDER------\nCoin Symbol: {TRADE_SYMBOL}\nCandle Close: {coinDeger}\nOrder Price: {coinAlimEmriDeger}")
+                                        orderAc(str(xd), coinAlimEmriDeger, kusur, "sat")
                                     else:
-                                        print("Error while sending message to channel\n", sent['description'])
+                                        sendLog("Error while sending message to channel\n{}".format(sent['description']))
                                 else:
-                                    print("Aradaki fark 2 den büyük değil, işlem kesin değil. İşlem açmadım.")
+                                    sendLog("Aradaki fark 2 den büyük değil, işlem kesin değil. İşlem açmadım.")
                     return True
                 if bildirimGonderildi > 0:
                     if (red < 80 and blue < 80) and (red > 20 and blue > 20):
                         bildirimGonderildi = 0
                         coind[xd]['bildirimGonderildi'] = bildirimGonderildi
                 if (red > 88 or red == 88) and (blue > 88 or blue == 88):
-                    print("İkisi de 90 Üstünde")
+                    sendLog("İkisi de 90 Üstünde")
                     coinDeger = float(close)
                     coinAlimEmriDeger = float(coinDeger - ((coinDeger / float(100)) * float(0.185)))
                     coinAlimEmriDeger = float(coinAlimEmriDeger)
                     coinAlimEmriDeger = float(str(coinAlimEmriDeger).split('.')[0] + "." + str(coinAlimEmriDeger).split('.')[1][0:kusur])
                     if eskiUstte != 0:
                         if (ustte == 1 and eskiUstte == 2) or (ustte == 2 and eskiUstte == 1):
-                            print("KESİŞME OLMUŞ")
+                            sendLog("KESİŞME OLMUŞ")
                             if bildirimGonderildi == 0:
                                 if aradakiFark > 2:
                                     bildirimGonderildi = 1
                                     coind[xd]['bildirimGonderildi'] = bildirimGonderildi
                                     kesisti = 1
                                     coind[xd]['kesisti'] = kesisti
-                                    print(f"trying to send notification for sell {TRADE_SYMBOL} from {coinAlimEmriDeger} USDT")
+                                    sendLog(f"trying to send notification for sell {TRADE_SYMBOL} from {coinAlimEmriDeger} USDT")
                                     sent = sendTelegram(channelId, f"------SATIŞ EMRI------\nCoin Sembol: {TRADE_SYMBOL}\nMum Kapanışı: {coinDeger}\nEmir Koyulacak Fiyat: {coinAlimEmriDeger}")
                                     if sent['ok'] == True:
-                                        print(f"------SELL ORDER------\nCoin Symbol: {TRADE_SYMBOL}\nCandle Close: {coinDeger}\nOrder Price: {coinAlimEmriDeger}")
+                                        sendLog(f"------SELL ORDER------\nCoin Symbol: {TRADE_SYMBOL}\nCandle Close: {coinDeger}\nOrder Price: {coinAlimEmriDeger}")
+                                        orderAc(str(xd), coinAlimEmriDeger, kusur, "sat")
                                         kesisti = 0
                                         coind[xd]['kesisti'] = kesisti
                                     else:
-                                        print("Error while sending message to channel\n", sent['description'])
+                                        sendLog("Error while sending message to channel\n{}".format(sent['description']))
                                 else:
-                                    print("Aradaki fark 2 den büyük değil, işlem kesin değil. İşlem açmadım.")
+                                    sendLog("Aradaki fark 2 den büyük değil, işlem kesin değil. İşlem açmadım.")
                             elif bildirimGonderildi == 2:
                                 if aradakiFark > 2:
                                     bildirimGonderildi = 1
                                     coind[xd]['bildirimGonderildi'] = bildirimGonderildi
                                     kesisti = 1
                                     coind[xd]['kesisti'] = kesisti
-                                    print(f"trying to send notification for sell {TRADE_SYMBOL} from {coinAlimEmriDeger} USDT")
+                                    sendLog(f"trying to send notification for sell {TRADE_SYMBOL} from {coinAlimEmriDeger} USDT")
                                     sent = sendTelegram(channelId, f"------SATIŞ EMRI------\nCoin Sembol: {TRADE_SYMBOL}\nMum Kapanışı: {coinDeger}\nEmir Koyulacak Fiyat: {coinAlimEmriDeger}")
                                     if sent['ok'] == True:
-                                        print(f"------SELL ORDER------\nCoin Symbol: {TRADE_SYMBOL}\nCandle Close: {coinDeger}\nOrder Price: {coinAlimEmriDeger}")
+                                        sendLog(f"------SELL ORDER------\nCoin Symbol: {TRADE_SYMBOL}\nCandle Close: {coinDeger}\nOrder Price: {coinAlimEmriDeger}")
+                                        orderAc(str(xd), coinAlimEmriDeger, kusur, "sat")
                                         kesisti = 0
                                         coind[xd]['kesisti'] = kesisti
                                     else:
-                                        print("Error while sending message to channel\n", sent['description'])
+                                        sendLog("Error while sending message to channel\n{}".format(sent['description']))
                                 else:
-                                    print("Aradaki fark 2 den büyük değil, işlem kesin değil. İşlem açmadım.")
+                                    sendLog("Aradaki fark 2 den büyük değil, işlem kesin değil. İşlem açmadım.")
                         else:
-                            print("Kesişme yok.")
+                            sendLog("Kesişme yok.")
                             kesisme = 0
                             coind[xd]['kesisti'] = kesisti
                 elif (red < 12 or red == 12) and (blue < 12 or blue == 12):
-                    print("İkisi de 10 Altında")
+                    sendLog("İkisi de 10 Altında")
                     coinDeger = float(close)
                     coinAlimEmriDeger = float(coinDeger + ((coinDeger / float(100)) * float(0.185)))
                     coinAlimEmriDeger = float(coinAlimEmriDeger)
                     coinAlimEmriDeger = float(str(coinAlimEmriDeger).split('.')[0] + "." + str(coinAlimEmriDeger).split('.')[1][0:kusur])
                     if eskiUstte != 0:
                         if (ustte == 1 and eskiUstte == 2) or (ustte == 2 and eskiUstte == 1):
-                            print("KESİŞME OLMUŞ")
+                            sendLog("KESİŞME OLMUŞ")
                             if bildirimGonderildi == 0:
                                 if aradakiFark > 2:
                                     bildirimGonderildi = 2
@@ -251,33 +279,35 @@ def check(ws, message):
                                     coind[xd]['kesisti'] = kesisti
                                     sent = sendTelegram(channelId, f"------ALIŞ EMRI------\nCoin Sembol: {TRADE_SYMBOL}\nMum Kapanışı: {coinDeger}\nEmir Koyulması Gereken Fiyat: {coinAlimEmriDeger}")
                                     if sent['ok'] == True:
-                                        print(f"------BUY ORDER------\nCoin Sembol: {TRADE_SYMBOL}\nCandle Close: {coinDeger}")
+                                        sendLog(f"------BUY ORDER------\nCoin Sembol: {TRADE_SYMBOL}\nCandle Close: {coinDeger}")
+                                        orderAc(str(xd), coinAlimEmriDeger, kusur, "al")
                                         kesisti = 0
                                         coind[xd]['kesisti'] = kesisti
                                     else:
-                                        print("Error while sending message to channel\n", sent['description'])
+                                        sendLog("Error while sending message to channel\n{}".format(sent['description']))
                                 else:
-                                    print("Aradaki fark 2 den büyük değil, işlem kesin değil. İşlem açmadım.")
+                                    sendLog("Aradaki fark 2 den büyük değil, işlem kesin değil. İşlem açmadım.")
                             elif bildirimGonderildi == 1:
                                 if aradakiFark > 2:
                                     bildirimGonderildi = 2
                                     coind[xd]['bildirimGonderildi'] = bildirimGonderildi
                                     kesisti = 1
                                     coind[xd]['kesisti'] = kesisti
-                                    print(f"trying to send notification for buy {TRADE_SYMBOL} from {coinAlimEmriDeger} USDT")
+                                    sendLog(f"trying to send notification for buy {TRADE_SYMBOL} from {coinAlimEmriDeger} USDT")
                                     sent = sendTelegram(channelId, f"------ALIŞ EMRI------\nCoin Sembol: {TRADE_SYMBOL}\nMum Kapanışı: {coinDeger}\nEmir Koyulacak Fiyat: {coinAlimEmriDeger}")
                                     if sent['ok'] == True:
-                                        print(f"------BUY ORDER------\nCoin Symbol: {TRADE_SYMBOL}\nCandle Close: {coinDeger}\nOrder Price: {coinAlimEmriDeger}")
+                                        sendLog(f"------BUY ORDER------\nCoin Symbol: {TRADE_SYMBOL}\nCandle Close: {coinDeger}\nOrder Price: {coinAlimEmriDeger}")
+                                        orderAc(str(xd), coinAlimEmriDeger, kusur, "al")
                                         kesisti = 0
                                         coind[xd]['kesisti'] = kesisti
                                     else:
-                                        print("Error while sending message to channel\n", sent['description'])
+                                        sendLog("Error while sending message to channel\n{}".format(sent['description']))
                                     kesisme = 1
                                     coind[xd]['kesisti'] = kesisti
                                 else:
-                                    print("Aradaki fark 2 den büyük değil, işlem kesin değil. İşlem açmadım.")
+                                    sendLog("Aradaki fark 2 den büyük değil, işlem kesin değil. İşlem açmadım.")
                         else:
-                            print("Kesişme yok.")
+                            sendLog("Kesişme yok.")
                             kesisme = 0
                             coind[xd]['kesisti'] = kesisti
             
