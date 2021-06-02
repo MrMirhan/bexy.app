@@ -1,11 +1,11 @@
 {
-    "userId": 10001,
-    "telegramChatId": 610957248,
-    "membershipLevel": 4,
-    "coinLimit": 0,
-    "maxActiveOrders": 4,
-    "orderBudgetLimit": 7,
     "automaticClose": "true",
-    "long": "false",
-    "short": "true"
+    "coinLimit": 0,
+    "long": "true",
+    "maxActiveOrders": 4,
+    "membershipLevel": 4,
+    "orderBudgetLimit": 7,
+    "short": "false",
+    "telegramChatId": 610957248,
+    "userId": 10001
 }

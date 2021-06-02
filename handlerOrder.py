@@ -147,61 +147,55 @@ def getOrder(id, symbol, apiKey, apiSecret):
 def checkPnl(threadId, args):
     orderId = str(args['orderId'])
     symbol = str(args['symbol'])
-    coin = str(args['coin']).upper()
     orderType = str(args['orderType'])
-    coinAlimEmriDeger = float(args['coinAlimEmriDeger'])
-    quantity = int(args['quantity'])
+    quantity = str(args['quantity'])
     userId = str(args['userId'])
-    spent = float(args['spent'])
-    apiId = int(args['apiId'])
-    islemBaslamaTime = int(round(int(threadId)))
-    anlikTime = int(round(time.time() * 1000))
-
+    spent = str(args['spent'])
+    apiId = str(args['apiId'])
     positionOrderJsonFile = open("users/{}/positionOrders.json".format(userId), "r+")
     configJsonFile = open("users/{}/config.json".format(userId), "r+")
     apiJsonFile = open("users/{}/binanceApiKeys.json".format(userId), "r+")
     pnlJsonFile = open("users/{}/pnlHistory.json".format(userId), "r+")
-    positionHistoryJsonFile = open("users/{}/positionHistory.json".format(userId), "r+")
-    coinsJsonFile = open("users/{}/coins.json".format(userId), "r+")
                 
     positionOrders = json.load(positionOrderJsonFile)
     userConfig = json.load(configJsonFile)
     userApis = json.load(apiJsonFile)
     pnlHistory = json.load(pnlJsonFile)
-    positionHistory = json.load(positionHistoryJsonFile)
-    userCoins = json.load(coinsJsonFile)
 
-    api = [x for x in userApis if x['apiKeyId'] == int(apiId)]
+    api = [x for x in userApis if int(x['apiKeyId']) == int(apiId)]
     api = api[0]
     apiKey = api['apiKey']
     apiSecret = api['apiSecret']
-    apiName = api['apiName']
     client = Client(apiKey, apiSecret)
-    order = getOrder(orderId, symbol, apiKey, apiSecret)
-    status = order['status']
     positions = client.futures_account(recvWindow=50000, timestamp=round(time.time() * 1000))['positions']
-    position = [y for y in positions if y['symbol'] == symbol]
+    position = [y for y in positions if str(y['symbol']) == str(symbol)]
+    print(position)
     pnl = float(position[0]['unrealizedProfit'])
     karzarar = "KÂR"
     if pnl < 0: karzarar = "ZARAR"
-    orderId = str(order['orderId'])
     positionAmount = float(position[0]['positionAmt'])
-    openPositions = [z for z in positions if z['orderId'] == orderId]
     if positionAmount == 0:
         scheduler.remove_job(f"{threadId}", jobstore=None)
-        print(len(openPositions))
-        if len(openPositions) > -1:
-            if openPositions['apiId'] == apiId:
-                mesaj =  "------İŞLEMDEN  MANUEL ÇIKILDI ({})------\nCoin Sembol: {}\nİşlem Tipi: {}\nİşlem Id: {}\nMiktar: {}\nHarcama: {}\nPNL: {}".format(karzarar, orderType, orderType, orderId, quantity, spent, pnl)
-                sendTelegram(str(userConfig['telegramChatId']), mesaj)
-                sendLog(mesaj)
-                with open("users/{}/positionOrders.json".format(userId), encoding='utf-8') as json_data:
-                    nations = json.load(json_data)
-                nations_new = [x for x in nations if x['coin'] != coin]
-                with open("users/{}/positionOrders.json".format(userId), mode='w', encoding='utf-8') as json_data:
-                    json.dump(nations_new, json_data, indent=2)
+        openPositions = [z for z in positionOrders if str(z['orderId']) == str(orderId)]
+        if openPositions:
+            mesaj =  "------İŞLEMDEN  MANUEL ÇIKILDI ({})------\nCoin Sembol: {}\nİşlem Tipi: {}\nİşlem Id: {}\nMiktar: {}\nHarcama: {}\nPNL: {}".format(karzarar, symbol, orderType, orderId, quantity, spent, pnl)
+            sendTelegram(str(userConfig['telegramChatId']), mesaj)
+            sendLog(mesaj)
+            with open("users/{}/positionOrders.json".format(userId), encoding='utf-8') as json_data:
+                nations = json.load(json_data)
+            nations_new = [x for x in nations if x['orderId'] != orderId]
+            with open("users/{}/positionOrders.json".format(userId), mode='w', encoding='utf-8') as json_data:
+                json.dump(nations_new, json_data, indent=2)                
     else:
-        sendLog(len(openPositions))
+        if pnl > 1:
+            mesaj =  "------KÂR {}$------\nCoin Sembol: {}\nİşlem Tipi: {}\nİşlem Id: {}\nMiktar: {}\nHarcama: {}\nPNL: {}\nDaha fazla risk almamak için işlemden çıkmanızı öneriyoruz.".format(pnl, symbol, orderType, orderId, quantity, spent, pnl)
+            sendTelegram(str(userConfig['telegramChatId']), mesaj)
+            sendLog(mesaj)
+        elif pnl < -1:
+            mesaj =  "------ZARAR {}$------\nCoin Sembol: {}\nİşlem Tipi: {}\nİşlem Id: {}\nMiktar: {}\nHarcama: {}\nPNL: {}\nDaha fazla risk almak ve zarar etmemek için işlemden çıkmanızı öneriyoruz.".format(pnl, symbol, orderType, orderId, quantity, spent, pnl)
+            sendTelegram(str(userConfig['telegramChatId']), mesaj)
+            sendLog(mesaj)
+
 def orderCheck(threadId, args):
     orderId = str(args['orderId'])
     symbol = str(args['symbol'])
@@ -210,7 +204,6 @@ def orderCheck(threadId, args):
     coinAlimEmriDeger = float(args['coinAlimEmriDeger'])
     side = str(args['side'])
     quantity = int(args['quantity'])
-    beforeBudget = float(args['beforeBudget'])
     spent = float(args['spent'])
     apiId = int(args['apiId'])
     islemBaslamaTime = int(round(int(threadId)))
@@ -249,7 +242,7 @@ def orderCheck(threadId, args):
             sendTelegram(str(userConfig['telegramChatId']), mesaj)
             with open("users/{}/openOrders.json".format(userId), encoding='utf-8') as json_data:
                 nations = json.load(json_data)
-            nations_new = [x for x in nations if x['coin'] != coin]
+            nations_new = [x for x in nations if str(x['orderId']) != str(orderId)]
             with open("users/{}/openOrders.json".format(userId), mode='w', encoding='utf-8') as json_data:
                 json.dump(nations_new, json_data, indent=2)
     elif status == "CANCELED":
@@ -259,7 +252,7 @@ def orderCheck(threadId, args):
         sendTelegram(str(userConfig['telegramChatId']), mesaj)
         with open("users/{}/openOrders.json".format(userId), encoding='utf-8') as json_data:
             nations = json.load(json_data)
-        nations_new = [x for x in nations if x['coin'] != coin]
+        nations_new = [x for x in nations if str(x['orderId']) != str(orderId)]
         with open("users/{}/openOrders.json".format(userId), mode='w', encoding='utf-8') as json_data:
             json.dump(nations_new, json_data, indent=2)
     elif status != "NEW":
@@ -271,7 +264,7 @@ def orderCheck(threadId, args):
         createThread("pnl", args)
         with open("users/{}/openOrders.json".format(userId), encoding='utf-8') as json_data:
             nations = json.load(json_data)
-        nations_new = [x for x in nations if x['coin'] != coin]
+        nations_new = [x for x in nations if str(x['orderId']) != str(orderId)]
         with open("users/{}/openOrders.json".format(userId), mode='w', encoding='utf-8') as json_data:
             json.dump(nations_new, json_data, indent=2)
         sendLog("Order successfully deleted from opened orders json.")
@@ -288,27 +281,176 @@ def orderCheck(threadId, args):
             json.dump(feeds, feedsjson, indent=2)
         sendLog("Order successfully added to positions history json.")
 
-def startCheck():
-    for dirs in os.walk("users"):
-        usersArray = dirs[1]
-        for user in usersArray:
-            openOrdersJsonFile = open("1users/{}/openOrders.json".format(user), "r+")
-            positionOrderJsonFile = open("users/{}/positionOrders.json".format(user), "r+")
-            configJsonFile = open("users/{}/config.json".format(user), "r+")
-            apiJsonFile = open("users/{}/binanceApiKeys.json".format(user), "r+")
-                                
-            openOrders = json.load(openOrdersJsonFile)
-            positionOrders = json.load(positionOrderJsonFile)
-            userConfig = json.load(configJsonFile)
-            userApis = json.load(apiJsonFile)
-            
-            for order in openOrders:
-                createThread("check", {"orderId": order['orderId'], "symbol":  str(order['coin']).upper() + "USDT", "side": order['orderType'], "coin": str(order['coin']).ower(), "orderType": order['orderType'], "coinAlimEmriDeger": order['entryPrice'], "quantity": order['bougthQuantity'], "beforeBudget": order['orderType'], "spent": order['spentMoney'], "userId": userConfig['userId'], "apiId": order['apiId']})
-            for position in positionOrders:
-                createThread("pnl", {"orderId": position['orderId'], "symbol":  str(position['coin']).upper() + "USDT", "side": position['orderType'], "coin": str(position['coin']).ower(), "orderType": position['orderType'], "coinAlimEmriDeger": position['entryPrice'], "quantity": position['bougthQuantity'], "beforeBudget": position['orderType'], "spent": order['spentMoney'], "userId": userConfig['userId'], "apiId": position['apiId']})
+def socketClose():
+    jsonFile = open("coins.json", "r+")
+    coins = json.load(jsonFile)
+    jsonFile.close()
+    coinList = coins.keys()
+    for coin in coinList:
+        coins[coin]['bildirimGonderildi'] = 0
+        coins[coin]['eskiUstte'] = 0
+        coins[coin]['ustte'] = 0
+        coins[coin]['kesisti'] = 0
+    jsonFile = open("coins.json", "w+")
+    jsonFile.write(json.dumps(coins, indent = 4, sort_keys=True))
+    jsonFile.close()
+    sendLog('All coins datas resetted successfully.')
+
+def closeCoin(threadId, args):
+    userId = str(args['userId'])
+    chatId = str(args['chatId'])
+    if str(args['type']) == "all":
+        jsonFile = open("users/{}/coins.json".format(userId), "r+")
+        coins = json.load(jsonFile)
+        jsonFile.close()
+        coinList = coins.keys()
+        for coin in coinList:
+            if coins[coin]['active'] == 0:
+                mesaj = f"{coin} zaten deaktif olarak ayarlı."
+                sendTelegram(chatId, mesaj)
+            coins[coin]['active'] = 0
+        jsonFile = open("users/{}/coins.json".format(userId), "w+")
+        jsonFile.write(json.dumps(coins, indent = 4, sort_keys=True))
+        jsonFile.close()
+    else:
+        coin = str(args['coin']).lower()
+        jsonFile = open("users/{}/coins.json".format(userId), "r+")
+        coins = json.load(jsonFile)
+        jsonFile.close()
+        if coins[coin]['active'] == 0:
+            mesaj = f"{coin} zaten deaktif olarak ayarlı."
+            sendTelegram(chatId, mesaj)
+        coins[coin]['active'] = 0
+        jsonFile = open("users/{}/coins.json".format(userId), "w+")
+        jsonFile.write(json.dumps(coins, indent = 4, sort_keys=True))
+        jsonFile.close()
+
+def openCoin(threadId, args):
+    userId = str(args['userId'])
+    chatId = str(args['chatId'])
+    if str(args['type']) == "all":
+        jsonFile = open("users/{}/coins.json".format(userId), "r+")
+        coins = json.load(jsonFile)
+        jsonFile.close()
+        coinList = coins.keys()
+        for coin in coinList:
+            if coins[coin]['active'] == 1:
+                mesaj = f"{coin} zaten aktif olarak ayarlı."
+                sendTelegram(chatId, mesaj)
+            coins[coin]['active'] = 1
+        jsonFile = open("users/{}/coins.json".format(userId), "w+")
+        jsonFile.write(json.dumps(coins, indent = 4, sort_keys=True))
+        jsonFile.close()
+    else:
+        coin = str(args['coin']).lower()
+        jsonFile = open("users/{}/coins.json".format(userId), "r+")
+        coins = json.load(jsonFile)
+        jsonFile.close()
+        if coins[coin]['active'] == 1:
+            mesaj = f"{coin} zaten aktif olarak ayarlı."
+            sendTelegram(chatId, mesaj)
+        coins[coin]['active'] = 1
+        jsonFile = open("users/{}/coins.json".format(userId), "w+")
+        jsonFile.write(json.dumps(coins, indent = 4, sort_keys=True))
+        jsonFile.close()
+
+def openSide(threadId, args):
+    userId = str(args['userId'])
+    chatId = str(args['chatId'])
+    if str(args['type']) == "all":
+        jsonFile = open("users/{}/config.json".format(userId), "r+")
+        config = json.load(jsonFile)
+        jsonFile.close()
+        if config['long'] == "true":
+            mesaj = "Long işlem ayarınız zaten açık."
+            sendTelegram(chatId, mesaj)
+        config['long'] = "true"
+        if config['short'] == "true":
+            mesaj = "Short işlem ayarınız zaten açık."
+            sendTelegram(chatId, mesaj)
+        config['short'] = "true"
+        jsonFile = open("users/{}/config.json".format(userId), "w+")
+        jsonFile.write(json.dumps(config, indent = 4, sort_keys=True))
+        jsonFile.close()
+        mesaj = "Short ve Long işleminiz açılmıştır."
+        sendTelegram(chatId, mesaj)
+    elif str(args['type']) == "long":
+        jsonFile = open("users/{}/config.json".format(userId), "r+")
+        config = json.load(jsonFile)
+        jsonFile.close()
+        if config['long'] == "true":
+            mesaj = "Long işlem ayarınız zaten açık."
+            sendTelegram(chatId, mesaj)
+        config['long'] = "true"
+        jsonFile = open("users/{}/config.json".format(userId), "w+")
+        jsonFile.write(json.dumps(config, indent = 4, sort_keys=True))
+        jsonFile.close()
+        mesaj = "Long işleminiz açılmıştır."
+        sendTelegram(chatId, mesaj)
+    else:
+        jsonFile = open("users/{}/config.json".format(userId), "r+")
+        config = json.load(jsonFile)
+        jsonFile.close()
+        if config['short'] == "true":
+            mesaj = "Short işlem ayarınız zaten açık."
+            sendTelegram(chatId, mesaj)
+        config['short'] = "true"
+        jsonFile = open("users/{}/config.json".format(userId), "w+")
+        jsonFile.write(json.dumps(config, indent = 4, sort_keys=True))
+        jsonFile.close()
+        mesaj = "Short işleminiz açılmıştır."
+        sendTelegram(chatId, mesaj)
+
+def closeSide(threadId, args):
+    userId = str(args['userId'])
+    chatId = str(args['chatId'])
+    if str(args['type']) == "all":
+        jsonFile = open("users/{}/config.json".format(userId), "r+")
+        config = json.load(jsonFile)
+        jsonFile.close()
+        if config['long'] == "false":
+            mesaj = "Long işlem ayarınız zaten kapalı."
+            sendTelegram(chatId, mesaj)
+        config['long'] = "false"
+        if config['short'] == "false":
+            mesaj = "Short işlem ayarınız zaten kapalı."
+            sendTelegram(chatId, mesaj)
+        config['short'] = "false"
+        jsonFile = open("users/{}/config.json".format(userId), "w+")
+        jsonFile.write(json.dumps(config, indent = 4, sort_keys=True))
+        jsonFile.close()
+        mesaj = "Short ve Long işleminiz kapatılmıştır."
+        sendTelegram(chatId, mesaj)
+    elif str(args['type']) == "long":
+        jsonFile = open("users/{}/config.json".format(userId), "r+")
+        config = json.load(jsonFile)
+        jsonFile.close()
+        if config['long'] == "false":
+            mesaj = "Long işlem ayarınız zaten kapalı."
+            sendTelegram(chatId, mesaj)
+        config['long'] = "false"
+        jsonFile = open("users/{}/config.json".format(userId), "w+")
+        jsonFile.write(json.dumps(config, indent = 4, sort_keys=True))
+        jsonFile.close()
+        mesaj = "Long işleminiz kapatılmıştır."
+        sendTelegram(chatId, mesaj)
+    else:
+        jsonFile = open("users/{}/config.json".format(userId), "r+")
+        config = json.load(jsonFile)
+        jsonFile.close()
+        if config['short'] == "false":
+            mesaj = "Short işlem ayarınız zaten kapalı."
+            sendTelegram(chatId, mesaj)
+        config['short'] = "false"
+        jsonFile = open("users/{}/config.json".format(userId), "w+")
+        jsonFile.write(json.dumps(config, indent = 4, sort_keys=True))
+        jsonFile.close()
+        mesaj = "Short işleminiz kapatılmıştır."
+        sendTelegram(chatId, mesaj)
 
 def createOrder(args):
     coin = str(args['coin']).lower()
+    sendLog('test -1')
     if args['type'] == "all":
         for dirs in os.walk("users"):
             usersArray = dirs[1]
@@ -318,19 +460,16 @@ def createOrder(args):
                 positionOrderJsonFile = open("users/{}/positionOrders.json".format(x), "r+")
                 configJsonFile = open("users/{}/config.json".format(x), "r+")
                 apiJsonFile = open("users/{}/binanceApiKeys.json".format(x), "r+")
-                pnlJsonFile = open("users/{}/pnlHistory.json".format(x), "r+")
-                positionHistoryJsonFile = open("users/{}/positionHistory.json".format(x), "r+")
                 coinsJsonFile = open("users/{}/coins.json".format(x), "r+")
-                                
+                sendLog('test 0')
                 openOrders = json.load(openOrdersJsonFile)
                 positionOrders = json.load(positionOrderJsonFile)
                 userConfig = json.load(configJsonFile)
                 userApis = json.load(apiJsonFile)
-                pnlHistory = json.load(pnlJsonFile)
-                positionHistory = json.load(positionHistoryJsonFile)
                 userCoins = json.load(coinsJsonFile)
                 userId = str(userConfig['userId'])
                 TRADE_SYMBOL = str(coin.upper()) + "USDT"
+                sendLog("test 0 + 1")
                 coinData = userCoins[coin]
                 if coinData['active'] == 1:
                     for a in coinData['apiKeys']:
@@ -341,38 +480,43 @@ def createOrder(args):
                         apiName = api['apiName']
                         apiId = api['apiKeyId']
                         client = Client(apiKey, apiSecret)
+                        sendLog("test 0 + 2")
                         side = args['side']
-                        pres = int(args['pres'])
-                        orders = client.futures_get_open_orders(symbol=TRADE_SYMBOL, recvWindow=50000, timestamp=round(time.time() * 1000))
+                        pres = args['pres']
+                        sendLog("test 0 + 3")
                         budget = float(client.futures_account_balance()[1]['balance'])
-                        open_orders = orders
+                        sendLog(budget)
+                        sendLog("test 0 + 4")
                         minusBudget = float(0)
-                        for x in open_orders:
-                            minusBudget = float(minusBudget) + float((float(x['stopPrice']) * float(x['origQty'])) / float(10))
+                        for x in openOrders:
+                            minusBudget = float(minusBudget) + float((float(x['entryPrice']) * float(x['bougthQuantity'])) / float(10))
                         for x in positionOrders:
-                            minusBudget = float(minusBudget) + float((float(x['stopPrice']) * float(x['origQty'])) / float(10))
+                            minusBudget = float(minusBudget) + float((float(x['entryPrice']) * float(x['bougthQuantity'])) / float(10))
                         availableBalance = budget - minusBudget
                         orderBudgetLimit = int(userConfig['orderBudgetLimit'])
                         alimButce = float(float(availableBalance) * float(float(orderBudgetLimit) / float(100)))
                         price = float(args['coinAlimEmriDeger'])
                         qnt = int(round(float(alimButce / price)) * 10)
-                        if str(side) == "BUY":
-                            if userConfig['long'] == "false":
+                        sendLog('test 1')
+                        if str(side).lower() == "BUY".lower():
+                            if str(userConfig['long']) == "false":
                                 mesaj = "------LONG İŞLEM KAPALI------\nLong işlem ayarınız kapalı olduğundan bu işleme girilmedi."
                                 sendLog(str(mesaj) + " " + str(userId))
                                 sendTelegram(str(userConfig['telegramChatId']), mesaj)
                                 return
-                        elif str(side) == "SELL":
-                            if userConfig['short'] == "false":
+                        elif str(side).lower() == "SELL".lower():
+                            if str(userConfig['short']) == "false":
                                 mesaj = "------SHORT İŞLEM KAPALI------\nShort işlem ayarınız kapalı olduğundan bu işleme girilmedi."
                                 sendLog(str(mesaj) + " " + str(userId))
                                 sendTelegram(str(userConfig['telegramChatId']), mesaj)
                                 return
+                        sendLog('test 2')
                         if availableBalance < alimButce:
                             mesaj = "------YETERSİZ BAKİYE------\nİşlem İçin Gereken Tutar: {}\nHesabınızdaki Kullanılabilir Bakiye: {}\nİşleme bakiyeniz yetersiz olduğu için girilemedi.".format(availableBalance, alimButce)
                             sendLog(str(mesaj) + " " + str(userId))
                             sendTelegram(str(userConfig['telegramChatId']), mesaj)
                             return
+                        sendLog('test 3')
                         sameOrder = [x for x in openOrders if x['coin'] == str(coin).upper()]
                         samePosition = [x for x in positionOrders if x['coin'] == str(coin).upper()]
                         if len(samePosition) > 1 or len(sameOrder) > 0:
@@ -381,16 +525,18 @@ def createOrder(args):
                                 sendLog(str(mesaj) + " " + str(userId))
                                 sendTelegram(str(userConfig['telegramChatId']), mesaj)
                             return
+                        sendLog('test 4')
                         apiOpenOrders = [x for x in openOrders if x['apiId'] == int(apiId)]
                         if len(apiOpenOrders) == int(userConfig['maxActiveOrders']):
                             mesaj = "------MAKS İŞLEM LİMİTİ------\nKoyulan Maks İşlem Limiti: {}\nApi Adı: {}\nApi ID: {}\nBelirlemiş olduğunuz aynı anda maksimum işlem limiti aşılacak olduğu için yeni işleme girilemedi.".format(int(userConfig['maxActiveOrders']), apiName, apiId)
                             sendLog(str(mesaj) + " " + str(userId))
                             sendTelegram(str(userConfig['telegramChatId']), mesaj)
                             return
+                        sendLog('test 5')
                         try:
                             sendLog("Order Request Sending to Binance" + " " + str(userId))
                             order = client.futures_create_order(symbol=TRADE_SYMBOL, side=side, type="STOP", timeInForce = "GTC", quantity = qnt, price=price, stopPrice=price, recvWindow=50000, timestamp=round(time.time() * 1000))
-                            appendOrder = {"coin": coin.upper(), "orderId": order['orderId'], "entryPrice": price, "bougthQuantity": qnt, "spentMoney": alimButce, "orderType": side, "apiId": int(apiId)}
+                            appendOrder = {"coin": coin.upper(), "orderId": order['orderId'], "entryPrice": price, "bougthQuantity": qnt, "spentMoney": alimButce, "orderType": side, "userId": userId, "apiId": int(apiId)}
                             with open("users/{}/openOrders.json".format(userId), mode='r', encoding='utf-8') as feedsjson:
                                 feeds = json.load(feedsjson)
                             with open("users/{}/openOrders.json".format(userId), mode='w', encoding='utf-8') as feedsjson:
@@ -403,7 +549,7 @@ def createOrder(args):
                                 json.dump(feeds, feedsjson, indent=2)
                             mesaj = "------EMİR KOYULDU------\nCoin Sembol: {}\nİşlem Tipi: {}\nİşlem Id: {}\nAlım Miktarı: {}\nAlım Yapılacak Değer: {}\nHarcanan Tutar: {}\nİşlem Öncesi Kullanılabilir Bakiye: {}".format(TRADE_SYMBOL, side, order['orderId'], qnt, price, alimButce, availableBalance)
                             sendTelegram(str(userConfig['telegramChatId']), mesaj)
-                            createThread("check", {"orderId": order['orderId'], "symbol": TRADE_SYMBOL, "side": side, "coin": coin, "orderType": side, "coinAlimEmriDeger": price, "quantity": qnt, "beforeBudget": availableBalance, "spent": alimButce, "userId": userId, "apiId": a})
+                            createThread("check", {"orderId": order['orderId'], "symbol": TRADE_SYMBOL, "side": side, "coin": coin, "orderType": side, "coinAlimEmriDeger": price, "quantity": qnt, "spent": alimButce, "userId": userId, "apiId": a})
                             return order
                         except Exception as e:
                             mesaj = "an exception occured - {}".format(e)
@@ -432,7 +578,9 @@ def alimYap(threadId, args):
             orderTypex = "BUY"
         else:
             orderTypex = "SELL"
-        order = createOrder({"coin": coin, "side": orderTypex, "coinAlimEmriDeger": coinAlimEmriDeger, "pres": pres, "type": str(args['type'])})
+        mesaj = "{} order request for {} came. Sending to orderCreate function.".format(str(orderTypex), str(coin))
+        sendLog(mesaj)
+        order = createOrder({"coin": coin, "side": orderTypex, "coinAlimEmriDeger": coinAlimEmriDeger, "pres": int(args['pres']), "type": "all"})
         if order == "immediately":
             while True:
                 time.sleep(0.3)
@@ -447,7 +595,7 @@ def alimYap(threadId, args):
                 else:
                     orderTypex = "SELL"
                     coinAlimEmriDegerx = float(coinDeger + ((coinDeger / float(100)) * float(0.125)))
-                order = createOrder({"coin": coin, "side": orderTypex, "coinAlimEmriDeger": coinAlimEmriDegerx, "pres": pres, "type": str(args['type'])})
+                order = createOrder({"coin": coin, "side": orderTypex, "coinAlimEmriDeger": coinAlimEmriDegerx, "pres": pres, "type": str(args['type']), "type": "all"})
                 if order == "immediately":
                         continue
                 elif order == "pres":
@@ -459,18 +607,69 @@ def alimYap(threadId, args):
         else:
             return
 
-
 def createThread(type, args):
     threadId = round(time.time() * 1000)
-    if type == 'cancel':
-        scheduler.add_job(func=orderCancel, args=[threadId, args], trigger=None, id=f"{threadId}")
-    elif type == 'check':
-        scheduler.add_job(func=orderCheck, args=[threadId, args], trigger="interval", id=f"{threadId}", seconds=1)
-    elif type == 'pnl':
-        scheduler.add_job(func=checkPnl, args=[threadId, args], trigger="interval", id=f"{threadId}", seconds=1)
-    elif type == 'create':
-        scheduler.add_job(func=alimYap, args=[threadId, args], trigger=None, id=f"{threadId}")
+    if str(type) == "cancel":
+        return scheduler.add_job(func=orderCancel, args=[threadId, args], trigger=None, id=f"{threadId}")
+    elif str(type) ==  "check":
+        return scheduler.add_job(func=orderCheck, args=[threadId, args], trigger="interval", id=f"{threadId}", seconds=1)
+    elif str(type) ==  "pnl":
+        return scheduler.add_job(func=checkPnl, args=[threadId, args], trigger="interval", id=f"{threadId}", seconds=1)
+    elif str(type) ==  "create":
+        return scheduler.add_job(func=alimYap, args=[threadId, args], trigger=None, id=f"{threadId}")
+    elif str(type) ==  "close":
+        return scheduler.add_job(func=closeCoin, args=[threadId, args], trigger=None, id=f"{threadId}")
+    elif str(type) ==  "open":
+        return scheduler.add_job(func=openCoin, args=[threadId, args], trigger=None, id=f"{threadId}")
+    elif str(type) ==  "sideClose":
+        return scheduler.add_job(func=closeSide, args=[threadId, args], trigger=None, id=f"{threadId}")
+    elif str(type) ==  "sideOpen":
+        return scheduler.add_job(func=openSide, args=[threadId, args], trigger=None, id=f"{threadId}")
 
 def stopJobs():
     scheduler.remove_all_jobs(jobstore=None)
     scheduler.shutdown(wait=False)
+
+def startCheck():
+    sendLog("Started to check open and position orders.")
+    orders = 0
+    for dirs in os.walk("users"):
+        usersArray = dirs[1]
+        for user in usersArray:
+            user = str(user)
+            openOrdersJsonFile = open("users/{}/openOrders.json".format(user), "r+")
+            positionOrderJsonFile = open("users/{}/positionOrders.json".format(user), "r+")
+            configJsonFile = open("users/{}/config.json".format(user), "r+")
+                                
+            openOrders = json.load(openOrdersJsonFile)
+            positionOrders = json.load(positionOrderJsonFile)
+            userConfig = json.load(configJsonFile)
+            for position in positionOrders:
+                orders = orders + 1
+                orderId = str(position['orderId'])
+                symbol = str(position['coin']).upper() + "USDT"
+                side = str(position['orderType'])
+                coin = str(position['coin']).lower()
+                orderType = str(position['orderType'])
+                coinAlimEmriDeger = str(position['entryPrice'])
+                quantity = str(position['bougthQuantity'])
+                spent = str(position['spentMoney'])
+                userId = str(userConfig['userId'])
+                apiId = str(position['apiId'])
+                createThread("pnl", {"orderId": orderId, "symbol": symbol, "side": side, "coin": coin, "orderType": orderType, "coinAlimEmriDeger": coinAlimEmriDeger, "quantity": quantity, "spent": spent, "userId": userId, "apiId": apiId})
+                sendLog(f"checking position {orderId}")
+            for order in openOrders:
+                orders = orders + 1
+                orderId = str(order['orderId'])
+                symbol = str(order['coin']).upper() + "USDT"
+                side = str(order['orderType'])
+                coin = str(order['coin']).lower()
+                orderType = str(order['orderType'])
+                coinAlimEmriDeger = str(order['entryPrice'])
+                quantity = str(order['bougthQuantity'])
+                spent = str(order['spentMoney'])
+                userId = str(userConfig['userId'])
+                apiId = str(order['apiId'])
+                createThread("check", {"orderId": orderId, "symbol": symbol, "side": side, "coin": coin, "orderType": orderType, "coinAlimEmriDeger": coinAlimEmriDeger, "quantity": quantity, "spent": spent, "userId": userId, "apiId": apiId})
+                sendLog(f"checking order {orderId}")
+    sendLog('Old orders and positions checking finished. Total checked positions and order is: ' + str(orders))

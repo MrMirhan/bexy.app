@@ -9,7 +9,7 @@ import requests
 from binance.client import Client
 from binance.enums import *
 from binance.exceptions import BinanceAPIException, BinanceOrderException
-import time
+import time, datetime
 import json
 from tradingview_ta import TA_Handler, Interval, Exchange
 from decimal import Decimal
@@ -20,13 +20,6 @@ from telepot.delegate import per_chat_id, create_open, pave_event_space, per_inl
 from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, ForceReply
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 from telepot.namedtuple import InlineQueryResultArticle, InlineQueryResultPhoto, InputTextMessageContent
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC1, wait
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
 import decimal
 import handlerOrder as oh
 import json
@@ -48,11 +41,14 @@ def on_open(ws):
                   'chosen_inline_result': on_chosen_inline_result}).run_as_thread()
     print('Listening ...')
     oh.startCheck()
+    oh.socketClose()
 
 def on_close(ws):
     print('Socket connection ended.')
     sendLog('Process stopped.')
     oh.stopJobs()
+    oh.socketClose()
+    quit()
 
 def generateStochasticRSI(close_array, timeperiod=14):
     rsi = talib.RSI(close_array, timeperiod)
@@ -61,6 +57,13 @@ def generateStochasticRSI(close_array, timeperiod=14):
         rsi, rsi, rsi, fastk_period=14, slowk_period=3, slowd_period=3)
     return stochrsif, stochrsis
 
+try:
+    client = Client(config.API_KEY, config.API_SECRET)
+    budget = client.futures_account(recvWindow=50000, timestamp=round(time.time() * 1000))
+    sendLog("Client successfully connected.")
+except:
+    sendLog("While connection to client an error occured.")
+    on_close("no")
 
 def format_number(num):
     try:
@@ -102,8 +105,7 @@ def check(ws, message):
                 ustte = coin['ustte']
                 kesisti = coin['kesisti']
                 eskiUstte = coin['eskiUstte']
-                
-                client = Client(config.API_KEY, config.API_SECRET)
+            
                 TRADE_SYMBOL = xd.upper() + "USDT"
 
                 close = str(float(requests.get("https://api.binance.com/api/v3/avgPrice?symbol={}".format(TRADE_SYMBOL)).json()['price']))

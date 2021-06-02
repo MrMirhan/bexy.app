@@ -1,77 +1,91 @@
 {
-    "ada":{
+    "ada": {
         "active": 1,
-        "apiKeys":[
+        "apiKeys": [
             "900001"
         ]
-    }, "dent":{
+    },
+    "algo": {
         "active": 1,
-        "apiKeys":[
+        "apiKeys": [
             "900001"
         ]
-    }, "storj":{
+    },
+    "btt": {
         "active": 1,
-        "apiKeys":[
+        "apiKeys": [
             "900001"
         ]
-    }, "btt":{
+    },
+    "dent": {
         "active": 1,
-        "apiKeys":[
+        "apiKeys": [
             "900001"
         ]
-    }, "vet":{
+    },
+    "doge": {
         "active": 1,
-        "apiKeys":[
+        "apiKeys": [
             "900001"
         ]
-    }, "doge":{
+    },
+    "hot": {
         "active": 1,
-        "apiKeys":[
+        "apiKeys": [
             "900001"
         ]
-    }, "hot":{
+    },
+    "mtl": {
         "active": 1,
-        "apiKeys":[
+        "apiKeys": [
             "900001"
         ]
-    }, "sxp":{
+    },
+    "one": {
         "active": 1,
-        "apiKeys":[
+        "apiKeys": [
             "900001"
         ]
-    }, "xlm":{
+    },
+    "reef": {
         "active": 1,
-        "apiKeys":[
+        "apiKeys": [
             "900001"
         ]
-    }, "algo":{
+    },
+    "storj": {
         "active": 1,
-        "apiKeys":[
+        "apiKeys": [
             "900001"
         ]
-    }, "mtl":{
+    },
+    "sxp": {
         "active": 1,
-        "apiKeys":[
+        "apiKeys": [
             "900001"
         ]
-    }, "trx":{
+    },
+    "trx": {
         "active": 1,
-        "apiKeys":[
+        "apiKeys": [
             "900001"
         ]
-    }, "reef":{
-        "active": 0,
-        "apiKeys":[
+    },
+    "vet": {
+        "active": 1,
+        "apiKeys": [
             "900001"
         ]
-    }, "one":{
+    },
+    "xlm": {
         "active": 1,
-        "apiKeys":[
+        "apiKeys": [
             "900001"
         ]
-    }, "xrp":{
+    },
+    "xrp": {
         "active": 1,
-        "apiKeys":[
+        "apiKeys": [
             "900001"
         ]
     }

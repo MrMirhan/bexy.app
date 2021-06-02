@@ -5,5 +5,7 @@
     "coinLimit": 0,
     "maxActiveOrders": 3,
     "orderBudgetLimit": 5,
-    "automaticClose": "true"
+    "automaticClose": "true",
+    "long": "true",
+    "short": "true"
 }
