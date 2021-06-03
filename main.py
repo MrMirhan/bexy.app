@@ -35,20 +35,25 @@ bot = telepot.Bot(TOKEN)
 answerer = telepot.helper.Answerer(bot)
 
 def on_open(ws):
-    print('Socket connection started.')
+    sendLog("Bexy started to working. Version is: " + config.branch + " " + config.version)
+    sendLog('Socket connection started.')
     MessageLoop(bot, {'chat': on_chat_message,
                   'callback_query': on_callback_query,
                   'chosen_inline_result': on_chosen_inline_result}).run_as_thread()
-    print('Listening ...')
+    sendLog('Listening ...')
     oh.startCheck()
     oh.socketClose()
 
 def on_close(ws):
-    print('Socket connection ended.')
+    sendLog('Socket connection ended.')
     sendLog('Process stopped.')
     oh.stopJobs()
     oh.socketClose()
     quit()
+
+if config.run != True:
+        sendLog("Config'den gelen yanıt çalışmamam gerektiğini söylüyor.")
+        on_close()
 
 def generateStochasticRSI(close_array, timeperiod=14):
     rsi = talib.RSI(close_array, timeperiod)
@@ -89,6 +94,9 @@ def orderAc(coin, coinAlimEmriDeger, pres, type):
     oh.createThread("create", {"orderType": str(type), "coinAlimEmriDeger": float(coinAlimEmriDeger), "pres": int(pres), "coin": str(coin).lower(), "type": "all"})
 
 def check(ws, message):
+    if config.run != True:
+        sendLog("Config'den gelen yanıt çalışmamam gerektiğini söylüyor.")
+        on_close()
     coins = ["ada", "dent", "storj", "btt", "vet", "doge", "hot", "sxp", "xlm", "algo", "mtl", "trx", "reef", "one", "xrp"]
     json_message = json.loads(message)
     candle = json_message['k']
