@@ -53,7 +53,7 @@ def on_close(ws):
 
 if config.run != True:
         sendLog("Config'den gelen yanıt çalışmamam gerektiğini söylüyor.")
-        on_close()
+        on_close("a")
 
 def generateStochasticRSI(close_array, timeperiod=14):
     rsi = talib.RSI(close_array, timeperiod)
@@ -96,7 +96,7 @@ def orderAc(coin, coinAlimEmriDeger, pres, type):
 def check(ws, message):
     if config.run != True:
         sendLog("Config'den gelen yanıt çalışmamam gerektiğini söylüyor.")
-        on_close()
+        on_close("a")
     coins = ["ada", "dent", "storj", "btt", "vet", "doge", "hot", "sxp", "xlm", "algo", "mtl", "trx", "reef", "one", "xrp"]
     json_message = json.loads(message)
     candle = json_message['k']

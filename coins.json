@@ -1,107 +1,107 @@
 {
     "ada": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 2,
+        "eskiUstte": 0,
         "kesisti": 0,
         "pres": 4,
-        "ustte": 1
+        "ustte": 0
     },
     "algo": {
-        "bildirimGonderildi": 2,
-        "eskiUstte": 1,
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
         "kesisti": 0,
         "pres": 4,
-        "ustte": 2
+        "ustte": 0
     },
     "btt": {
-        "bildirimGonderildi": 2,
-        "eskiUstte": 1,
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
         "kesisti": 0,
         "pres": 6,
-        "ustte": 2
+        "ustte": 0
     },
     "dent": {
-        "bildirimGonderildi": 2,
-        "eskiUstte": 1,
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
         "kesisti": 0,
         "pres": 6,
-        "ustte": 2
+        "ustte": 0
     },
     "doge": {
-        "bildirimGonderildi": 2,
-        "eskiUstte": 2,
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
         "kesisti": 0,
         "pres": 5,
-        "ustte": 1
+        "ustte": 0
     },
     "hot": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 1,
+        "eskiUstte": 0,
         "kesisti": 0,
         "pres": 6,
-        "ustte": 2
+        "ustte": 0
     },
     "mtl": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 1,
+        "eskiUstte": 0,
         "kesisti": 0,
         "pres": 4,
-        "ustte": 2
+        "ustte": 0
     },
     "one": {
-        "bildirimGonderildi": 2,
-        "eskiUstte": 1,
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
         "kesisti": 0,
         "pres": 5,
-        "ustte": 2
+        "ustte": 0
     },
     "reef": {
-        "bildirimGonderildi": 2,
-        "eskiUstte": 1,
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
         "kesisti": 0,
         "pres": 6,
-        "ustte": 2
+        "ustte": 0
     },
     "storj": {
-        "bildirimGonderildi": 2,
-        "eskiUstte": 1,
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
         "kesisti": 0,
         "pres": 4,
-        "ustte": 2
+        "ustte": 0
     },
     "sxp": {
-        "bildirimGonderildi": 2,
-        "eskiUstte": 2,
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
         "kesisti": 0,
         "pres": 4,
-        "ustte": 1
+        "ustte": 0
     },
     "trx": {
-        "bildirimGonderildi": 2,
-        "eskiUstte": 2,
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
         "kesisti": 0,
         "pres": 5,
-        "ustte": 1
+        "ustte": 0
     },
     "vet": {
-        "bildirimGonderildi": 2,
-        "eskiUstte": 2,
+        "bildirimGonderildi": 0,
+        "eskiUstte": 0,
         "kesisti": 0,
         "pres": 5,
-        "ustte": 1
+        "ustte": 0
     },
     "xlm": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 1,
+        "eskiUstte": 0,
         "kesisti": 0,
         "pres": 5,
-        "ustte": 2
+        "ustte": 0
     },
     "xrp": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 1,
+        "eskiUstte": 0,
         "kesisti": 0,
         "pres": 4,
-        "ustte": 2
+        "ustte": 0
     }
 }
