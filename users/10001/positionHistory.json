@@ -748,5 +748,89 @@
     "pnl": 0.0,
     "roe": "0",
     "apiId": 900001
+  },
+  {
+    "coin": "REEF",
+    "orderId": "737388926",
+    "entryPrice": 0.026503,
+    "markPrice": 0.0,
+    "bougthQuantity": 3350.0,
+    "spentMoney": 8.8672427263,
+    "orderType": "BUY",
+    "pnl": 0.0,
+    "roe": "0",
+    "apiId": 900001
+  },
+  {
+    "coin": "REEF",
+    "orderId": "738271889",
+    "entryPrice": 0.026217,
+    "markPrice": 0.0,
+    "bougthQuantity": 3140.0,
+    "spentMoney": 8.226861726300001,
+    "orderType": "BUY",
+    "pnl": 0.0,
+    "roe": "0",
+    "apiId": 900001
+  },
+  {
+    "coin": "MTL",
+    "orderId": "276712497",
+    "entryPrice": 2.3323,
+    "markPrice": 0.0,
+    "bougthQuantity": 40.0,
+    "spentMoney": 8.8799057263,
+    "orderType": "BUY",
+    "pnl": 0.0,
+    "roe": "0",
+    "apiId": 900001
+  },
+  {
+    "coin": "SXP",
+    "orderId": "6489250113",
+    "entryPrice": 2.2407,
+    "markPrice": 0.0,
+    "bougthQuantity": 40.0,
+    "spentMoney": 8.3137360663,
+    "orderType": "SELL",
+    "pnl": 0.0,
+    "roe": "0",
+    "apiId": 900001
+  },
+  {
+    "coin": "TRX",
+    "orderId": "3997183242",
+    "entryPrice": 0.07872,
+    "markPrice": 0.0,
+    "bougthQuantity": 980.0,
+    "spentMoney": 7.686340066300001,
+    "orderType": "SELL",
+    "pnl": 0.0,
+    "roe": "0",
+    "apiId": 900001
+  },
+  {
+    "coin": "STORJ",
+    "orderId": "2172782118",
+    "entryPrice": 1.1369,
+    "markPrice": 0.0,
+    "bougthQuantity": 70.0,
+    "spentMoney": 7.6870260663000005,
+    "orderType": "BUY",
+    "pnl": 0.0,
+    "roe": "0",
+    "apiId": 900001
+  },
+  {
+    "coin": "DOGE",
+    "orderId": "6281612870",
+    "entryPrice": 0.41408,
+    "markPrice": 0.0,
+    "bougthQuantity": 170.0,
+    "spentMoney": 7.1299450663,
+    "orderType": "BUY",
+    "pnl": 0.0,
+    "roe": "0",
+    "apiId": 900001
   }
 ]

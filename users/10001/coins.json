@@ -1,90 +1,90 @@
 {
     "ada": {
-        "active": 1,
+        "active": 0,
         "apiKeys": [
             "900001"
         ]
     },
     "algo": {
-        "active": 1,
+        "active": 0,
         "apiKeys": [
             "900001"
         ]
     },
     "btt": {
-        "active": 1,
+        "active": 0,
         "apiKeys": [
             "900001"
         ]
     },
     "dent": {
-        "active": 1,
+        "active": 0,
         "apiKeys": [
             "900001"
         ]
     },
     "doge": {
-        "active": 1,
+        "active": 0,
         "apiKeys": [
             "900001"
         ]
     },
     "hot": {
-        "active": 1,
+        "active": 0,
         "apiKeys": [
             "900001"
         ]
     },
     "mtl": {
-        "active": 1,
+        "active": 0,
         "apiKeys": [
             "900001"
         ]
     },
     "one": {
-        "active": 1,
+        "active": 0,
         "apiKeys": [
             "900001"
         ]
     },
     "reef": {
-        "active": 1,
+        "active": 0,
         "apiKeys": [
             "900001"
         ]
     },
     "storj": {
-        "active": 1,
+        "active": 0,
         "apiKeys": [
             "900001"
         ]
     },
     "sxp": {
-        "active": 1,
+        "active": 0,
         "apiKeys": [
             "900001"
         ]
     },
     "trx": {
-        "active": 1,
+        "active": 0,
         "apiKeys": [
             "900001"
         ]
     },
     "vet": {
-        "active": 1,
+        "active": 0,
         "apiKeys": [
             "900001"
         ]
     },
     "xlm": {
-        "active": 1,
+        "active": 0,
         "apiKeys": [
             "900001"
         ]
     },
     "xrp": {
-        "active": 1,
+        "active": 0,
         "apiKeys": [
             "900001"
         ]
