@@ -13,17 +13,22 @@ import json
 from loggerM import sendLog
 import time
 import handlerOrder as oh
-import datetime, requests, os
+import datetime
+import requests
+import os
 
 TOKEN = "1776589751:AAH3HQRXe7tEJf5C-HnfBVeOBWta72Gbd_E"
-coins = ["ada", "dent", "storj", "btt", "vet", "doge", "hot", "sxp", "xlm", "algo", "mtl", "trx", "reef", "one", "xrp"]
+coins = ["ada", "dent", "storj", "btt", "vet", "doge", "hot",
+         "sxp", "xlm", "algo", "mtl", "trx", "reef", "one", "xrp"]
 
 bot = telepot.Bot(TOKEN)
+
 
 def sendTelegram(cid, message):
     send_text = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={cid}&text={message}"
     response = requests.post(send_text)
     return response.json()
+
 
 def on_chat_message(msg):
     global coins, message_with_inline_keyboard
@@ -33,9 +38,9 @@ def on_chat_message(msg):
         message = str(msg['text'])
         if message.startswith("/"):
             args = message.split(" ")
-            command = args[0].replace("/", "").lower();
+            command = args[0].replace("/", "").lower()
             del args[0]
-            #komutlar: /kapat, /start, /api (ekle / sil / bak), /coin (açık (pozisyon / order) - api (ekle / çıkar / bak) - çık {coin}), /ayar (limit (bütçe / işlem) - otomatik (kapat / aç))
+            # komutlar: /kapat, /start, /api (ekle / sil / bak), /coin (açık (pozisyon / order) - api (ekle / çıkar / bak) - çık {coin}), /ayar (limit (bütçe / işlem) - otomatik (kapat / aç))
             if command == "hi":
                 bot.sendMessage(chat_id, "xd")
                 print(args)
@@ -44,24 +49,32 @@ def on_chat_message(msg):
                 if len(args) > 0:
                     if args[0] == "deaktif":
                         xd = []
-                        xd.append([InlineKeyboardButton(text='Tümü Dekatif Edilsin', callback_data='yön deaktif hepsi')])
+                        xd.append([InlineKeyboardButton(
+                            text='Tümü Dekatif Edilsin', callback_data='yön deaktif hepsi')])
                         for x in sides:
                             x = x.upper()
-                            xd.append([InlineKeyboardButton(text=f'{x} Dekatif Edilsin', callback_data=f'yön deaktif {x}')])
+                            xd.append([InlineKeyboardButton(
+                                text=f'{x} Dekatif Edilsin', callback_data=f'yön deaktif {x}')])
                         markup = InlineKeyboardMarkup(inline_keyboard=xd)
-                        message_with_inline_keyboard = bot.sendMessage(chat_id, 'Hangi yönde işlemler kabul edilmesin?', reply_markup=markup)
+                        message_with_inline_keyboard = bot.sendMessage(
+                            chat_id, 'Hangi yönde işlemler kabul edilmesin?', reply_markup=markup)
                     elif args[0] == "aktif":
                         xd = []
-                        xd.append([InlineKeyboardButton(text='Tümü aktif Edilsin', callback_data='yön aktif hepsi')])
+                        xd.append([InlineKeyboardButton(
+                            text='Tümü aktif Edilsin', callback_data='yön aktif hepsi')])
                         for x in sides:
                             x = x.upper()
-                            xd.append([InlineKeyboardButton(text=f'{x} Aktif Edilsin', callback_data=f'yön aktif {x}')])
+                            xd.append([InlineKeyboardButton(
+                                text=f'{x} Aktif Edilsin', callback_data=f'yön aktif {x}')])
                         markup = InlineKeyboardMarkup(inline_keyboard=xd)
-                        message_with_inline_keyboard = bot.sendMessage(chat_id, 'Hangi yönde işlemler kabul edilsin?', reply_markup=markup)
+                        message_with_inline_keyboard = bot.sendMessage(
+                            chat_id, 'Hangi yönde işlemler kabul edilsin?', reply_markup=markup)
                     else:
-                        bot.sendMessage(chat_id, 'Kullanılabilir argümanlar: "deaktif, aktif"')
+                        bot.sendMessage(
+                            chat_id, 'Kullanılabilir argümanlar: "deaktif, aktif"')
                 else:
-                    bot.sendMessage(chat_id, 'Kullanılabilir argümanlar: "deaktif, aktif"')
+                    bot.sendMessage(
+                        chat_id, 'Kullanılabilir argümanlar: "deaktif, aktif"')
             elif command == "coin":
                 if len(args) > 0:
                     if args[0] == "bak":
@@ -77,49 +90,67 @@ def on_chat_message(msg):
                             bot.sendMessage(chat_id, 'Bir coin adı belirtin.')
                     elif args[0] == "deaktif":
                         xd = []
-                        xd.append([InlineKeyboardButton(text='Tümü Dekatif Edilsin', callback_data='coin deaktif hepsi')])
+                        xd.append([InlineKeyboardButton(
+                            text='Tümü Dekatif Edilsin', callback_data='coin deaktif hepsi')])
                         for x in coins:
                             x = x.upper()
-                            xd.append([InlineKeyboardButton(text=f'{x} Dekatif Edilsin', callback_data=f'coin deaktif {x}')])
+                            xd.append([InlineKeyboardButton(
+                                text=f'{x} Dekatif Edilsin', callback_data=f'coin deaktif {x}')])
                         markup = InlineKeyboardMarkup(inline_keyboard=xd)
-                        message_with_inline_keyboard = bot.sendMessage(chat_id, 'Hangi Coin İşlemlerden Muaf Tutulsun?', reply_markup=markup)
+                        message_with_inline_keyboard = bot.sendMessage(
+                            chat_id, 'Hangi Coin İşlemlerden Muaf Tutulsun?', reply_markup=markup)
                     elif args[0] == "aktif":
                         xd = []
-                        xd.append([InlineKeyboardButton(text='Tümü aktif Edilsin', callback_data='coin aktif hepsi')])
+                        xd.append([InlineKeyboardButton(
+                            text='Tümü aktif Edilsin', callback_data='coin aktif hepsi')])
                         for x in coins:
                             x = x.upper()
-                            xd.append([InlineKeyboardButton(text=f'{x} Aktif Edilsin', callback_data=f'coin aktif {x}')])
+                            xd.append([InlineKeyboardButton(
+                                text=f'{x} Aktif Edilsin', callback_data=f'coin aktif {x}')])
                         markup = InlineKeyboardMarkup(inline_keyboard=xd)
-                        message_with_inline_keyboard = bot.sendMessage(chat_id, 'Hangi Coin İşlemlere Eklensin?', reply_markup=markup)
+                        message_with_inline_keyboard = bot.sendMessage(
+                            chat_id, 'Hangi Coin İşlemlere Eklensin?', reply_markup=markup)
                     else:
-                        bot.sendMessage(chat_id, 'Kullanılabilir argümanlar: "bak"')
+                        bot.sendMessage(
+                            chat_id, 'Kullanılabilir argümanlar: "bak"')
                 else:
-                    bot.sendMessage(chat_id, 'Kullanılabilir argümanlar: "bak"')
+                    bot.sendMessage(
+                        chat_id, 'Kullanılabilir argümanlar: "bak"')
             elif command == 'c':
                 markup = ReplyKeyboardMarkup(keyboard=[
-                            ["Plain Text", KeyboardButton(text='Text only')],
-                            [dict(text='Phone', request_contact=True), KeyboardButton(text='Location', request_location=True)],
-                        ])
-                bot.sendMessage(chat_id, 'Custom keyboard with various buttons', reply_markup=markup)
+                    ["Plain Text", KeyboardButton(text='Text only')],
+                    [dict(text='Phone', request_contact=True), KeyboardButton(
+                        text='Location', request_location=True)],
+                ])
+                bot.sendMessage(
+                    chat_id, 'Custom keyboard with various buttons', reply_markup=markup)
             elif command == 'i':
                 markup = InlineKeyboardMarkup(inline_keyboard=[
-                            [dict(text='Telegram URL', url='https://core.telegram.org/')],
-                            [InlineKeyboardButton(text='Callback - show notification', callback_data='notification')],
-                            [dict(text='Callback - show alert', callback_data='alert')],
-                            [InlineKeyboardButton(text='Callback - edit message', callback_data='edit')],
-                            [dict(text='Switch to using bot inline', switch_inline_query='initial query')],
-                        ])
-                message_with_inline_keyboard = bot.sendMessage(chat_id, 'Inline keyboard with various buttons', reply_markup=markup)
+                    [dict(text='Telegram URL', url='https://core.telegram.org/')],
+                    [InlineKeyboardButton(
+                        text='Callback - show notification', callback_data='notification')],
+                    [dict(text='Callback - show alert',
+                          callback_data='alert')],
+                    [InlineKeyboardButton(
+                        text='Callback - edit message', callback_data='edit')],
+                    [dict(text='Switch to using bot inline',
+                          switch_inline_query='initial query')],
+                ])
+                message_with_inline_keyboard = bot.sendMessage(
+                    chat_id, 'Inline keyboard with various buttons', reply_markup=markup)
             elif command == 'h':
                 markup = ReplyKeyboardRemove()
-                bot.sendMessage(chat_id, 'Hide custom keyboard', reply_markup=markup)
+                bot.sendMessage(chat_id, 'Hide custom keyboard',
+                                reply_markup=markup)
             elif command == "kapat":
                 xd = []
                 for x in coins:
                     x = x.upper()
-                    xd.append([InlineKeyboardButton(text=f'{x} Kapatılsın', callback_data=f'kapat {x}')])
+                    xd.append([InlineKeyboardButton(
+                        text=f'{x} Kapatılsın', callback_data=f'kapat {x}')])
                 markup = InlineKeyboardMarkup(inline_keyboard=xd)
-                message_with_inline_keyboard = bot.sendMessage(chat_id, 'Hangi Coinin Açık İşlemleri Kapatılsın?', reply_markup=markup)
+                message_with_inline_keyboard = bot.sendMessage(
+                    chat_id, 'Hangi Coinin Açık İşlemleri Kapatılsın?', reply_markup=markup)
             elif command == "start":
                 if msg['chat']['type'] != "private":
                     return
@@ -127,14 +158,17 @@ def on_chat_message(msg):
                 users = json.load(jsonFile)
                 user = [x for x in users if x['telegramId'] == chat_id]
                 if user:
-                    bot.sendMessage(chat_id, 'Kullanıcı kaydınız zaten bulunmakta.')
+                    bot.sendMessage(
+                        chat_id, 'Kullanıcı kaydınız zaten bulunmakta.')
                 else:
                     markup = ReplyKeyboardMarkup(keyboard=[
-                            [dict(text='İletişim Bilgilerini Paylaş', request_contact=True)]
-                        ])
+                        [dict(text='İletişim Bilgilerini Paylaş',
+                              request_contact=True)]
+                    ])
                     bot.sendMessage(chat_id, 'Kayıt işlemleri başlıyor..')
                     time.sleep(1.2)
-                    bot.sendMessage(chat_id, 'Lütfen iletişim bilgilerini paylaşır mısın?', reply_markup=markup)
+                    bot.sendMessage(
+                        chat_id, 'Lütfen iletişim bilgilerini paylaşır mısın?', reply_markup=markup)
     elif content_type == "contact":
         jsonFile = open("users.json", "r+")
         users = json.load(jsonFile)
@@ -153,7 +187,8 @@ def on_callback_query(msg):
             msg_idf = telepot.message_identifier(message_with_inline_keyboard)
             bot.editMessageText(msg_idf, 'NEW MESSAGE HERE!!!!!')
         else:
-            bot.answerCallbackQuery(query_id, text='No previous message to edit')
+            bot.answerCallbackQuery(
+                query_id, text='No previous message to edit')
     elif data.startswith("kapat"):
         coin = str(data.split(" ")[1]).lower()
         msg_idf = telepot.message_identifier(message_with_inline_keyboard)
@@ -173,13 +208,16 @@ def on_callback_query(msg):
                 usersArray = dirs[1]
                 for x in usersArray:
                     x = str(x)
-                    configJsonFile = open("users/{}/config.json".format(x), "r+")
+                    configJsonFile = open(
+                        "users/{}/config.json".format(x), "r+")
                     userConfig = json.load(configJsonFile)
                     if int(userConfig['telegramChatId']) == int(from_id):
                         if coin == 'hepsi':
-                            oh.createThread("close", {"type": "all", "chatId": str(from_id), "userId": x})
+                            oh.createThread(
+                                "close", {"type": "all", "chatId": str(from_id), "userId": x})
                         else:
-                            oh.createThread("close", {"type": "one", "coin": coin, "chatId": str(from_id), "userId": x})
+                            oh.createThread(
+                                "close", {"type": "one", "coin": coin, "chatId": str(from_id), "userId": x})
                         break
                 break
         elif durum == "aktif":
@@ -190,13 +228,16 @@ def on_callback_query(msg):
                 usersArray = dirs[1]
                 for x in usersArray:
                     x = str(x)
-                    configJsonFile = open("users/{}/config.json".format(x), "r+")
+                    configJsonFile = open(
+                        "users/{}/config.json".format(x), "r+")
                     userConfig = json.load(configJsonFile)
                     if int(userConfig['telegramChatId']) == int(from_id):
                         if coin == 'hepsi':
-                            oh.createThread("open", {"type": "all", "chatId": str(from_id), "userId": x})
+                            oh.createThread(
+                                "open", {"type": "all", "chatId": str(from_id), "userId": x})
                         else:
-                            oh.createThread("open", {"type": "one", "coin": coin, "chatId": str(from_id), "userId": x})
+                            oh.createThread(
+                                "open", {"type": "one", "coin": coin, "chatId": str(from_id), "userId": x})
                         break
                 break
     elif data.startswith("yön"):
@@ -211,13 +252,16 @@ def on_callback_query(msg):
                 usersArray = dirs[1]
                 for x in usersArray:
                     x = str(x)
-                    configJsonFile = open("users/{}/config.json".format(x), "r+")
+                    configJsonFile = open(
+                        "users/{}/config.json".format(x), "r+")
                     userConfig = json.load(configJsonFile)
                     if int(userConfig['telegramChatId']) == int(from_id):
                         if coin == 'hepsi':
-                            oh.createThread("sideClose", {"type": "all", "chatId": str(from_id), "userId": x})
+                            oh.createThread(
+                                "sideClose", {"type": "all", "chatId": str(from_id), "userId": x})
                         else:
-                            oh.createThread("sideClose", {"type": coin, "chatId": str(from_id), "userId": x})
+                            oh.createThread(
+                                "sideClose", {"type": coin, "chatId": str(from_id), "userId": x})
                         break
                 break
         elif durum == "aktif":
@@ -228,16 +272,21 @@ def on_callback_query(msg):
                 usersArray = dirs[1]
                 for x in usersArray:
                     x = str(x)
-                    configJsonFile = open("users/{}/config.json".format(x), "r+")
+                    configJsonFile = open(
+                        "users/{}/config.json".format(x), "r+")
                     userConfig = json.load(configJsonFile)
                     if int(userConfig['telegramChatId']) == int(from_id):
                         if coin == 'hepsi':
-                            oh.createThread("sideOpen", {"type": "all", "chatId": str(from_id), "userId": x})
+                            oh.createThread(
+                                "sideOpen", {"type": "all", "chatId": str(from_id), "userId": x})
                         else:
-                            oh.createThread("sideOpen", {"type": coin, "chatId": str(from_id), "userId": x})
+                            oh.createThread(
+                                "sideOpen", {"type": coin, "chatId": str(from_id), "userId": x})
                         break
                 break
 
+
 def on_chosen_inline_result(msg):
-    result_id, from_id, query_string = telepot.glance(msg, flavor='chosen_inline_result')
+    result_id, from_id, query_string = telepot.glance(
+        msg, flavor='chosen_inline_result')
     print('Chosen Inline Result:', result_id, from_id, query_string)

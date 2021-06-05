@@ -1,0 +1,9 @@
+requests
+websocket-client
+numpy
+binance-api
+datetime
+telepot
+tradingview_ta
+continuous_threading
+telethon
