@@ -56,5 +56,14 @@
         "apiKeys":[
             "900003"
         ]
+    }, "btc":{
+        "active": 0,
+        "apiKeys":[]
+    }, "eth":{
+        "active": 0,
+        "apiKeys":[]
+    }, "ltc":{
+        "active": 0,
+        "apiKeys":[]
     }
 }

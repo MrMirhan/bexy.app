@@ -3,6 +3,7 @@
         "apiKey": "z1UeBh8zBf56F3rlDWkfzj5xbZ81XFyDjGVMWH7GT2I5Je5FnX7DmyVAvx78Qw8N",
         "apiSecret": "zGbeSQsaNMiFbftoMDu3UHA60y89Wi7UM1FcZ5DNNKknTCVtoMtCUJvKuQx1bfrU",
         "apiKeyId": 900003,
-        "apiName": "Burak's Api"
+        "apiName": "Burak's Api",
+        "orderBudgetLimit": 8
     }
 ]

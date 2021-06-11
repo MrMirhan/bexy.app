@@ -1,8 +1,6 @@
 import logging
 import datetime
-import time
 import os
-import sys
 import config as cf
 from re import search
 
@@ -25,9 +23,11 @@ except FileExistsError:
                         filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
     logging.warning('Process started.')
 
-
 def sendLog(message):
     if search("raised", str(message)):
+        return
+    elif search("ignore", str(message)):
+        logging.warning(message)
         return
     logging.warning(message)
     print(message)

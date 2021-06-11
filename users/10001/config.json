@@ -2,10 +2,9 @@
     "automaticClose": "true",
     "coinLimit": 0,
     "long": "true",
-    "maxActiveOrders": 4,
+    "maxActiveOrders": 5,
     "membershipLevel": 4,
-    "orderBudgetLimit": 7,
-    "short": "false",
+    "short": "true",
     "telegramChatId": 610957248,
     "userId": 10001
 }

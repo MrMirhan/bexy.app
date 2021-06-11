@@ -1,107 +1,257 @@
 {
     "ada": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 0,
-        "kesisti": 0,
+        "macd": {
+            "eskiSinyal": false,
+            "sinyal": false
+        },
         "pres": 4,
-        "ustte": 0
+        "stochRSI": {
+            "eskiUstte": 0,
+            "kesisti": 0,
+            "ustte": 0
+        },
+        "t3": {
+            "eskiSinyal": false,
+            "sinyal": false
+        }
     },
     "algo": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 0,
-        "kesisti": 0,
+        "macd": {
+            "eskiSinyal": false,
+            "sinyal": false
+        },
         "pres": 4,
-        "ustte": 0
+        "stochRSI": {
+            "eskiUstte": 0,
+            "kesisti": 0,
+            "ustte": 0
+        },
+        "t3": {
+            "eskiSinyal": false,
+            "sinyal": false
+        }
     },
     "btt": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 0,
-        "kesisti": 0,
-        "pres": 4,
-        "ustte": 0
+        "macd": {
+            "eskiSinyal": false,
+            "sinyal": false
+        },
+        "pres": 6,
+        "stochRSI": {
+            "eskiUstte": 0,
+            "kesisti": 0,
+            "ustte": 0
+        },
+        "t3": {
+            "eskiSinyal": false,
+            "sinyal": false
+        }
     },
     "dent": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 0,
-        "kesisti": 0,
-        "pres": 4,
-        "ustte": 0
+        "macd": {
+            "eskiSinyal": false,
+            "sinyal": false
+        },
+        "pres": 6,
+        "stochRSI": {
+            "eskiUstte": 0,
+            "kesisti": 0,
+            "ustte": 0
+        },
+        "t3": {
+            "eskiSinyal": false,
+            "sinyal": false
+        }
     },
     "doge": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 0,
-        "kesisti": 0,
-        "pres": 4,
-        "ustte": 0
+        "macd": {
+            "eskiSinyal": "al",
+            "sinyal": "sat"
+        },
+        "pres": 5,
+        "stochRSI": {
+            "eskiUstte": 2,
+            "kesisti": 1,
+            "ustte": 1
+        },
+        "t3": {
+            "eskiSinyal": false,
+            "sinyal": false
+        }
     },
     "hot": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 0,
-        "kesisti": 0,
-        "pres": 4,
-        "ustte": 0
+        "macd": {
+            "eskiSinyal": false,
+            "sinyal": false
+        },
+        "pres": 6,
+        "stochRSI": {
+            "eskiUstte": 2,
+            "kesisti": 0,
+            "ustte": 1
+        },
+        "t3": {
+            "eskiSinyal": false,
+            "sinyal": false
+        }
     },
     "mtl": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 0,
-        "kesisti": 0,
+        "macd": {
+            "eskiSinyal": "al",
+            "sinyal": "sat"
+        },
         "pres": 4,
-        "ustte": 0
+        "stochRSI": {
+            "eskiUstte": 1,
+            "kesisti": 0,
+            "ustte": 2
+        },
+        "t3": {
+            "eskiSinyal": false,
+            "sinyal": false
+        }
     },
     "one": {
-        "bildirimGonderildi": 0,
-        "eskiUstte": 0,
-        "kesisti": 0,
-        "pres": 4,
-        "ustte": 0
+        "bildirimGonderildi": 1,
+        "macd": {
+            "eskiSinyal": "al",
+            "sinyal": "sat"
+        },
+        "pres": 5,
+        "stochRSI": {
+            "eskiUstte": 2,
+            "kesisti": 0,
+            "ustte": 1
+        },
+        "t3": {
+            "eskiSinyal": "al",
+            "sinyal": "sat"
+        }
     },
     "reef": {
-        "bildirimGonderildi": 0,
-        "eskiUstte": 0,
-        "kesisti": 0,
-        "pres": 4,
-        "ustte": 0
+        "bildirimGonderildi": 1,
+        "macd": {
+            "eskiSinyal": false,
+            "sinyal": false
+        },
+        "pres": 6,
+        "stochRSI": {
+            "eskiUstte": 0,
+            "kesisti": 0,
+            "ustte": 0
+        },
+        "t3": {
+            "eskiSinyal": false,
+            "sinyal": false
+        }
     },
     "storj": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 0,
-        "kesisti": 0,
+        "macd": {
+            "eskiSinyal": "al",
+            "sinyal": "sat"
+        },
         "pres": 4,
-        "ustte": 0
+        "stochRSI": {
+            "eskiUstte": 2,
+            "kesisti": 1,
+            "ustte": 1
+        },
+        "t3": {
+            "eskiSinyal": false,
+            "sinyal": false
+        }
     },
     "sxp": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 0,
-        "kesisti": 0,
+        "macd": {
+            "eskiSinyal": "al",
+            "sinyal": "sat"
+        },
         "pres": 4,
-        "ustte": 0
+        "stochRSI": {
+            "eskiUstte": 1,
+            "kesisti": 1,
+            "ustte": 2
+        },
+        "t3": {
+            "eskiSinyal": false,
+            "sinyal": false
+        }
     },
     "trx": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 0,
-        "kesisti": 0,
-        "pres": 4,
-        "ustte": 0
+        "macd": {
+            "eskiSinyal": false,
+            "sinyal": false
+        },
+        "pres": 5,
+        "stochRSI": {
+            "eskiUstte": 0,
+            "kesisti": 0,
+            "ustte": 0
+        },
+        "t3": {
+            "eskiSinyal": false,
+            "sinyal": false
+        }
     },
     "vet": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 0,
-        "kesisti": 0,
-        "pres": 4,
-        "ustte": 0
+        "macd": {
+            "eskiSinyal": false,
+            "sinyal": false
+        },
+        "pres": 5,
+        "stochRSI": {
+            "eskiUstte": 0,
+            "kesisti": 0,
+            "ustte": 0
+        },
+        "t3": {
+            "eskiSinyal": false,
+            "sinyal": false
+        }
     },
     "xlm": {
         "bildirimGonderildi": 0,
-        "eskiUstte": 0,
-        "kesisti": 0,
-        "pres": 4,
-        "ustte": 0
+        "macd": {
+            "eskiSinyal": false,
+            "sinyal": false
+        },
+        "pres": 5,
+        "stochRSI": {
+            "eskiUstte": 0,
+            "kesisti": 0,
+            "ustte": 0
+        },
+        "t3": {
+            "eskiSinyal": false,
+            "sinyal": false
+        }
     },
     "xrp": {
-        "bildirimGonderildi": 0,
-        "eskiUstte": 0,
-        "kesisti": 0,
+        "bildirimGonderildi": 1,
+        "macd": {
+            "eskiSinyal": "al",
+            "sinyal": "sat"
+        },
         "pres": 4,
-        "ustte": 0
+        "stochRSI": {
+            "eskiUstte": 2,
+            "kesisti": 1,
+            "ustte": 1
+        },
+        "t3": {
+            "eskiSinyal": false,
+            "sinyal": false
+        }
     }
 }

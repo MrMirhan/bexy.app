@@ -1,7 +1,7 @@
 requests
 websocket-client
 numpy
-binance-api
+python-binance
 datetime
 telepot
 tradingview_ta

@@ -1,25 +1,16 @@
-from telethon.sync import TelegramClient, events
-import continuous_threading
-from continuous_threading import CommandProcess
-import traceback
-import config
 import telepot
-from telepot.loop import MessageLoop
-from telepot.delegate import per_chat_id, create_open, pave_event_space, per_inline_from_id
-from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, ForceReply
+from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
-from telepot.namedtuple import InlineQueryResultArticle, InlineQueryResultPhoto, InputTextMessageContent
 import json
 from loggerM import sendLog
 import time
 import handlerOrder as oh
-import datetime
 import requests
 import os
+import sys
 
 TOKEN = "1776589751:AAH3HQRXe7tEJf5C-HnfBVeOBWta72Gbd_E"
-coins = ["ada", "dent", "storj", "btt", "vet", "doge", "hot",
-         "sxp", "xlm", "algo", "mtl", "trx", "reef", "one", "xrp"]
+coins = ["ada", "btc", "eth", "ltc", "dent", "storj", "btt", "vet", "doge", "hot", "sxp", "xlm", "algo", "mtl", "trx", "reef", "one", "xrp"]
 
 bot = telepot.Bot(TOKEN)
 
@@ -41,9 +32,24 @@ def on_chat_message(msg):
             command = args[0].replace("/", "").lower()
             del args[0]
             # komutlar: /kapat, /start, /api (ekle / sil / bak), /coin (açık (pozisyon / order) - api (ekle / çıkar / bak) - çık {coin}), /ayar (limit (bütçe / işlem) - otomatik (kapat / aç))
-            if command == "hi":
-                bot.sendMessage(chat_id, "xd")
-                print(args)
+            if command == "kapat":
+                for dirs in os.walk("users"):
+                    usersArray = dirs[1]
+                    for x in usersArray:
+                        x = str(x)
+                        configJsonFile = open(
+                            "users/{}/config.json".format(x), "r+")
+                        userConfig = json.load(configJsonFile)
+                        if int(userConfig['telegramChatId']) == int(chat_id):
+                            if int(userConfig['membershipLevel']) > 3:
+                                sendLog('Process stopped.')
+                                sendTelegram(chat_id, "Bot kapatılıyor.")
+                                oh.stopJobs()
+                                oh.socketClose()
+                                os._exit(0)
+                            else:
+                                sendTelegram(chat_id, "Botu kapatabilmek için yönetici olmalısınız.")
+
             elif command == "yön":
                 sides = ["long", "short"]
                 if len(args) > 0:
@@ -110,9 +116,18 @@ def on_chat_message(msg):
                         markup = InlineKeyboardMarkup(inline_keyboard=xd)
                         message_with_inline_keyboard = bot.sendMessage(
                             chat_id, 'Hangi Coin İşlemlere Eklensin?', reply_markup=markup)
+                    elif args[0] == "kapat":
+                        xd = []
+                        for x in coins:
+                            x = x.upper()
+                            xd.append([InlineKeyboardButton(
+                                text=f'{x} Kapatılsın', callback_data=f'kapat {x}')])
+                        markup = InlineKeyboardMarkup(inline_keyboard=xd)
+                        message_with_inline_keyboard = bot.sendMessage(
+                            chat_id, 'Hangi Coinin Açık İşlemleri Kapatılsın?', reply_markup=markup)
                     else:
                         bot.sendMessage(
-                            chat_id, 'Kullanılabilir argümanlar: "bak"')
+                            chat_id, 'Kullanılabilir argümanlar: "bak, kapat, deaktif, aktif"')
                 else:
                     bot.sendMessage(
                         chat_id, 'Kullanılabilir argümanlar: "bak"')
@@ -142,15 +157,6 @@ def on_chat_message(msg):
                 markup = ReplyKeyboardRemove()
                 bot.sendMessage(chat_id, 'Hide custom keyboard',
                                 reply_markup=markup)
-            elif command == "kapat":
-                xd = []
-                for x in coins:
-                    x = x.upper()
-                    xd.append([InlineKeyboardButton(
-                        text=f'{x} Kapatılsın', callback_data=f'kapat {x}')])
-                markup = InlineKeyboardMarkup(inline_keyboard=xd)
-                message_with_inline_keyboard = bot.sendMessage(
-                    chat_id, 'Hangi Coinin Açık İşlemleri Kapatılsın?', reply_markup=markup)
             elif command == "start":
                 if msg['chat']['type'] != "private":
                     return
