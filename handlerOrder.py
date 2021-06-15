@@ -277,7 +277,7 @@ def orderCheck(threadId, args):
     orderType = str(args['orderType'])
     coinAlimEmriDeger = float(args['coinAlimEmriDeger'])
     side = str(args['side'])
-    quantity = int(args['quantity'])
+    quantity = float(args['quantity'])
     spent = float(args['spent'])
     apiId = int(args['apiId'])
     islemBaslamaTime = int(threadId)

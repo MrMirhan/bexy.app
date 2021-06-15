@@ -1,6 +1,6 @@
 {
     "automaticExit": 1,
-    "profitExitPercent": 4,
+    "profitExitPercent": 7,
     "lossExitPercent": 78,
-    "lossNotifyPercent": 66
-}
+    "lossNotifyPercent": 70
+} 

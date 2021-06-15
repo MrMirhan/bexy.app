@@ -5,7 +5,8 @@ import time
 
 API_KEY = 'VzJYaYBn2w0aNkavvlCG1o2LwuOUQyBEjjnM0TPZAGBIwZge0hsejAnxV3pf2J2L'
 API_SECRET = 'XGoSn1gxfL6eoDA8WlEBinbNUmGXNneeBCCbHpXaE6BxWNIvHvWMXYziZTFjZjFa'
-SOCKETS = 'wss://stream.binance.com:9443/ws/adausdt@kline_5m'
+TIME = "1h"
+SOCKETS = f'wss://stream.binance.com:9443/ws/adausdt@kline_{TIME}'
 
 # Version
 

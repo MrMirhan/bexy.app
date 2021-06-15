@@ -17,7 +17,7 @@ class Controller():
 
         self.TRADE_SYMBOL = self.symbol.upper() + "USDT"
 
-        klines = client.get_klines(symbol=self.TRADE_SYMBOL, interval='5m', limit=500)
+        klines = client.get_klines(symbol=self.TRADE_SYMBOL, interval=config.TIME, limit=500)
 
         close = [float(entry[4]) for entry in klines]
         high = [float(entry[2]) for entry in klines]

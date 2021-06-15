@@ -173,6 +173,7 @@ def check(ws, message):
     candle = json_message['k']
     is_candle_closed = candle['x']
     if is_candle_closed:
+        print(json_message)
         for xd in coins:
             sleepTime = random.uniform(1.05, 1.45)
             time.sleep(sleepTime)
