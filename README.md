@@ -27,7 +27,7 @@ For now it checks 15 different crypto coin and make orders about them.
 > Threads isn't mix because thread ids is all unique. Timestamp using in thread ids.
 
 4. Order and Position Checking
-> All orders checking with interval in every 1 seconds with threading.
+> All orders checking with interval in every random 9 to 10 seconds with threading.
 
 > When new order appears system checks it every seconds if it cancelled or going the position.
 
@@ -37,9 +37,11 @@ For now it checks 15 different crypto coin and make orders about them.
 
 > When order goes the position system change the order status inside and checks position and PNL (profit and loss)
 
-> While position checking if money loss is too much than 1.5 dollars it informs the user should close position for not get risk of liquidity.
+> While position checking if money loss is too much than percent which data stated from users settings it informs the user should close position for not get risk of liquidity.
 
-> If profit is higer than 1.5 dollars it informs the user should close the position to not get risk of losing profit.
+> If profit is higer than percent which data stated from users settings it informs the user should close the position to not get risk of losing profit.
+
+> Also if the user was set automatic close true and stated the percent for profit and loss bot will close the position from about that information.
 
 > If user manually close position from Binance the system can figure it and remove the thread and remove the position from inside and inform the user.
 
@@ -54,3 +56,8 @@ This will be a platform that based on web. I'm continuing to develop this and th
 There is a logging system in here and when it starts, the bot every single process gives a log.
 
 And also you can see sendLog() requests in function to understand which function what is work for.
+
+# NOTE!
+Binance allow 2400 requests per minute so you should keep orders down from 15 my suggestion.
+
+I'm trying to find any solution to fix this problem.
