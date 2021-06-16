@@ -1,14 +1,14 @@
 # Bexy.app
  
-Bexy is a automated trading bot which control Stoch RSI about coin. 
+Bexy is a automated trading bot which control Stoch RSI & MAC.D & Tillson T3 about coin. 
 
 For now it checks 15 different crypto coin and make orders about them.
 
 # Features
 1. Automatic Trade
-> Bexy checks all 15 coins in every 5 mins (candle closes). If there any intersecitons on candle close it opens trade. The intersection data comes from checking the Stoch RSI.
+> Bexy checks all 15 coins in every 5 mins (candle closes) (customizable). If there any intersecitons on candle close it opens trade. The intersection data comes from checking the Stoch RSI & MAC.D & Tillson T3.
 
-> Search the conditions if blue and red (the integer which comes from Stoch RSI) are between 0 and 10 or 90 - 100 before opening the trade. If it's 90-100 it opens a sell order otherwise it's 0-10 it opens a buy order. 
+> Compare the directions and make the decision with datas which come from Tillson T3 & Stoch RSI & MAC.D direction control module. Then creates buy (long) and sell (short) orders if there is a success equality.
 
 > With Telegram connection it informs the user about trades and intersections.
 
@@ -45,9 +45,9 @@ For now it checks 15 different crypto coin and make orders about them.
 
 # For Final Explaination
 
-Bexy is a Trader Bot project to people who wants to Future trading on Binance. I'm making this project on my own for a month and it is working.
+Bexy is a Trader Bot project to people who wants to Future trading on Binance. I'm making this project on my own for 2 months and it is working.
 
-Bot is looking Stoch RSI datas for opening orders. Bot can create successful and correct orders.
+Bot is looking Stoch RSI & MAC.D & Tillson T3 datas for opening orders. Bot can create successful and correct orders.
 
 This will be a platform that based on web. I'm continuing to develop this and this version is the working version of Beta version.
 
