@@ -149,7 +149,7 @@ def orderCancel(threadId, args):
 
 
 def getOrder(id, symbol, apiKey, apiSecret):
-    sleepTime = random.uniform(0.4, 1.1)
+    sleepTime = random.uniform(1, 2)
     time.sleep(sleepTime)
     try:
         client = Client(apiKey, apiSecret)
@@ -164,7 +164,7 @@ def getOrder(id, symbol, apiKey, apiSecret):
 
 
 def checkPnl(threadId, args):
-    sleepTime = random.uniform(1.05, 1.45)
+    sleepTime = random.uniform(9, 10)
     time.sleep(sleepTime)
     orderId = str(args['orderId'])
     symbol = str(args['symbol'])
@@ -269,7 +269,7 @@ def checkPnl(threadId, args):
 
 
 def orderCheck(threadId, args):
-    sleepTime = random.uniform(1.05, 1.45)
+    sleepTime = random.uniform(9, 10)
     time.sleep(sleepTime)
     orderId = str(args['orderId'])
     symbol = str(args['symbol'])
@@ -842,7 +842,7 @@ def startCheck():
             positionOrders = json.load(positionOrderJsonFile)
             userConfig = json.load(configJsonFile)
             for position in positionOrders:
-                sleepTime = random.uniform(0.2, 0.8)
+                sleepTime = random.uniform(1, 3)
                 time.sleep(sleepTime)
                 orders = orders + 1
                 orderId = str(position['orderId'])
@@ -858,7 +858,7 @@ def startCheck():
                 createThread("pnl", {"orderId": orderId, "symbol": symbol, "side": side, "coin": coin, "orderType": orderType, "coinAlimEmriDeger": coinAlimEmriDeger, "quantity": quantity, "spent": spent, "userId": userId, "apiId": apiId})
                 sendLog(f"checking position {orderId}")
             for order in openOrders:
-                sleepTime = random.uniform(0.2, 0.8)
+                sleepTime = random.uniform(1, 3)
                 time.sleep(sleepTime)
                 orders = orders + 1
                 orderId = str(order['orderId'])

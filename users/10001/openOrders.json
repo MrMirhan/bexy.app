@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "coin": "ALGO",
+    "orderId": 2428172972,
+    "entryPrice": 1.0295,
+    "bougthQuantity": "19",
+    "spentMoney": 1.9620912404999977,
+    "orderType": "SELL",
+    "userId": "10001",
+    "apiId": 900001
+  }
+]

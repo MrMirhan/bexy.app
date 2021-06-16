@@ -3,9 +3,9 @@ import time
 
 # Informations
 
-API_KEY = 'VzJYaYBn2w0aNkavvlCG1o2LwuOUQyBEjjnM0TPZAGBIwZge0hsejAnxV3pf2J2L'
-API_SECRET = 'XGoSn1gxfL6eoDA8WlEBinbNUmGXNneeBCCbHpXaE6BxWNIvHvWMXYziZTFjZjFa'
-TIME = "1h"
+API_KEY = 'KEY'
+API_SECRET = 'SECRET'
+TIME = "30m"
 SOCKETS = f'wss://stream.binance.com:9443/ws/adausdt@kline_{TIME}'
 
 # Version
@@ -29,5 +29,5 @@ except:
 
 # Telegram
 
-channelId = "-1001347995174"
-TOKEN = "1776589751:AAH3HQRXe7tEJf5C-HnfBVeOBWta72Gbd_E"
+channelId = "CHANNEL ID"
+TOKEN = "TOKEN TELEGRAM"
