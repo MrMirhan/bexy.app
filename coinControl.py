@@ -139,7 +139,7 @@ class Controller():
 
     def stochRSIControl(self):
         self.srside = "a"
-        if (self.red > 88.6 or self.red == 88.6) and (self.blue > 88.6 or self.blue == 88.6):
+        if (self.red >= 88.6) and (self.blue >= 88.6):
             sendLog("İkisi de 90 Üstünde")
             if self.eskiUstte != 0:
                 if (self.ustte == 1 and self.eskiUstte == 2) or (self.ustte == 2 and self.eskiUstte == 1):
@@ -155,7 +155,7 @@ class Controller():
                     self.srside = False
             else:
                 self.srside = False
-        elif (self.red < 11.4 or self.red == 11.4) and (self.blue < 11.4 or self.blue == 11.4):
+        elif (self.red <= 11.4) and (self.blue <= 11.4):
             sendLog("İkisi de 10 Altında")
             if self.eskiUstte != 0:
                 if (self.ustte == 1 and self.eskiUstte == 2) or (self.ustte == 2 and self.eskiUstte == 1):

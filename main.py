@@ -108,64 +108,17 @@ def coinControl(symbol):
     control.controlNotify()
     if t3side == False: t3side = coind[symbol]['t3']['sinyal']
     if macdside == False: macdside = coind[symbol]['macd']['sinyal']
-    if stochside == False:
+    if stochside == "al" or stochside == "sat":
         if t3side == "al" or t3side == "sat":
-            if t3side == rbside and t3side == macdside and macdside == rbside:
-                coinAlimDeger = control.coinBuyPriceCheck(t3side)
-                coinDeger = control.coinDeger
-                control.end()
-                coinsJsonFile.close()
-                orderCreate(symbol, TRADE_SYMBOL, coinAlimDeger, coinDeger, t3side)
-            else:
-                if macdside != "al" or macdside != "sat": macdside = False
-                coinAlimDeger = control.coinBuyPriceCheck(rbside)
-                coinDeger = control.coinDeger
-                control.end()
-                coinsJsonFile.close()
-                sendLog("Order Isn't Created. T3 and StochRSI Blue and Red and MACD Check Side isn't equal.\n" + "Stock Side: " + str(rbside) + "\nT3 Side: " + str(t3side) + "\nMACD Side: " + str(macdside))
-        else:
-            if macdside == rbside:
-                coinAlimDeger = control.coinBuyPriceCheck(rbside)
-                coinDeger = control.coinDeger
-                control.end()
-                coinsJsonFile.close()
-                orderCreate(symbol, TRADE_SYMBOL, coinAlimDeger, coinDeger, rbside)
-            else:
-                if macdside != "al" or macdside != "sat": macdside = False
-                coinAlimDeger = control.coinBuyPriceCheck(rbside)
-                coinDeger = control.coinDeger
-                control.end()
-                coinsJsonFile.close()
-                sendLog("Order Isn't Created. MACD and StochRSI Blue and Red Check Side isn't equal.\n" + "Stock Side: " + str(rbside) + "\nMACD Side: " + str(macdside))
-    else:
-        if t3side == "al" or t3side == "sat":
+            coinAlimDeger = control.coinBuyPriceCheck(stochside)
+            coinDeger = control.coinDeger
+            control.end()
+            coinsJsonFile.close()
+            if macdside != "al" or macdside != "sat": macdside = False
             if t3side == stochside and t3side == macdside and macdside == stochside:
-                coinAlimDeger = control.coinBuyPriceCheck(stochside)
-                coinDeger = control.coinDeger
-                control.end()
-                coinsJsonFile.close()
                 orderCreate(symbol, TRADE_SYMBOL, coinAlimDeger, coinDeger, stochside)
             else:
-                if macdside != "al" or macdside != "sat": macdside = False
-                coinAlimDeger = control.coinBuyPriceCheck(rbside)
-                coinDeger = control.coinDeger
-                control.end()
-                coinsJsonFile.close()
                 sendLog("Order Isn't Created. T3 and Stoch and MACD isn't equal.\n" + "Stock Side: " + str(stochside) + "\nT3 Side: " + str(t3side) + "\nMACD Side: " + str(macdside))
-        else:
-            if macdside == stochside:
-                coinAlimDeger = control.coinBuyPriceCheck(stochside)
-                coinDeger = control.coinDeger
-                control.end()
-                coinsJsonFile.close()
-                orderCreate(symbol, TRADE_SYMBOL, coinAlimDeger, coinDeger, stochside)
-            else:
-                if macdside != "al" or macdside != "sat": macdside = False
-                coinAlimDeger = control.coinBuyPriceCheck(rbside)
-                coinDeger = control.coinDeger
-                control.end()
-                coinsJsonFile.close()
-                sendLog("Order Isn't Created. MACD and StochRSI Side isn't equal.\n" + "Stock Side: " + str(stochside) + "\nMACD Side: " + str(macdside))
 
 def check(ws, message):
     coins = ["ada", "btc", "eth", "ltc", "dent", "storj", "btt", "vet", "doge", "hot", "sxp", "xlm", "algo", "mtl", "trx", "reef", "one", "xrp"]

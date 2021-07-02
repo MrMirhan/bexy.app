@@ -5,12 +5,12 @@ import time
 
 API_KEY = 'KEY'
 API_SECRET = 'SECRET'
-TIME = "30m"
+TIME = "5m"
 SOCKETS = f'wss://stream.binance.com:9443/ws/adausdt@kline_{TIME}'
 
 # Version
 
-branch = "Beta"
+branch = "Master"
 version = "1.1.6"
 
 # Run Dependency
