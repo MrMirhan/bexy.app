@@ -7,4 +7,3 @@ telepot
 tradingview_ta
 continuous_threading
 telethon
-x
