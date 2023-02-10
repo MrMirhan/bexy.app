@@ -1,4 +1,10 @@
 # Bexy.app
+
+### DISCONTINUED
+
+This project is not continuing. It's one of the first bots I made and I think it's no longer working in an optimized way. I last developed and used it 2 years ago. All functions were working properly. This bot should never be used as an investment tool. And it certainly does not give you any investment advice. Cryptocurrency markets are high-volume markets and many criteria should be evaluated before trading.
+
+## Description
  
 Bexy is a automated trading bot which control Stoch RSI & MAC.D & Tillson T3 about coin. 
 
